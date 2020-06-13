@@ -24,10 +24,18 @@ namespace Datos
                 new Entrenador(rnd.Next(15000, 25000), "Giovanni")
             };
 
+            PC.Legendarios = new Pokemon[]
+            {
+                new Pokemon(144,"Articuno"),
+                new Pokemon(145,"Zapdos"),
+                new Pokemon(146,"Moltres"),
+                new Pokemon(150,"Mewtwo"),
+                new Pokemon(151,"Mew")
+            };
+
             InicializarBoxes();
         }
 
-        //Traer la informacion de las boxes de alguna fuente de datos(memoria, excel, txt, base de datos...)
         public static void InicializarBoxes()
         {
             for (int posBox = 0; posBox < PC.Boxes.Length; posBox++)
@@ -58,7 +66,7 @@ namespace Datos
 
         }
 
-        public static void RedefinirCantidadDeBoxes(int cantidad)
+        public static void ModificarCantidadBoxes(int cantidad)
         {
             //Backupear las boxes actuales de la PC
             Box[] boxesACopiar = PC.Boxes;
@@ -74,8 +82,6 @@ namespace Datos
             {
                 PC.Boxes[pos] = boxesACopiar[pos];
             }
-
-
         }
 
     }

@@ -17,7 +17,9 @@ namespace Entidades
             limiteAtaques = 4;
         }
 
-        public Pokemon(short nroDex, string nombre, byte nivel, Tipo tipo, Sexo sexo, Entrenador entrenador, Pokebola pokebola, string[] ataques, bool tieneItem)
+        public Pokemon(short nroDex, string nombre) { _nroDex = nroDex; this.Nombre = nombre; }
+
+        public Pokemon(short nroDex, string nombre, byte nivel, Tipo tipo, Genero sexo, Entrenador entrenador, Pokebola pokebola, string[] ataques, bool tieneItem)
         {
             _nroDex = nroDex;
             _tipo = tipo;
@@ -37,7 +39,7 @@ namespace Entidades
         private readonly Entrenador _entrenador;
         private readonly Pokebola _pokebola;
         private readonly short _nroDex;
-        private readonly Sexo _sexo;
+        private readonly Genero _sexo;
 
         public int Id { get; set; }
         public short NroDex { get { return _nroDex; } }
@@ -46,48 +48,10 @@ namespace Entidades
         public Entrenador Entrenador { get { return _entrenador; } }
         public Tipo Tipo { get { return _tipo; } }
         public Pokebola AtrapadoCon { get { return _pokebola; } }
-        public Sexo Sexo { get{ return _sexo; } }
+        public Genero Sexo { get{ return _sexo; } }
         public bool TieneItem { get; set; }
         public string[] Ataques { get; set; }
-
     }
 
-    public enum Tipo
-    {
-        NoAsignado = 0,
-        Normal,
-        Electrico,
-        Agua,
-        Fuego,
-        Planta,
-        Tierra,
-        Roca,
-        Volador,
-        Bicho,
-        Lucha,
-        Veneno,
-        Fantasma,
-        Siniestro,
-        Psiquico,
-        Hielo,
-        Acero,
-        Dragon,
-    }
-
-    public enum Pokebola
-    {
-        NoAsignado = 0,
-        Pokeball,
-        Greatball,
-        Ultraball,
-        Safariball,
-        Masterball,
-    }
-
-    public enum Sexo
-    {
-        NoAsignado = 0,
-        Masculino,
-        Femenino,
-    }
+    
 }

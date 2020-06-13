@@ -27,16 +27,16 @@ namespace Datos
             #region Lista de pokemones
             Pokemon[] pokemonesHardcodeados = new Pokemon[]
             {
-                new Pokemon(120, "Staryu", 25, Tipo.Agua, Sexo.Femenino, PC.Jugador, Pokebola.Greatball, new string[] { "burbuja", "gruñido", "placaje" }, true),
-                new Pokemon(001, "Bulbasaur", 5, Tipo.Planta, Sexo.Masculino, PC.Jugador, Pokebola.Pokeball, new string[] { "placaje", "gruñido" }, false),
+                new Pokemon(120, "Staryu", 25, Tipo.Agua, Genero.Femenino, PC.Jugador, Pokebola.Greatball, new string[] { "burbuja", "gruñido", "placaje" }, true),
+                new Pokemon(001, "Bulbasaur", 5, Tipo.Planta, Genero.Masculino, PC.Jugador, Pokebola.Pokeball, new string[] { "placaje", "gruñido" }, false),
                 new Huevo(300),
-                new Pokemon(041, "Zubat", 17, Tipo.Veneno, Sexo.Femenino, PC.Jugador, Pokebola.Pokeball, new string[] { "burbuja", "golpe", "", "" }, true),
-                new Pokemon(041, "Zubat", 17, Tipo.Veneno, Sexo.Femenino, PC.Jugador, Pokebola.Pokeball, new string[] { "burbuja", "golpe", "", "" }, true),
+                new Pokemon(041, "Zubat", 17, Tipo.Veneno, Genero.Femenino, PC.Jugador, Pokebola.Pokeball, new string[] { "burbuja", "golpe", "", "" }, true),
+                new Pokemon(041, "Zubat", 17, Tipo.Veneno, Genero.Femenino, PC.Jugador, Pokebola.Pokeball, new string[] { "burbuja", "golpe", "", "" }, true),
                 new Huevo(1000),
-                new Pokemon(150, "Mewtwo", 70, Tipo.Psiquico, Sexo.Masculino, PC.Jugador, Pokebola.Masterball, new string[] { "telekinesis", "", "", "" }, true),
+                new Pokemon(150, "Mewtwo", 70, Tipo.Psiquico, Genero.Masculino, PC.Jugador, Pokebola.Masterball, new string[] { "telekinesis", "", "", "" }, true),
                 new Huevo(500),
-                new Pokemon(016, "Charizard", 38, Tipo.Fuego, Sexo.Femenino, PC.Jugador, Pokebola.Pokeball, new string[] { "llamarada", "volar", "", "" }, true),
-                new Pokemon(020, "Pikachu", 10, Tipo.Electrico, Sexo.Femenino, new Entrenador(35268, "NoobSaibot"), Pokebola.Safariball, new string[] { "placaje", "impactrueno", "agilidad", "" }, true)
+                new Pokemon(016, "Charizard", 38, Tipo.Fuego, Genero.Femenino, PC.Jugador, Pokebola.Pokeball, new string[] { "llamarada", "volar", "", "" }, true),
+                new Pokemon(020, "Pikachu", 10, Tipo.Electrico, Genero.Femenino, new Entrenador(35268, "NoobSaibot"), Pokebola.Safariball, new string[] { "placaje", "impactrueno", "agilidad", "" }, true)
              };
             #endregion
 
@@ -61,31 +61,6 @@ namespace Datos
             }
             else
                 throw new BoxLlenaException();
-        }
-
-        private void CargarEnPosicion(Pokemon pokemon, int espacioEnBox)
-        {
-            pokemon.Id = espacioEnBox;
-            Box.Pokemones[espacioEnBox] = pokemon;
-        }
-
-        /// <summary>
-        /// Busca un espacio disponible dentro la Box.
-        /// </summary>
-        /// <returns>En caso de encontrar un espacio, retorna la posicion disponible. En caso contrario, retorna -1.</returns>
-        private int ObtenerEspacioDisponible()
-        {
-            int posEncontrada = -1;
-
-            for (int pos = 0; pos < Box.Pokemones.Length; pos++)
-            {
-                if (Box.Pokemones[pos] is null)
-                {
-                    posEncontrada = pos;
-                    break;
-                }
-            }
-            return posEncontrada;
         }
 
         public void Liberar(int idPokemon)
@@ -139,7 +114,7 @@ namespace Datos
             throw new NotImplementedException();
         }
 
-        public void ModificarStatusItem(Pokemon pokemon)
+        public void CambiarStatusItem(Pokemon pokemon)
         {
             pokemon.TieneItem = !pokemon.TieneItem;
         }
@@ -165,5 +140,36 @@ namespace Datos
             }
         }
 
+        /// <summary>
+        /// Se carga el pokemon dentro de la box con la posicion especificada por parámetro
+        /// </summary>
+        /// <param name="pokemon"></param>
+        /// <param name="espacioEnBox"></param>
+        private void CargarEnPosicion(Pokemon pokemon, int espacioEnBox)
+        {
+            pokemon.Id = espacioEnBox;
+            Box.Pokemones[espacioEnBox] = pokemon;
+        }
+
+        /// <summary>
+        /// Busca un espacio disponible dentro la Box.
+        /// </summary>
+        /// <returns>En caso de encontrar un espacio, retorna la posicion disponible. En caso contrario, retorna -1.</returns>
+        private int ObtenerEspacioDisponible()
+        {
+            int posEncontrada = -1;
+
+            for (int pos = 0; pos < Box.Pokemones.Length; pos++)
+            {
+                if (Box.Pokemones[pos] is null)
+                {
+                    posEncontrada = pos;
+                    break;
+                }
+            }
+            return posEncontrada;
+        }
+
+        
     }
 }

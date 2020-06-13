@@ -20,19 +20,9 @@ namespace Entidades
         public static Region Region { get; set; }
         public static Box[] Boxes { get; set; }
         public static int NroBoxes { get; set; }
-        public static List<Entrenador> Contactos { get; set; }
         public static string Titulo { get; set; }
+        public static List<Entrenador> Contactos { get; set; }
+        public static Pokemon[] Legendarios { get; set; } 
     }
-
-    public enum Region
-    {
-        Kanto = 1,
-        Johto,
-        Hoenn,
-        Sinnoh,
-        Unova,
-        Kalos
-    }
-
 
 }

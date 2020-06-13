@@ -11,11 +11,13 @@ namespace Entidades
     {
         void Guardar(Pokemon pokemon);
         void Liberar(int idPokemon);
-        void ModificarStatusItem(Pokemon pokemon);
+        void CambiarStatusItem(Pokemon pokemon);
         void CambiarAtaques(Pokemon pokemon, string[] ataques);
         void CambiarNombre(Pokemon pokemon, string nombre);
         void Mover(Pokemon pokemon, int espacioEnBox);
         Pokemon ObtenerPokemon(int idPokemon);
         Pokemon[] ObtenerTodos();
     }
+
+   
 }
