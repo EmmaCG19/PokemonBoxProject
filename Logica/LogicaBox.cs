@@ -72,7 +72,6 @@ namespace Logica
             }
         }
 
-        
         public void Liberar(int idPokemon)
         {
             _dal.Liberar(idPokemon);
@@ -117,7 +116,6 @@ namespace Logica
                                   .Where(p => p is Huevo);
         }
 
-        //Ordenar los pokemon de la box
         public void OrdenarPorNivel(ModoOrdenamiento orden) 
         {
             switch (orden) 
@@ -133,7 +131,6 @@ namespace Logica
             }
         }
 
-        //REGLA DE NEGOCIO: Hasta 3 pokemones con la misma dex por Box
         public Pokemon[] ObtenerPorNroPokedex(int nroPokedex)
         {
             return (Pokemon[])this.ObtenerTodos()

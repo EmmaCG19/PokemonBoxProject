@@ -3,24 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 using Entidades;
 using Entidades.Excepciones;
 using Datos;
-using System.ComponentModel;
 
 namespace Logica
 {
     public static class LogicaPC
     {
-        //REGLA 
+        static LogicaPC()
+        {
+            //_limiteDexNacional = 151;
+        }
 
+        //static readonly byte _limiteDexNacional;
+
+        //ACCIONES EN PC
 
         /// <summary>
         /// Envia un mail a uno de los NPC agendados como contacto
         /// </summary>
         /// <param name="nombreEntrenador"></param>
         /// <returns></returns>
-        public static bool EnviarMail(string entrenadorOT) 
+        public static bool EnviarMail(string entrenadorOT)
         {
             //Buscar el nombre en los contactos de la PC
             foreach (Entrenador trainer in PC.Contactos)
@@ -33,25 +39,30 @@ namespace Logica
             return false;
         }
 
+        public static void ModificarCantBoxes(int cantidad)
+        {
+            PCDAL.ModificarCantidadBoxes(cantidad);
+        }
+
+        public static void ResetearBox(Box box)
+        {
+            PCDAL.ResetearBox(box);
+        }
+
+        public static void IntercambiarBoxes(Box box1, Box box2)
+        {
+            PCDAL.IntercambiarBoxes(box1, box2);
+        }
+
+
         //ESTADISTICAS
-        public static Pokemon[] PokemonesIntercambiados() 
+
+        public static bool CapturasteTodosLosLegendarios()
         {
-            //Recorro todas las cajas y obtengo aquellos pokemones que no coincidan con el OT del Jugador
             throw new NotImplementedException();
         }
 
-        public static Pokemon[] PokemonesPorNivel(byte nivel=100)
-        {
-            //Recorro todas las cajas y obtengo solamente aquellos pokemones de nivel 100
-            throw new NotImplementedException();
-        }
-
-        public static bool CapturasteTodosLosLegendarios() 
-        {
-            throw new NotImplementedException();
-        }
-        
-        public static int CantPokemonesPorTipo(Tipo tipo) 
+        public static int CantPokemonesPorTipo(Tipo tipo)
         {
             throw new NotImplementedException();
 
@@ -63,15 +74,7 @@ namespace Logica
 
         }
 
-        //Pokemon que más veces aparece (guiarnos por el nroDeDex)
-        public static Pokemon PokemonMasCapturado() 
-        {
-
-            throw new NotImplementedException();
-
-        }
-
-        private static int NroCapturasPorDex(short nroDex) 
+        public static int NroCapturasPorDex(short nroDex)
         {
             int cantidadVeces = 0;
 
@@ -87,8 +90,62 @@ namespace Logica
             return cantidadVeces;
         }
 
-        //Deberia ser uno solo - YaExistePokemonConMasterball
-        public static Pokemon PokemonAtrapadoConMasterball() 
+        public static Pokemon[] PokemonesIntercambiados()
+        {
+            //Recorro todas las cajas y obtengo aquellos pokemones que no coincidan con el OT del Jugador
+            throw new NotImplementedException();
+        }
+
+        public static Pokemon[] PokemonesPorNivel(byte nivel = 100)
+        {
+            //Recorro todas las cajas y obtengo solamente aquellos pokemones de nivel 100
+            throw new NotImplementedException();
+        }
+
+        public static string PokemonMasCapturado()
+        {
+            byte limiteDex = 151;
+            int[] capturasPorDex = new int[limiteDex];
+            int capturasMax = int.MinValue;
+            int nroDexMax = 1;
+
+            #region Calcular la cantidad de capturas por cada nroDex
+            for (int nroDex = 1; nroDex <= limiteDex; nroDex++)
+            {
+                capturasPorDex[nroDex - 1] = NroCapturasPorDex((byte)nroDex);
+            }
+            #endregion
+
+            #region Obtener el nro de dex con mayor nro de capturas
+            for (int i = 0; i < limiteDex; i++)
+            {
+                if (capturasPorDex[i] > capturasMax)
+                {
+                    capturasMax = capturasPorDex[i];
+                    nroDexMax = i + 1;
+                }
+            }
+            #endregion
+
+            #region Retornar nombre del pokemon con ese nroDex
+            string nombrePokemon = String.Empty;
+            foreach (Box box in PC.Boxes)
+            {
+                foreach (Pokemon pokemon in box.Pokemones)
+                {
+                    if (pokemon.NroDex == nroDexMax)
+                    {
+                        nombrePokemon = pokemon.Nombre;
+                        break;
+                    }
+                }
+            }
+            #endregion
+
+            return nombrePokemon;
+        }
+
+        public static Pokemon PokemonAtrapadoConMasterball()
         {
             foreach (Box box in PC.Boxes)
             {

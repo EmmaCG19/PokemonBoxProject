@@ -15,6 +15,8 @@ namespace Entidades
         static Pokemon()
         {
             limiteAtaques = 4;
+            //nivelMaximo = 100; --Al validar el ingreso del usuario
+            //nroDexLimite = 151; --Al validar el ingreso del usuario
         }
 
         public Pokemon(short nroDex, string nombre) { _nroDex = nroDex; this.Nombre = nombre; }

@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enumerados.cs" />
     <Compile Include="Excepciones\BoxLlenaException.cs" />
+    <Compile Include="Excepciones\MasterBallUnicaException.cs" />
     <Compile Include="Excepciones\NoExistePokemonException.cs" />
     <Compile Include="Excepciones\NroDexSuperadoException.cs" />
     <Compile Include="IPokemon.cs" />
