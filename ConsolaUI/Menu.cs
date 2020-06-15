@@ -12,52 +12,91 @@ namespace ConsolaUI
         static Menu()
         {
             Console.Title = PC.Titulo.ToUpper();
-            _colorMenu = ConsoleColor.Green;
+            _colorMenu = ConsoleColor.DarkGreen;
+            largoFila = 65;
         }
 
-        private static ConsoleColor _colorMenu;
-        public static ConsoleColor ColorMenu
+        //Propiedad largo de fila
+        public static readonly int largoFila;
+        static readonly ConsoleColor _colorMenu;
+
+        /// <summary>
+        /// Cambiar el color del menu al valor establecido inicialmente.
+        /// </summary>
+        public static void ResetearColor()
         {
-            get { return _colorMenu; }
-            set
-            {
-                _colorMenu = value;
-                Console.ForegroundColor = _colorMenu;
-            }
+            Console.ForegroundColor = _colorMenu;
+        }
+
+        /// <summary>
+        /// Cambia el color del tipado del menu
+        /// </summary>
+        /// <param name="color"></param>
+        public static void CambiarColor(ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
         }
 
         public static void HeaderPrincipal()
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            string mensaje = string.Format("Player:{0}{1,30}Time:{2}", PC.Jugador.NombreOT, "|", DateTime.Now.ToLocalTime());
-            Console.WriteLine(mensaje);
-            DibujarLinea(mensaje.Length, '-');
-            Console.WriteLine();
+            Console.Clear();
+            Menu.CambiarColor(ConsoleColor.Yellow);
+            Console.WriteLine("Player: {0,-29}Time: {1}", PC.Jugador.NombreOT, DateTime.Now.ToLocalTime());
+            LineaDeSeparacion(Menu.largoFila, '-');
         }
-
-        public abstract void Iniciar();
 
         public static void BannerMenu(string nombreDelMenu)
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
-            DibujarLinea(65, '*');
-            DibujarLinea(65, '*');
 
-            //La cantidad de asteriscos tiene que ser proporcional a la longitud de la palabra
-            Console.WriteLine("{0}{1}{2}", "***********************", nombreDelMenu, "***********************");
-            DibujarLinea(65, '*');
-            DibujarLinea(65, '*');
-            Console.WriteLine();
-        }
+            int largoFilaPalabra = largoFila - nombreDelMenu.Length;
+            string lineaLadoDer;
+            string lineaLadoIzq;
 
-        public static void DibujarLinea(int longitud, char simbolo)
-        {
-            for (int i = 0; i < longitud; i++)
+            //Corregir cantidas de dots de cada lado 
+            if (largoFilaPalabra % 2 == 0)
             {
-                Console.Write(simbolo);
+                lineaLadoIzq = LineaFormateada(largoFilaPalabra / 2, '*');
+                lineaLadoDer = LineaFormateada(largoFilaPalabra / 2, '*');
             }
+            else
+            {
+                lineaLadoIzq = LineaFormateada(largoFilaPalabra / 2, '*');
+                lineaLadoDer = LineaFormateada((largoFilaPalabra / 2 - 1), '*');
+            }
+
+            LineaDeSeparacion(largoFila, '*');
+            LineaDeSeparacion(largoFila, '*');
+            Console.WriteLine("{0} {1} {2}", lineaLadoIzq, nombreDelMenu.ToUpper(), lineaLadoDer);
+            LineaDeSeparacion(largoFila, '*');
+            LineaDeSeparacion(largoFila, '*');
             Console.WriteLine();
+            Menu.ResetearColor();
         }
 
+        public static void LineaDeSeparacion(int longitud, char simbolo)
+        {
+            Console.WriteLine(LineaFormateada(longitud, simbolo));
+        }
+
+        public static string LineaFormateada(int longitud, char simbolo)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            //Tener en cuenta los espacios
+            for (int i = 0; i < longitud - 2; i++)
+            {
+                sb.Append(simbolo);
+            }
+
+            return sb.ToString();
+        }
+
+        public static string Identar(int espacios)
+        {
+            return "".PadLeft(espacios);
+        }
     }
 }
+
+

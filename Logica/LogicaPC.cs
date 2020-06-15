@@ -14,12 +14,32 @@ namespace Logica
     {
         static LogicaPC()
         {
-            //_limiteDexNacional = 151;
+            limiteDexNacional = 151;
+            _boxSeleccionada = PC.Boxes[0];
         }
 
-        //static readonly byte _limiteDexNacional;
+        public static readonly byte limiteDexNacional;
+        private static Box _boxSeleccionada;
 
         //ACCIONES EN PC
+
+        public static void IniciarPC()
+        {
+            PCDAL.CargarData();
+
+            //Cargo valores a algunas cajas [Son 12 cajas]
+            LogicaBox caja1 = new LogicaBox(PC.Boxes[0]);
+            LogicaBox caja3 = new LogicaBox(PC.Boxes[2]);
+            LogicaBox caja5 = new LogicaBox(PC.Boxes[4]);
+            LogicaBox caja10 = new LogicaBox(PC.Boxes[9]);
+
+            caja1.CargaInicial();
+            caja5.CargaInicial();
+            caja3.CargaInicial();
+            caja10.CargaInicial();
+        }
+
+        public static Box BoxSeleccionada { get { return _boxSeleccionada; } set { _boxSeleccionada = value; } }
 
         /// <summary>
         /// Envia un mail a uno de los NPC agendados como contacto
@@ -57,20 +77,65 @@ namespace Logica
 
         //ESTADISTICAS
 
-        public static bool CapturasteTodosLosLegendarios()
+        public static Pokemon[] LegendariosCapturados()
         {
-            throw new NotImplementedException();
+            int[] nroDexLegendarios = new int[PC.Legendarios.Length];
+            Pokemon[] pokeLegendariosCapturados = new Pokemon[PC.Legendarios.Length];
+
+            #region Obtener el nroDex de los pokemons legendarios
+            for (int i = 0; i < nroDexLegendarios.Length; i++)
+            {
+                nroDexLegendarios[i] = PC.Legendarios[i].NroDex;
+            }
+
+            #endregion
+
+            #region Obtener los pokemones que coincidan con el dex de los legendarios
+            foreach (Box box in PC.Boxes)
+            {
+                for (int i = 0; i < box.Pokemones.Length; i++)
+                {
+                    if (nroDexLegendarios.Contains(box.Pokemones[i].NroDex))
+                    {
+                        pokeLegendariosCapturados[i] = box.Pokemones[i];
+                    }
+                }
+            }
+            #endregion
+
+            return pokeLegendariosCapturados;
         }
 
         public static int CantPokemonesPorTipo(Tipo tipo)
         {
-            throw new NotImplementedException();
+            int pokemonesPorTipo = 0;
 
+            foreach (Box box in PC.Boxes)
+            {
+                foreach (Pokemon pokemon in box.Pokemones)
+                {
+                    if (pokemon.Tipo == tipo)
+                        pokemonesPorTipo++;
+                }
+            }
+
+            return pokemonesPorTipo;
         }
 
         public static int CantPokemonesPorPokebola(Pokebola pokebola)
         {
-            throw new NotImplementedException();
+            int pokemonesPorPokebola = 0;
+
+            foreach (Box box in PC.Boxes)
+            {
+                foreach (Pokemon pokemon in box.Pokemones)
+                {
+                    if (pokemon.AtrapadoCon == pokebola)
+                        pokemonesPorPokebola++;
+                }
+            }
+
+            return pokemonesPorPokebola;
 
         }
 
@@ -96,28 +161,38 @@ namespace Logica
             throw new NotImplementedException();
         }
 
-        public static Pokemon[] PokemonesPorNivel(byte nivel = 100)
+        public static int PokemonesPorNivel(byte nivel)
         {
-            //Recorro todas las cajas y obtengo solamente aquellos pokemones de nivel 100
-            throw new NotImplementedException();
+            //Recorro todas las cajas y obtengo solamente aquellos pokemones de nivel N
+            int pokemonesDeLvl = 0;
+
+            foreach (Box box in PC.Boxes)
+            {
+                foreach (Pokemon pokemon in box.Pokemones)
+                {
+                    if (pokemon.Nivel == nivel)
+                        pokemonesDeLvl++;
+                }
+            }
+
+            return pokemonesDeLvl;
         }
 
         public static string PokemonMasCapturado()
         {
-            byte limiteDex = 151;
-            int[] capturasPorDex = new int[limiteDex];
+            int[] capturasPorDex = new int[limiteDexNacional];
             int capturasMax = int.MinValue;
             int nroDexMax = 1;
 
             #region Calcular la cantidad de capturas por cada nroDex
-            for (int nroDex = 1; nroDex <= limiteDex; nroDex++)
+            for (int nroDex = 1; nroDex <= limiteDexNacional; nroDex++)
             {
                 capturasPorDex[nroDex - 1] = NroCapturasPorDex((byte)nroDex);
             }
             #endregion
 
             #region Obtener el nro de dex con mayor nro de capturas
-            for (int i = 0; i < limiteDex; i++)
+            for (int i = 0; i < limiteDexNacional; i++)
             {
                 if (capturasPorDex[i] > capturasMax)
                 {
@@ -179,4 +254,17 @@ namespace Logica
         }
 
     }
+
+
+    //Helpful code
+
+    //    foreach (Box box in PC.Boxes)
+    //{
+    //    foreach (Pokemon pokemon in box.Pokemones)
+    //    {
+
+    //    }
+
+    //}
+
 }

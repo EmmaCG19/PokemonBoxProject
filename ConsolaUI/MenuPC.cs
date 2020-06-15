@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Entidades;
 using Logica;
@@ -12,42 +13,67 @@ namespace ConsolaUI
 {
     public class MenuPC
     {
-        public void Iniciar()
+        public static void Iniciar()
         {
+            LogicaPC.IniciarPC();
+
             Menu.HeaderPrincipal();
-            Menu.BannerMenu("Menu Principal");
+            Menu.BannerMenu("Menu PC");
+            OpcionesMenu();
 
-            OpcionesMenuPrincipal();
-
-            int opcionSeleccionada = default;
-            while (!int.TryParse(Console.ReadLine(), out opcionSeleccionada))
+            switch (ValidarIngresoUsuario())
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("La opcion ingresada no es válida, vuelva a intentarlo..");
-            }
-
-            Console.ResetColor();
-
-            switch ((OpcionesMenu)opcionSeleccionada)
-            {
-                case OpcionesMenu.Box:
-                    //Submenu BOX
-                    Console.WriteLine("Accedio al box");
+                case OpcionesMenuPC.Boxes:
+                    MenuBoxes.Iniciar();
                     break;
-                case OpcionesMenu.Mail:
-                    Console.WriteLine("Accedio al mail");
+                case OpcionesMenuPC.Mail:
                     break;
-                case OpcionesMenu.Informe:
+                case OpcionesMenuPC.Informe:
                     break;
-                case OpcionesMenu.Salir:
-                    Console.WriteLine("Salio");
+                case OpcionesMenuPC.Salir:
+                    Thread.Sleep(3000);
+                    Environment.Exit(0);
                     break;
                 default:
                     break;
             }
         }
 
-        public static void OpcionesMenuPrincipal()
+        static OpcionesMenuPC ValidarIngresoUsuario()
+        {
+            OpcionesMenuPC opcionSeleccionada;
+
+            Console.Write("Ingrese su opcion: ");
+            while (!EsOpcionValida(Console.ReadKey(), out opcionSeleccionada))
+            {
+                Menu.CambiarColor(ConsoleColor.Red);
+                Console.WriteLine("\nLa opcion ingresada no es válida, vuelva a intentarlo..");
+                Menu.ResetearColor();
+                Console.Write("Ingrese su opcion: ");
+            }
+            Console.WriteLine();
+
+            return opcionSeleccionada;
+        }
+
+        static bool EsOpcionValida(ConsoleKeyInfo teclaIngresada, out OpcionesMenuPC menuSeleccionado)
+        {
+            menuSeleccionado = (OpcionesMenuPC)teclaIngresada.Key;
+
+            //El usuario presiona una tecla y esta tiene que coincidir con las disponibles
+            switch (menuSeleccionado)
+            {
+                case OpcionesMenuPC.Boxes:
+                case OpcionesMenuPC.Mail:
+                case OpcionesMenuPC.Informe:
+                case OpcionesMenuPC.Salir:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        static void OpcionesMenu()
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("1. Ir a la seccion BOX");
@@ -55,15 +81,15 @@ namespace ConsolaUI
             sb.AppendLine("3. Salir");
             sb.AppendLine();
 
-            Console.WriteLine("{0, -20}", sb);
+            Console.WriteLine(sb.ToString());
         }
 
-        enum OpcionesMenu
+        enum OpcionesMenuPC
         {
-            Box = 1,
-            Mail,
-            Informe,
-            Salir
+            Boxes = ConsoleKey.NumPad1,
+            Mail = ConsoleKey.NumPad2,
+            Informe = ConsoleKey.NumPad3,
+            Salir = ConsoleKey.NumPad4
         }
 
     }

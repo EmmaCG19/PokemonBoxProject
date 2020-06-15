@@ -43,10 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tablas\ITabla.cs" />
     <Compile Include="Menu.cs" />
+    <Compile Include="MenuBox.cs" />
+    <Compile Include="MenuBoxes.cs" />
+    <Compile Include="MenuMostrarPokemon.cs" />
     <Compile Include="MenuPC.cs" />
+    <Compile Include="MenuSeleccionBox.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tablas\TablaPokemon.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -60,6 +66,9 @@
       <Project>{287555fb-a0c1-4774-97bc-05d49c87e738}</Project>
       <Name>Logica</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Menues\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

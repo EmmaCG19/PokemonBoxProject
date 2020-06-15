@@ -11,12 +11,9 @@ namespace Entidades
 {
     public class Pokemon
     {
-        //Si todos los pokemones tendrian el mismo entrenador, deberia definirlo en el constructor estatico
         static Pokemon()
         {
             limiteAtaques = 4;
-            //nivelMaximo = 100; --Al validar el ingreso del usuario
-            //nroDexLimite = 151; --Al validar el ingreso del usuario
         }
 
         public Pokemon(short nroDex, string nombre) { _nroDex = nroDex; this.Nombre = nombre; }
@@ -28,7 +25,7 @@ namespace Entidades
             _pokebola = pokebola;
             _entrenador = entrenador;
             _nivel = nivel;
-            _sexo = sexo;
+            _genero = sexo;
 
             this.Nombre = nombre;
             this.Ataques = (ataques.Length <= limiteAtaques)? ataques: new string[limiteAtaques];
@@ -41,7 +38,7 @@ namespace Entidades
         private readonly Entrenador _entrenador;
         private readonly Pokebola _pokebola;
         private readonly short _nroDex;
-        private readonly Genero _sexo;
+        private readonly Genero _genero;
 
         public int Id { get; set; }
         public short NroDex { get { return _nroDex; } }
@@ -50,7 +47,7 @@ namespace Entidades
         public Entrenador Entrenador { get { return _entrenador; } }
         public Tipo Tipo { get { return _tipo; } }
         public Pokebola AtrapadoCon { get { return _pokebola; } }
-        public Genero Sexo { get{ return _sexo; } }
+        public Genero Genero { get{ return _genero; } }
         public bool TieneItem { get; set; }
         public string[] Ataques { get; set; }
     }

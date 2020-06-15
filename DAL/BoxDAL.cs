@@ -71,7 +71,7 @@ namespace Datos
                 throw new NoExistePokemonException();
             else
                 pokeALiberar = null;
-                //Box.Pokemones[idPokemon] = null;
+            //Box.Pokemones[idPokemon] = null;
         }
 
         public void Mover(Pokemon pokemonActual, int espacioEnBox)
@@ -104,9 +104,31 @@ namespace Datos
             return Box.Pokemones[idPokemon];
         }
 
-        public Pokemon[] ObtenerTodos()
+        public Pokemon[] ObtenerTodosLosCapturados()
         {
-            return Box.Pokemones;
+            int espaciosDisponibles;
+            Pokemon[] pokemonesCargados;
+
+            #region Calcular cuantos espacios disponibles hay
+            espaciosDisponibles = 0;
+            foreach (Pokemon pokemon in Box.Pokemones)
+            {
+                if (pokemon is null)
+                    espaciosDisponibles++;
+            }
+            #endregion
+
+            #region Obtener los espacios en box donde haya un pokemon cargado
+            pokemonesCargados = new Pokemon[Box.Pokemones.Length - espaciosDisponibles];
+
+            for (int posBox = 0, posCargados = 0; posBox < Box.Pokemones.Length; posBox++)
+            {
+                if (Box.Pokemones[posBox] != null)
+                    pokemonesCargados[posCargados++] = Box.Pokemones[posBox];
+            }
+            #endregion
+
+            return pokemonesCargados;
         }
 
         public void CambiarItem(Pokemon pokemon, string nombreItem)
@@ -170,6 +192,6 @@ namespace Datos
             return posEncontrada;
         }
 
-        
+
     }
 }

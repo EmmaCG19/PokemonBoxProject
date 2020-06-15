@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Enumerados.cs" />
     <Compile Include="Excepciones\BoxLlenaException.cs" />
+    <Compile Include="Excepciones\LegendarioUnicoException.cs" />
     <Compile Include="Excepciones\MasterBallUnicaException.cs" />
     <Compile Include="Excepciones\NoExistePokemonException.cs" />
     <Compile Include="Excepciones\NroDexSuperadoException.cs" />
@@ -54,6 +55,8 @@
     <Compile Include="Pokemon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Pokemon.cd" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

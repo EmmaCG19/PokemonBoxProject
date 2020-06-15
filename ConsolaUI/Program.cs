@@ -11,9 +11,7 @@ namespace ConsolaUI
     {
         static void Main(string[] args)
         {
-            MenuPC menu = new MenuPC();
-            menu.Iniciar();
-            
+            MenuPC.Iniciar();
             Console.ReadKey();
         }
     }

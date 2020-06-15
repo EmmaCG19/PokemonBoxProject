@@ -10,7 +10,8 @@ namespace Datos
 {
     public static class PCDAL
     {
-        static PCDAL()
+
+        public static void CargarData() 
         {
             PC.Jugador = new Entrenador(10235, "Red");
 
@@ -44,7 +45,7 @@ namespace Datos
             }
         }
 
-        public static void InicializarBox(int posicionBox)
+        private static void InicializarBox(int posicionBox)
         {
             PC.Boxes[posicionBox] = new Box(posicionBox);
         }

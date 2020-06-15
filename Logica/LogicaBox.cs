@@ -19,7 +19,7 @@ namespace Logica
             _dal = new BoxDAL(box);
         }
 
-        private BoxDAL _dal;
+        private readonly BoxDAL _dal;
 
         //FUNCIONALIDADES DE LOS POKEMONES DE LA BOX
 
@@ -47,9 +47,10 @@ namespace Logica
         {
             //No mas de 3 pokemones con el mismo nroDex en la box
             //Solamente un pokemon puede estar atrapado con una masterball
+            //Solamente se puede tener UNA copia de los pokemones legendarios
 
-            int cantMismoDex = 0;
             #region Calculando la cantidad de pokemones con el mismo nroDex
+            int cantMismoDex = 0;
             foreach (Pokemon poke in _dal.Box.Pokemones)
             {
                 if (poke.NroDex == pokemon.NroDex)
@@ -57,19 +58,27 @@ namespace Logica
                     cantMismoDex++;
                 }
             }
+
+            if (cantMismoDex >= 3)
+                throw new NroDexSuperadoException();
             #endregion
 
+            #region Verifica que el pokemon, siendo legendario, no exista ya en la PC
+            foreach (Pokemon legendario in LogicaPC.LegendariosCapturados())
+            {
+                if (pokemon.NroDex == legendario.NroDex)
+                    throw new LegendarioUnicoException();
+            }
+            #endregion
+
+            #region Verificar que el pokemon atrapado con Masterball, no exista
             if (LogicaPC.YaExistePokemonConMasterBall())
             {
                 throw new MasterBallUnicaException();
             }
-            else 
-            {
-                if (cantMismoDex < 3)
-                    _dal.Guardar(pokemon);
-                else
-                    throw new NroDexSuperadoException();
-            }
+            #endregion
+
+            _dal.Guardar(pokemon);
         }
 
         public void Liberar(int idPokemon)
@@ -87,32 +96,32 @@ namespace Logica
             return _dal.ObtenerPokemon(idPokemon);
         }
 
-        public Pokemon[] ObtenerTodos()
+        public Pokemon[] ObtenerTodosLosCapturados()
         {
-            return _dal.ObtenerTodos();
+            return _dal.ObtenerTodosLosCapturados();
         }
 
         public Pokemon[] ObtenerPorTipo(Tipo tipoPoke)
         {
-            return (Pokemon[])this.ObtenerTodos()
+            return (Pokemon[])this.ObtenerTodosLosCapturados()
                                   .Where(p => p.Tipo == tipoPoke);
         }
 
         public Pokemon[] ObtenerPorPokebola(Pokebola pokebola)
         {
-            return (Pokemon[])this.ObtenerTodos()
+            return (Pokemon[])this.ObtenerTodosLosCapturados()
                                   .Where(p => p.AtrapadoCon == pokebola);
         }
 
         public Pokemon[] ObtenerPorRangoNiveles(int nivelMin= 1, int nivelMax= 100)
         {
-            return (Pokemon[])this.ObtenerTodos()
+            return (Pokemon[])this.ObtenerTodosLosCapturados()
                                   .Where(p => p.Nivel >= nivelMin && p.Nivel <= nivelMax);
         }
 
         public Pokemon[] ObtenerHuevos()
         {
-            return (Pokemon[])this.ObtenerTodos()
+            return (Pokemon[])this.ObtenerTodosLosCapturados()
                                   .Where(p => p is Huevo);
         }
 
@@ -133,7 +142,7 @@ namespace Logica
 
         public Pokemon[] ObtenerPorNroPokedex(int nroPokedex)
         {
-            return (Pokemon[])this.ObtenerTodos()
+            return (Pokemon[])this.ObtenerTodosLosCapturados()
                                   .Where(p => p.NroDex == nroPokedex);
         }
 

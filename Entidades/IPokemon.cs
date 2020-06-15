@@ -16,7 +16,7 @@ namespace Entidades
         void CambiarNombre(Pokemon pokemon, string nombre);
         void Mover(Pokemon pokemon, int espacioEnBox);
         Pokemon ObtenerPokemon(int idPokemon);
-        Pokemon[] ObtenerTodos();
+        Pokemon[] ObtenerTodosLosCapturados();
     }
 
    

@@ -16,7 +16,7 @@ namespace Entidades
         public Box(int id, string nombre = "Box")
         {
             this.Id = id;
-            this.Nombre = (nombre.ToLower().Equals("box")) ? String.Format("{0}:{1}", nombre, id) : nombre;
+            this.Nombre = (nombre.ToLower().Equals("box")) ? String.Format("{0} {1}", nombre, id+1) : nombre;
             this.Fondo = ConsoleColor.Green;
             this.Pokemones = new Pokemon[Capacidad];
         }
@@ -42,4 +42,3 @@ namespace Entidades
 
     }
 }
-c
