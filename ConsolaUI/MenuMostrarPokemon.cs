@@ -15,8 +15,6 @@ namespace ConsolaUI
         {
             bool seguirEnMenu = true;
             
-            //El menu se va a volver a cargar siempre que el usuario realice una accion diferente a la de volver al menu anterior
-
             do
             {
                 Menu.HeaderPrincipal();
@@ -35,7 +33,7 @@ namespace ConsolaUI
                         SubMenuMostrarPorTipo.Iniciar();
                         break;
                     case OpcionesMenuMostrar.PorNroDex:
-                        SubMenuMostrarPorNroDex();
+                        MostrarPorNroDex();
                         break;
                     case OpcionesMenuMostrar.PorRangoNivel:
                         break;
@@ -47,8 +45,6 @@ namespace ConsolaUI
                         seguirEnMenu = false;
                         break;
                 }
-
-                Menu.EspereUnaTecla();
 
             } while (seguirEnMenu);
 
@@ -76,6 +72,8 @@ namespace ConsolaUI
         /// </summary>
         static void MostrarTodos()
         {
+            Menu.HeaderPrincipal();
+
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
             Pokemon[] pokemonesCapturados = box.ObtenerTodosLosCapturados();
 
@@ -84,24 +82,24 @@ namespace ConsolaUI
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("No hay pokemones capturados en esta box");
             }
+
+            Menu.EspereUnaTecla();
         }
 
-        static void SubMenuMostrarPorNroDex()
+        static void MostrarPorNroDex()
         {
             Menu.HeaderPrincipal();
-            MostrarPorNroDex(Validacion.ValidarNroDex());
-        }
-
-        static void MostrarPorNroDex(int nroDex)
-        {
+            
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
-            Pokemon[] pokemonConMismaDex = box.ObtenerPorNroPokedex(nroDex);
+            Pokemon[] pokemonConMismaDex = box.ObtenerPorNroPokedex(Validacion.ValidarNroDex());
 
             if (!Mostrar(pokemonConMismaDex))
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("No hay pokemones con esa dex en esta box");
             }
+
+            Menu.EspereUnaTecla();
         }
 
         static void OpcionesMenu()

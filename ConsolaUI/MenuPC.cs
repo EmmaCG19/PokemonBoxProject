@@ -17,26 +17,36 @@ namespace ConsolaUI
         {
             LogicaPC.IniciarPC();
 
-            Menu.HeaderPrincipal();
-            Menu.BannerMenu("Menu PC");
-            OpcionesMenu();
+            bool seguirEnMenu = true;
 
-            switch (ValidarIngresoUsuario())
+            do
             {
-                case OpcionesMenuPC.Boxes:
-                    MenuBoxes.Iniciar();
-                    break;
-                case OpcionesMenuPC.Mail:
-                    break;
-                case OpcionesMenuPC.Informe:
-                    break;
-                case OpcionesMenuPC.Salir:
-                    Thread.Sleep(3000);
-                    Environment.Exit(0);
-                    break;
-                default:
-                    break;
-            }
+                Menu.HeaderPrincipal();
+                Menu.BannerMenu("Menu PC");
+                OpcionesMenu();
+
+                switch (ValidarIngresoUsuario())
+                {
+                    case OpcionesMenuPC.Boxes:
+                        MenuBoxes.Iniciar();
+                        break;
+                    case OpcionesMenuPC.Mail:
+                        break;
+                    case OpcionesMenuPC.Informe:
+                        break;
+                    case OpcionesMenuPC.Salir:
+                        seguirEnMenu = false;
+                        Thread.Sleep(3000);
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        break;
+                }
+
+                //Menu.EspereUnaTecla(); -- Incluirlo en todas las acciones que requieran un retorno al menu
+
+            } while (seguirEnMenu);
+            
         }
 
         static OpcionesMenuPC ValidarIngresoUsuario()
@@ -78,7 +88,8 @@ namespace ConsolaUI
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("1. Ir a la seccion BOX");
             sb.AppendLine("2. Enviar Mail");
-            sb.AppendLine("3. Salir");
+            sb.AppendLine("3. Informes");
+            sb.AppendLine("4. Salir");
             sb.AppendLine();
 
             Console.WriteLine(sb.ToString());

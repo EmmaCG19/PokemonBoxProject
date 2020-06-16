@@ -13,27 +13,34 @@ namespace ConsolaUI
     {
         public static void Iniciar()
         {
-            Menu.HeaderPrincipal();
-            Menu.BannerMenu("Menu Boxes");
-            OpcionesMenu();
+            bool seguirEnMenu = true;
 
-            switch (ValidarIngresoUsuario())
+            do
             {
-                case OpcionesMenuBoxes.Boxes:
-                    MenuSeleccionBox.Iniciar();
-                    break;
-                case OpcionesMenuBoxes.Resetear:
-                    break;
-                case OpcionesMenuBoxes.Intercambiar:
-                    break;
-                case OpcionesMenuBoxes.Agregar:
-                    break;
-                case OpcionesMenuBoxes.Volver:
-                    MenuPC.Iniciar();
-                    break;
-                default:
-                    break;
-            }
+                Menu.HeaderPrincipal();
+                Menu.BannerMenu("Menu Boxes");
+                OpcionesMenu();
+
+                switch (ValidarIngresoUsuario())
+                {
+                    case OpcionesMenuBoxes.Boxes:
+                        MenuSeleccionBox.Iniciar();
+                        break;
+                    case OpcionesMenuBoxes.Resetear:
+                        break;
+                    case OpcionesMenuBoxes.Intercambiar:
+                        break;
+                    case OpcionesMenuBoxes.Agregar:
+                        break;
+                    case OpcionesMenuBoxes.Volver:
+                        seguirEnMenu = false;
+                        break;
+                    default:
+                        break;
+                }
+
+            } while (seguirEnMenu);
+            
         }
 
 

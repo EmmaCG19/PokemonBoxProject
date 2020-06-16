@@ -14,36 +14,43 @@ namespace ConsolaUI
     {
         public static void Iniciar()
         {
-            Menu.HeaderPrincipal();
-            Menu.BannerMenu(LogicaPC.BoxSeleccionada.Nombre);
-            OpcionesMenu();
+            bool seguirEnMenu = true;
 
-            Menu.CambiarColor(ConsoleColor.Green);
-            switch (ValidarIngresoUsuario())
+            do
             {
-                case OpcionesMenuBox.Mostrar:
-                    MenuMostrarPokemon.Iniciar();
-                    break;
-                case OpcionesMenuBox.Buscar:
-                    break;
-                case OpcionesMenuBox.Guardar:
-                    break;
-                case OpcionesMenuBox.Liberar:
-                    break;
-                case OpcionesMenuBox.Modificar:
-                    break;
-                case OpcionesMenuBox.Mover:
-                    break;
-                case OpcionesMenuBox.CambiarNombreBox:
-                    break;
-                case OpcionesMenuBox.CambiarFondoBox:
-                    break;
-                case OpcionesMenuBox.VolverMenuBoxes:
-                    MenuBoxes.Iniciar();
-                    break;
-                default:
-                    break;
-            }
+                Menu.HeaderPrincipal();
+                Menu.BannerMenu(LogicaPC.BoxSeleccionada.Nombre);
+                OpcionesMenu();
+
+                Menu.CambiarColor(ConsoleColor.Green);
+                switch (ValidarIngresoUsuario())
+                {
+                    case OpcionesMenuBox.Mostrar:
+                        MenuMostrarPokemon.Iniciar();
+                        break;
+                    case OpcionesMenuBox.Buscar:
+                        break;
+                    case OpcionesMenuBox.Guardar:
+                        break;
+                    case OpcionesMenuBox.Liberar:
+                        break;
+                    case OpcionesMenuBox.Modificar:
+                        break;
+                    case OpcionesMenuBox.Mover:
+                        break;
+                    case OpcionesMenuBox.CambiarNombreBox:
+                        break;
+                    case OpcionesMenuBox.CambiarFondoBox:
+                        break;
+                    case OpcionesMenuBox.VolverMenuBoxes:
+                        seguirEnMenu = false;
+                        break;
+                    default:
+                        break;
+                }
+
+            } while (seguirEnMenu);
+
         }
 
         

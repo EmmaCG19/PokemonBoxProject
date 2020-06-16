@@ -24,7 +24,7 @@ namespace ConsolaUI
         public static int ValidarNroDex()
         {
             int dexIngresado;
-            Console.Write("Ingrese un nro de dex [1-151]: ");
+            Console.Write($"Ingrese un nro de dex [1-{limitePokedex}]: ");
 
             while (!int.TryParse(Console.ReadLine(), out dexIngresado) || (dexIngresado < 1 || dexIngresado > limitePokedex))
             {

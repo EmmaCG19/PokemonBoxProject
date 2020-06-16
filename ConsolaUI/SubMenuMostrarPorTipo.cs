@@ -11,7 +11,7 @@ namespace ConsolaUI
 {
     public static class SubMenuMostrarPorTipo
     {
-        public static void Iniciar() 
+        public static void Iniciar()
         {
             bool seguirEnMenu = true;
 
@@ -23,50 +23,56 @@ namespace ConsolaUI
 
                 int opcionSeleccionada = ValidarIngresoUsuario();
 
-                if (opcionSeleccionada >= 0 && opcionSeleccionada <= Enum.GetNames(typeof(Tipo)).Length)
+                if (opcionSeleccionada >= 1 && opcionSeleccionada < Enum.GetNames(typeof(Tipo)).Length)
                 {
                     Console.Clear();
                     MostrarPorTipo((Tipo)opcionSeleccionada);
                 }
-                else
+                else /*if (opcionSeleccionada == Enum.GetNames(typeof(Tipo)).Length)*/
                     seguirEnMenu = false;
 
-                Menu.EspereUnaTecla();
 
             } while (seguirEnMenu);
-            
+
         }
 
 
-        static void MostrarPorTipo(Tipo tipo) 
+        static void MostrarPorTipo(Tipo tipo)
         {
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
             Pokemon[] pokemonPorTipo = box.ObtenerPorTipo(tipo);
 
-            if (!MenuMostrarPokemon.Mostrar(pokemonPorTipo)) 
+            if (!MenuMostrarPokemon.Mostrar(pokemonPorTipo))
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine($"No hay pokemones capturados del tipo '{tipo}' en esta box.");
             }
 
+            Menu.EspereUnaTecla();
+
         }
 
-        static void OpcionesMenu() 
+        static void OpcionesMenu()
         {
             int cont = 0;
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine("Seleccione un tipo de pokemon: ");
+            Console.WriteLine("Seleccione un tipo de pokemon: ");
+            Menu.CambiarColor(ConsoleColor.Green);
             foreach (string tipoPokemon in Enum.GetNames(typeof(Tipo)))
             {
-                sb.AppendLine(string.Format("{0}. {1}", cont++, tipoPokemon));
-            }
 
-            Console.WriteLine(sb);
+                if (cont != 0)
+                    Console.WriteLine("{0}{1}. {2}", Menu.Identar(3), cont, tipoPokemon);
+                cont++;
+            }
+            
+            Menu.ResetearColor();
+            Console.WriteLine("{0}. Volver al menú mostrar", cont);
         }
 
-        static int ValidarIngresoUsuario() 
-        {
+        static int ValidarIngresoUsuario()
+        { 
             int opcionSeleccionada;
 
             Console.Write("Ingrese su opcion: ");
@@ -83,11 +89,11 @@ namespace ConsolaUI
 
         }
 
-        static bool EsOpcionValida(string valorIngresado, out int opcionSeleccionada) 
+        static bool EsOpcionValida(string valorIngresado, out int opcionSeleccionada)
         {
             if (int.TryParse(valorIngresado, out opcionSeleccionada))
             {
-                if (opcionSeleccionada >= 0 && opcionSeleccionada <= Enum.GetNames(typeof(Tipo)).Length)
+                if (opcionSeleccionada >= 1 && opcionSeleccionada <= Enum.GetNames(typeof(Tipo)).Length)
                     return true;
             }
 
