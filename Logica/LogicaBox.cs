@@ -103,8 +103,29 @@ namespace Logica
 
         public Pokemon[] ObtenerPorTipo(Tipo tipoPoke)
         {
-            return (Pokemon[])this.ObtenerTodosLosCapturados()
-                                  .Where(p => p.Tipo == tipoPoke);
+            Pokemon[] todos = this.ObtenerTodosLosCapturados();
+
+            #region Obtengo la cantidad de pokemones de ese tipo
+            int cantPokemon = 0;
+            foreach (Pokemon pokemon in todos)
+            {
+                if (pokemon.Tipo == tipoPoke)
+                    cantPokemon++;
+            }
+
+            #endregion
+
+            #region Guardo los pokemones de ese tipo en el nuevo array
+            Pokemon[] pokemonesPorTipo = new Pokemon[cantPokemon];
+            for (int i = 0, j = 0; i < todos.Length; i++)
+            {
+                if (todos[i].Tipo == tipoPoke)
+                    pokemonesPorTipo[j++] = todos[i];
+            }
+            #endregion
+
+            return pokemonesPorTipo;
+
         }
 
         public Pokemon[] ObtenerPorPokebola(Pokebola pokebola)
@@ -118,7 +139,7 @@ namespace Logica
             return (Pokemon[])this.ObtenerTodosLosCapturados()
                                   .Where(p => p.Nivel >= nivelMin && p.Nivel <= nivelMax);
         }
-
+         
         public Pokemon[] ObtenerHuevos()
         {
             return (Pokemon[])this.ObtenerTodosLosCapturados()
@@ -142,8 +163,28 @@ namespace Logica
 
         public Pokemon[] ObtenerPorNroPokedex(int nroPokedex)
         {
-            return (Pokemon[])this.ObtenerTodosLosCapturados()
-                                  .Where(p => p.NroDex == nroPokedex);
+            Pokemon[] todos = this.ObtenerTodosLosCapturados();
+
+            #region Obtengo la cantidad de pokemones de ese nroDex
+            int cantPokemon = 0;
+            foreach (Pokemon pokemon in todos)
+            {
+                if (pokemon.NroDex == nroPokedex)
+                    cantPokemon++;
+            }
+
+            #endregion
+
+            #region Guardo los pokemones de ese nroDex en el nuevo array
+            Pokemon[] pokemonesMismoDex = new Pokemon[cantPokemon];
+            for (int i = 0, j = 0; i < todos.Length; i++)
+            {
+                if (todos[i].NroDex == nroPokedex)
+                    pokemonesMismoDex[j++] = todos[i];
+            }
+            #endregion
+
+            return pokemonesMismoDex;
         }
 
         //FUNCIONALIDADES DE LA BOX

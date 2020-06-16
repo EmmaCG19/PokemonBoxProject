@@ -13,48 +13,95 @@ namespace ConsolaUI
     {
         public static void Iniciar()
         {
-            Menu.HeaderPrincipal();
-            Menu.BannerMenu("Mostrar Pokemones");
-            Menu.CambiarColor(LogicaPC.BoxSeleccionada.Fondo);
+            bool seguirEnMenu = true;
+            
+            //El menu se va a volver a cargar siempre que el usuario realice una accion diferente a la de volver al menu anterior
 
-            OpcionesMenu();
-
-            switch (ValidarIngresoUsuario())
+            do
             {
-                case OpcionesMenuMostrar.Todos:
-                    MostrarTodos();
-                    break;
-                case OpcionesMenuMostrar.PorTipo:
-                    break;
-                case OpcionesMenuMostrar.PorNroDex:
-                    break;
-                case OpcionesMenuMostrar.PorRangoNivel:
-                    break;
-                case OpcionesMenuMostrar.PorPokebola:
-                    break;
-                case OpcionesMenuMostrar.Huevos:
-                    break;
-                default:
-                    break;
-            }
+                Menu.HeaderPrincipal();
+                Menu.BannerMenu("Mostrar Pokemones");
+                Menu.CambiarColor(LogicaPC.BoxSeleccionada.Fondo);
+
+                OpcionesMenu();
+                
+                switch (ValidarIngresoUsuario())
+                {
+                    
+                    case OpcionesMenuMostrar.Todos:
+                        MostrarTodos();
+                        break;
+                    case OpcionesMenuMostrar.PorTipo:
+                        SubMenuMostrarPorTipo.Iniciar();
+                        break;
+                    case OpcionesMenuMostrar.PorNroDex:
+                        SubMenuMostrarPorNroDex();
+                        break;
+                    case OpcionesMenuMostrar.PorRangoNivel:
+                        break;
+                    case OpcionesMenuMostrar.PorPokebola:
+                        break;
+                    case OpcionesMenuMostrar.Huevos:
+                        break;
+                    case OpcionesMenuMostrar.MenuBox:
+                        seguirEnMenu = false;
+                        break;
+                }
+
+                Menu.EspereUnaTecla();
+
+            } while (seguirEnMenu);
+
         }
 
+        /// <summary>
+        /// Muestra en una tabla los pokemones pasados por parámetro.
+        /// </summary>
+        /// <param name="pokemonesAMostrar"></param>
+        /// <returns>Un indicador si se pudo o no mostrar la información</returns>
+        public static bool Mostrar(Pokemon[] pokemonesAMostrar)
+        {
+            //Menu.HeaderPrincipal();
+            if (pokemonesAMostrar.Length != 0)
+            {
+                TablaPokemon.GenerarTabla(pokemonesAMostrar);
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Muestra todos los pokemones capturados. Se informa si no hay capturados.
+        /// </summary>
         static void MostrarTodos()
         {
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
             Pokemon[] pokemonesCapturados = box.ObtenerTodosLosCapturados();
 
-            Menu.HeaderPrincipal();
-            if (pokemonesCapturados.Length != 0)
-            {
-                TablaPokemon.GenerarTabla(pokemonesCapturados);
-            }
-            else
+            if (!Mostrar(pokemonesCapturados))
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("No hay pokemones capturados en esta box");
             }
+        }
 
+        static void SubMenuMostrarPorNroDex()
+        {
+            Menu.HeaderPrincipal();
+            MostrarPorNroDex(Validacion.ValidarNroDex());
+        }
+
+        static void MostrarPorNroDex(int nroDex)
+        {
+            LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
+            Pokemon[] pokemonConMismaDex = box.ObtenerPorNroPokedex(nroDex);
+
+            if (!Mostrar(pokemonConMismaDex))
+            {
+                Menu.CambiarColor(ConsoleColor.Red);
+                Console.WriteLine("No hay pokemones con esa dex en esta box");
+            }
         }
 
         static void OpcionesMenu()
@@ -66,6 +113,7 @@ namespace ConsolaUI
             sb.AppendLine("4. Mostrar por rango de nivel");
             sb.AppendLine("5. Mostrar por pokebola");
             sb.AppendLine("6. Mostrar huevos");
+            sb.AppendLine($"7. Volver al menu de {LogicaPC.BoxSeleccionada.Nombre.ToLower()}");
             sb.AppendLine();
 
             Console.WriteLine(sb);
@@ -83,10 +131,9 @@ namespace ConsolaUI
                 Menu.ResetearColor();
                 Console.Write("Ingrese su opcion: ");
             }
-            Console.WriteLine();
-
+            Console.Clear();
+            
             return opcionSeleccionada;
-
         }
 
         static bool EsOpcionValida(ConsoleKeyInfo teclaIngresada, out OpcionesMenuMostrar menuSeleccionado)
@@ -102,6 +149,7 @@ namespace ConsolaUI
                 case OpcionesMenuMostrar.PorRangoNivel:
                 case OpcionesMenuMostrar.PorPokebola:
                 case OpcionesMenuMostrar.Huevos:
+                case OpcionesMenuMostrar.MenuBox:
                     return true;
                 default:
                     return false;
@@ -116,8 +164,8 @@ namespace ConsolaUI
             PorNroDex = ConsoleKey.NumPad3,
             PorRangoNivel = ConsoleKey.NumPad4,
             PorPokebola = ConsoleKey.NumPad5,
-            Huevos = ConsoleKey.NumPad6
-            //Ordenados por nivel
+            Huevos = ConsoleKey.NumPad6,
+            MenuBox = ConsoleKey.NumPad7
         }
 
     }

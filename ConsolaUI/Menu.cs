@@ -96,6 +96,14 @@ namespace ConsolaUI
         {
             return "".PadLeft(espacios);
         }
+
+        public static void EspereUnaTecla() 
+        {
+            CambiarColor(ConsoleColor.Cyan);
+            Console.Write("Presione una tecla para continuar...");
+            Console.ReadLine();
+            Console.Clear();
+        }
     }
 }
 
