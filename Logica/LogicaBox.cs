@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Datos;
@@ -93,12 +94,43 @@ namespace Logica
 
         public Pokemon ObtenerPokemon(int idPokemon)
         {
-            return _dal.ObtenerPokemon(idPokemon);
+            Pokemon pokeEnPosicion = _dal.ObtenerPokemon(idPokemon);
+
+            if (pokeEnPosicion is null)
+                throw new NoExistePokemonException();
+
+            return pokeEnPosicion;
         }
 
         public Pokemon[] ObtenerTodosLosCapturados()
         {
             return _dal.ObtenerTodosLosCapturados();
+        }
+
+        public Pokemon[] ObtenerPorNroPokedex(int nroPokedex)
+        {
+            Pokemon[] todos = this.ObtenerTodosLosCapturados();
+
+            #region Obtengo la cantidad de pokemones de ese nroDex
+            int cantPokemon = 0;
+            foreach (Pokemon pokemon in todos)
+            {
+                if (pokemon.NroDex == nroPokedex)
+                    cantPokemon++;
+            }
+
+            #endregion
+
+            #region Guardo los pokemones de ese nroDex en el nuevo array
+            Pokemon[] pokemonesMismoDex = new Pokemon[cantPokemon];
+            for (int i = 0, j = 0; i < todos.Length; i++)
+            {
+                if (todos[i].NroDex == nroPokedex)
+                    pokemonesMismoDex[j++] = todos[i];
+            }
+            #endregion
+
+            return pokemonesMismoDex;
         }
 
         public Pokemon[] ObtenerPorTipo(Tipo tipoPoke)
@@ -130,20 +162,80 @@ namespace Logica
 
         public Pokemon[] ObtenerPorPokebola(Pokebola pokebola)
         {
-            return (Pokemon[])this.ObtenerTodosLosCapturados()
-                                  .Where(p => p.AtrapadoCon == pokebola);
+            Pokemon[] todos = this.ObtenerTodosLosCapturados();
+
+            #region Obtengo la cantidad de pokemones capturados con esa pokebola
+            int cantPokemon = 0;
+            foreach (Pokemon pokemon in todos)
+            {
+                if (pokemon.AtrapadoCon == pokebola)
+                    cantPokemon++;
+            }
+            #endregion
+
+            #region Guardo los pokemones capturados con esa pokebola en el nuevo array
+            Pokemon[] pokemonesPorPokebola = new Pokemon[cantPokemon];
+            for (int i = 0, j = 0; i < todos.Length; i++)
+            {
+                if (todos[i].AtrapadoCon == pokebola)
+                    pokemonesPorPokebola[j++] = todos[i];
+            }
+            #endregion
+
+            return pokemonesPorPokebola;
         }
 
-        public Pokemon[] ObtenerPorRangoNiveles(int nivelMin= 1, int nivelMax= 100)
+        public Pokemon[] ObtenerPorRangoNivel(int nivelMin= 1, int nivelMax= 100)
         {
-            return (Pokemon[])this.ObtenerTodosLosCapturados()
-                                  .Where(p => p.Nivel >= nivelMin && p.Nivel <= nivelMax);
+            Pokemon[] todos = this.ObtenerTodosLosCapturados();
+
+            #region Obtengo la cantidad de pokemones de ese tipo
+            int cantPokemon = 0;
+            foreach (Pokemon pokemon in todos)
+            {
+                if (pokemon.Nivel >= nivelMin && pokemon.Nivel <= nivelMax)
+                    cantPokemon++;
+            }
+
+            #endregion
+
+            #region Guardo los pokemones con ese rango en el nuevo array
+            Pokemon[] pokemonPorRangoNivel = new Pokemon[cantPokemon];
+            for (int i = 0, j = 0; i < todos.Length; i++)
+            {
+                if (todos[i].Nivel >= nivelMin && todos[i].Nivel <= nivelMax)
+                    pokemonPorRangoNivel[j++] = todos[i];
+            }
+            #endregion
+
+            return pokemonPorRangoNivel;
+
         }
          
         public Pokemon[] ObtenerHuevos()
         {
-            return (Pokemon[])this.ObtenerTodosLosCapturados()
-                                  .Where(p => p is Huevo);
+            Pokemon[] todos = this.ObtenerTodosLosCapturados();
+
+            #region Obtener la cantidad de huevos existentes en la box
+            int cantHuevos = 0;
+            foreach (Pokemon pokemon in todos)
+            {
+                if (pokemon is Huevo)
+                    cantHuevos++;
+            }
+            #endregion
+
+            #region Guardar los huevos en el nuevo array
+            Pokemon[] huevos = new Pokemon[cantHuevos];
+
+            for (int i = 0, j = 0; i < todos.Length; i++)
+            {
+                if (todos[i] is Huevo)
+                    huevos[j++] = todos[i];
+            }
+            #endregion
+
+            return huevos;
         }
 
         public void OrdenarPorNivel(ModoOrdenamiento orden) 
@@ -151,6 +243,7 @@ namespace Logica
             switch (orden) 
             {
                 case ModoOrdenamiento.ASC:
+                    //Metodo Burbuja or Sort method
                     _dal.Box.Pokemones.OrderBy(p => p.Nivel);
                     break;
                 case ModoOrdenamiento.DESC:
@@ -161,34 +254,10 @@ namespace Logica
             }
         }
 
-        public Pokemon[] ObtenerPorNroPokedex(int nroPokedex)
-        {
-            Pokemon[] todos = this.ObtenerTodosLosCapturados();
+        
 
-            #region Obtengo la cantidad de pokemones de ese nroDex
-            int cantPokemon = 0;
-            foreach (Pokemon pokemon in todos)
-            {
-                if (pokemon.NroDex == nroPokedex)
-                    cantPokemon++;
-            }
-
-            #endregion
-
-            #region Guardo los pokemones de ese nroDex en el nuevo array
-            Pokemon[] pokemonesMismoDex = new Pokemon[cantPokemon];
-            for (int i = 0, j = 0; i < todos.Length; i++)
-            {
-                if (todos[i].NroDex == nroPokedex)
-                    pokemonesMismoDex[j++] = todos[i];
-            }
-            #endregion
-
-            return pokemonesMismoDex;
-        }
 
         //FUNCIONALIDADES DE LA BOX
-
         public void CambiarFondo(ConsoleColor color)
         {
             _dal.Box.Fondo = color;

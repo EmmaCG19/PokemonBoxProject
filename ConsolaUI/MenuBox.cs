@@ -29,6 +29,8 @@ namespace ConsolaUI
                         MenuMostrarPokemon.Iniciar();
                         break;
                     case OpcionesMenuBox.Buscar:
+                        //Buscar el pokemon con el id ingresado por el usuario.
+                        BuscarPokemon();
                         break;
                     case OpcionesMenuBox.Guardar:
                         break;
@@ -53,7 +55,28 @@ namespace ConsolaUI
 
         }
 
-        
+        static void BuscarPokemon()
+        {
+            //El usuario va a ingresar el id
+            //Ese id se va a validar. Tener en cuenta que el usuario va a ingresar valores de 1-20, y las posiciones en el array son de 0-19
+            //Con un id valido, se va a buscar en la posicion y ver si hay cargado un pokemon.
+            LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
+            
+            int pokemonId = Validacion.ValidarId();
+
+            try
+            {
+                Pokemon pokemonEncontrado = box.ObtenerPokemon(pokemonId);
+
+            }
+            catch (NoExistePokemonException e)
+            {
+                Menu.CambiarColor(ConsoleColor.Red);
+                Console.WriteLine(e.InnerException.InnerException.Message);
+            }
+
+            
+        }
 
         static OpcionesMenuBox ValidarIngresoUsuario() 
         {

@@ -43,6 +43,7 @@ namespace ConsolaUI
             Menu.CambiarColor(ConsoleColor.Yellow);
             Console.WriteLine("Player: {0,-29}Time: {1}", PC.Jugador.NombreOT, DateTime.Now.ToLocalTime());
             LineaDeSeparacion(Menu.largoFila, '-');
+            ResetearColor();
         }
 
         public static void BannerMenu(string nombreDelMenu)
@@ -99,6 +100,7 @@ namespace ConsolaUI
 
         public static void EspereUnaTecla() 
         {
+            Console.WriteLine();
             CambiarColor(ConsoleColor.Cyan);
             Console.Write("Presione una tecla para continuar...");
             Console.ReadLine();

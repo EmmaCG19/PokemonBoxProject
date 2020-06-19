@@ -64,7 +64,8 @@ namespace ConsolaUI.Tablas
 
         public static void GenerarTabla(Pokemon[] pokemones)
         {
-            Console.WriteLine(GenerarEncabezado());
+            Menu.CambiarColor(ConsoleColor.Yellow);
+            Console.WriteLine("\n{0}", GenerarEncabezado());
             Console.WriteLine(GenerarLineaSeparacion());
             foreach (Pokemon pokemon in pokemones)
             {
@@ -76,6 +77,8 @@ namespace ConsolaUI.Tablas
 
         public static void GenerarTabla(Pokemon pokemon)
         {
+            Menu.CambiarColor(ConsoleColor.Yellow);
+            Console.WriteLine("\n{0}", GenerarEncabezado());
             Console.WriteLine(GenerarEncabezado());
             Console.WriteLine(GenerarLineaSeparacion());
             Console.WriteLine(GenerarFila(pokemon));

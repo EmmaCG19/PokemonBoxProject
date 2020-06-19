@@ -5,6 +5,11 @@ namespace Entidades
 {
     public class NoExistePokemonException : Exception
     {
-        public NoExistePokemonException() { }
-    }
+        private readonly string _mensajeError = "No existe un pokemon con ese Id en la box";
+
+        public NoExistePokemonException():base() 
+        {
+            
+        }
+    }    
 }

@@ -9,7 +9,7 @@ using ConsolaUI.Tablas;
 
 namespace ConsolaUI
 {
-    public static class SubMenuMostrarPorTipo
+    class SubMenuMostrarPorPokebola
     {
         public static void Iniciar()
         {
@@ -18,17 +18,17 @@ namespace ConsolaUI
             do
             {
                 Menu.HeaderPrincipal();
-                Menu.BannerMenu("Tipo de Pokemon");
+                Menu.BannerMenu("Tipo de Pokebola");
                 OpcionesMenu();
 
                 int opcionSeleccionada = ValidarIngresoUsuario();
 
-                if (opcionSeleccionada >= 1 && opcionSeleccionada < Enum.GetNames(typeof(Tipo)).Length)
+                if (opcionSeleccionada >= 1 && opcionSeleccionada < Enum.GetNames(typeof(Pokebola)).Length)
                 {
                     Console.Clear();
-                    MostrarPorTipo((Tipo)opcionSeleccionada);
+                    MostrarPorPokebola((Pokebola)opcionSeleccionada);
                 }
-                else 
+                else
                     seguirEnMenu = false;
 
 
@@ -37,42 +37,39 @@ namespace ConsolaUI
         }
 
 
-        static void MostrarPorTipo(Tipo tipo)
+        static void MostrarPorPokebola(Pokebola pokebola)
         {
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
-            Pokemon[] pokemonPorTipo = box.ObtenerPorTipo(tipo);
+            Pokemon[] pokemonPorPokebola = box.ObtenerPorPokebola(pokebola);
 
-            if (!MenuMostrarPokemon.Mostrar(pokemonPorTipo))
+            if (!MenuMostrarPokemon.Mostrar(pokemonPorPokebola))
             {
                 Menu.CambiarColor(ConsoleColor.Red);
-                Console.WriteLine($"No hay pokemones capturados del tipo '{tipo}' en esta box.");
+                Console.WriteLine($"No hay pokemones capturados con la '{pokebola.ToString().ToLower()}' en esta box.");
             }
 
             Menu.EspereUnaTecla();
-
         }
 
         static void OpcionesMenu()
         {
             int cont = 0;
-            StringBuilder sb = new StringBuilder();
 
-            Console.WriteLine("Seleccione un tipo de pokemon: ");
+            Console.WriteLine("Seleccione un tipo de pokebola: ");
             Menu.CambiarColor(ConsoleColor.Green);
-            foreach (string tipoPokemon in Enum.GetNames(typeof(Tipo)))
+            foreach (string tipoPokebola in Enum.GetNames(typeof(Pokebola)))
             {
-
                 if (cont != 0)
-                    Console.WriteLine("{0}{1}. {2}", Menu.Identar(3), cont, tipoPokemon);
+                    Console.WriteLine("{0}{1}. {2}", Menu.Identar(3), cont, tipoPokebola);
                 cont++;
             }
-            
+
             Menu.ResetearColor();
             Console.WriteLine("{0}. Volver al menú mostrar", cont);
         }
 
         static int ValidarIngresoUsuario()
-        { 
+        {
             int opcionSeleccionada;
 
             Console.Write("Ingrese su opcion: ");
@@ -93,12 +90,13 @@ namespace ConsolaUI
         {
             if (int.TryParse(valorIngresado, out opcionSeleccionada))
             {
-                if (opcionSeleccionada >= 1 && opcionSeleccionada <= Enum.GetNames(typeof(Tipo)).Length)
+                if (opcionSeleccionada >= 1 && opcionSeleccionada <= Enum.GetNames(typeof(Pokebola)).Length)
                     return true;
             }
 
             return false;
         }
+
 
     }
 }

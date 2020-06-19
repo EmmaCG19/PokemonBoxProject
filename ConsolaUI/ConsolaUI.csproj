@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SubMenuMostrarPorPokebola.cs" />
     <Compile Include="SubMenuMostrarPorTipo.cs" />
     <Compile Include="Tablas\ITabla.cs" />
     <Compile Include="Menu.cs" />
