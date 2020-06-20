@@ -11,30 +11,36 @@ namespace ConsolaUI
 {
     public static class MenuSeleccionBox
     {
-        public static void Iniciar() 
+        public static void Iniciar()
         {
-            //Mostramos menu
-            Menu.HeaderPrincipal();
-            Menu.BannerMenu("Menu Boxes");
-            OpcionesMenu();
+            bool seguirEnMenu = true;
 
-            int opcionSeleccionada = ValidarIngresoUsuario();
-
-            if (opcionSeleccionada >= 1 && opcionSeleccionada < PC.Boxes.Length)
+            do
             {
-                LogicaPC.BoxSeleccionada = PC.Boxes[opcionSeleccionada - 1];
-                Menu.CambiarColor(ConsoleColor.Green);
-                PantallaCargaABox();
-   
-            }
-            else if(opcionSeleccionada == 0)
-            { 
-                Console.WriteLine("Volviendo al menu boxes...");
-                MenuBoxes.Iniciar();
-            }
+                Menu.HeaderPrincipal();
+                Menu.BannerMenu("Menu Seleccion Boxes");
+                OpcionesMenu();
+
+                int opcionSeleccionada = ValidarIngresoUsuario();
+
+                if (opcionSeleccionada >= 1 && opcionSeleccionada < PC.Boxes.Length)
+                {
+                    LogicaPC.BoxSeleccionada = PC.Boxes[opcionSeleccionada - 1];
+                    Menu.CambiarColor(ConsoleColor.Green);
+                    PantallaCargaABox();
+
+                }
+                else if (opcionSeleccionada == 0)
+                {
+                    seguirEnMenu = false;
+                    Console.WriteLine("Volviendo al menu de seleccion...");
+                }
+
+            } while (seguirEnMenu);
+
         }
 
-        static int ValidarIngresoUsuario() 
+        static int ValidarIngresoUsuario()
         {
             int opcionSeleccionada;
             Console.Write("Ingrese el nro de box: ");
@@ -50,9 +56,9 @@ namespace ConsolaUI
             return opcionSeleccionada;
         }
 
-        static bool EsOpcionValida(string valorIngresado, out int opcionSeleccionada) 
+        static bool EsOpcionValida(string valorIngresado, out int opcionSeleccionada)
         {
-            if (int.TryParse(valorIngresado, out opcionSeleccionada)) 
+            if (int.TryParse(valorIngresado, out opcionSeleccionada))
             {
                 if (opcionSeleccionada >= 0 && opcionSeleccionada < PC.Boxes.Length)
                     return true;
@@ -63,21 +69,19 @@ namespace ConsolaUI
 
         static void OpcionesMenu()
         {
-            Console.WriteLine("A) Selecciona la box a la que desea ingresar: ");
-            
+            Console.WriteLine("{0}Selecciona la box a la que desea ingresar: ", Menu.Identar(3));
             #region Generando un submenu dinamico con la lista de cajas y su disponibilidad
             int indice = 0;
             foreach (Box box in PC.Boxes)
             {
                 Menu.CambiarColor(ConsoleColor.White);
                 string opcionBox = $"{++indice}. {box.Nombre}";
-                Console.Write("{0}{1} ", Menu.Identar(3), opcionBox);
+                Console.Write("{0}{1} ", Menu.Identar(4), opcionBox);
                 ContadorBox(box);
             }
             Console.WriteLine();
             #endregion
-
-            Console.WriteLine("B) Ingrese 0 para volver al menu anterior...\n");
+            Console.WriteLine("0. Volver al menu de seleccion\n");
 
         }
 

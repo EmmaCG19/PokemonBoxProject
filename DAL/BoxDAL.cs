@@ -70,8 +70,7 @@ namespace Datos
             if (pokeALiberar is null)
                 throw new NoExistePokemonException();
             else
-                pokeALiberar = null;
-            //Box.Pokemones[idPokemon] = null;
+                Box.Pokemones[idPokemon] = null;
         }
 
         public void Mover(Pokemon pokemonActual, int espacioEnBox)

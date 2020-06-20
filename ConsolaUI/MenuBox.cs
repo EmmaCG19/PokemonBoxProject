@@ -37,6 +37,7 @@ namespace ConsolaUI
                         GuardarPokemon();
                         break;
                     case OpcionesMenuBox.Liberar:
+                        LiberarPokemon();
                         break;
                     case OpcionesMenuBox.Modificar:
                         break;
@@ -82,6 +83,9 @@ namespace ConsolaUI
             Menu.EspereUnaTecla();
         }
 
+        /// <summary>
+        /// Guarda el pokemon en un espacio de la box actual. En caso de no lograrse el guardado, muestra el mensaje de error.
+        ///</summary>
         static void GuardarPokemon()
         {
             Menu.HeaderPrincipal();
@@ -134,26 +138,54 @@ namespace ConsolaUI
             {
                 //Cargar en otra box disponible??
                 Menu.CambiarColor(ConsoleColor.Red);
-                Console.WriteLine("{0} {1}",mensajeError, e.Message.ToLower());
+                Console.WriteLine("{0} {1}", mensajeError, e.Message.ToLower());
             }
             catch (MasterBallUnicaException e)
             {
                 Menu.CambiarColor(ConsoleColor.Red);
-                Console.WriteLine("{0} {1}",mensajeError, e.Message.ToLower());
+                Console.WriteLine("{0} {1}", mensajeError, e.Message.ToLower());
             }
             catch (LegendarioUnicoException e)
             {
                 Menu.CambiarColor(ConsoleColor.Red);
-                Console.WriteLine("{0} {1}",mensajeError, e.Message.ToLower());
+                Console.WriteLine("{0} {1}", mensajeError, e.Message.ToLower());
             }
             catch (NroDexSuperadoException e)
             {
                 Menu.CambiarColor(ConsoleColor.Red);
-                Console.WriteLine("{0} {1}",mensajeError, e.Message.ToLower());
+                Console.WriteLine("{0} {1}", mensajeError, e.Message.ToLower());
             }
 
             Menu.ResetearColor();
             Menu.EspereUnaTecla();
+        }
+
+        static void LiberarPokemon()
+        {
+            Menu.HeaderPrincipal();
+
+            LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
+            int idPokemon = Validacion.ValidarId();
+
+            try
+            {
+                TablaPokemon.GenerarTabla(box.ObtenerPokemon(idPokemon));
+
+                //Bonus: Agregar Confirmacion
+                box.Liberar(idPokemon);
+                Menu.CambiarColor(ConsoleColor.Yellow);
+                Console.WriteLine("\nEl pokemon ha sido liberado");
+
+            }
+            catch (NoExistePokemonException e)
+            {
+                Menu.CambiarColor(ConsoleColor.Red);
+                Console.WriteLine(e.Message);
+            }
+
+            Menu.ResetearColor();
+            Menu.EspereUnaTecla();
+
         }
 
         static Pokemon CargaDatosPokemon()
