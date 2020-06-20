@@ -28,15 +28,15 @@ namespace Datos
             Pokemon[] pokemonesHardcodeados = new Pokemon[]
             {
                 new Pokemon(120, "Staryu", 25, Tipo.Agua, Genero.Femenino, PC.Jugador, Pokebola.Greatball, new string[] { "burbuja", "gruñido", "placaje" }, true),
-                new Pokemon(001, "Bulbasaur", 5, Tipo.Planta, Genero.Masculino, PC.Jugador, Pokebola.Pokeball, new string[] { "placaje", "gruñido" }, false),
+                new Pokemon(1, "Bulbasaur", 5, Tipo.Planta, Genero.Masculino, PC.Jugador, Pokebola.Pokeball, new string[] { "placaje", "gruñido" }, false),
                 new Huevo(300),
-                new Pokemon(041, "Zubat", 17, Tipo.Veneno, Genero.Femenino, PC.Jugador, Pokebola.Pokeball, new string[] { "burbuja", "golpe", "", "" }, true),
-                new Pokemon(041, "Zubat", 17, Tipo.Veneno, Genero.Femenino, PC.Jugador, Pokebola.Pokeball, new string[] { "burbuja", "golpe", "", "" }, true),
+                new Pokemon(41, "Zubat", 17, Tipo.Veneno, Genero.Femenino, PC.Jugador, Pokebola.Pokeball, new string[] { "absorber", "rayo confusion"}, true),
+                new Pokemon(41, "Zubat", 18, Tipo.Veneno, Genero.Masculino, PC.Jugador, Pokebola.Pokeball, new string[] {"absorber", "rayo confusion", "veneno"}, false),
                 new Huevo(1000),
-                new Pokemon(150, "Mewtwo", 70, Tipo.Psiquico, Genero.Masculino, PC.Jugador, Pokebola.Masterball, new string[] { "telekinesis", "", "", "" }, true),
+                new Pokemon(150, "Mewtwo", 70, Tipo.Psiquico, Genero.Masculino, PC.Jugador, Pokebola.Masterball, new string[] { "telekinesis"}, true),
                 new Huevo(500),
-                new Pokemon(016, "Charizard", 38, Tipo.Fuego, Genero.Femenino, PC.Jugador, Pokebola.Pokeball, new string[] { "llamarada", "volar", "", "" }, true),
-                new Pokemon(020, "Pikachu", 10, Tipo.Electrico, Genero.Femenino, new Entrenador(35268, "NoobSaibot"), Pokebola.Safariball, new string[] { "placaje", "impactrueno", "agilidad", "" }, true)
+                new Pokemon(16, "Charizard", 38, Tipo.Fuego, Genero.Femenino, PC.Jugador, Pokebola.Pokeball, new string[] { "llamarada", "volar"}, true),
+                new Pokemon(20, "Pikachu", 10, Tipo.Electrico, Genero.Femenino, new Entrenador(35268, "NoobSaibot"), Pokebola.Safariball, new string[] { "placaje", "impactrueno", "agilidad"}, true)
              };
             #endregion
 

@@ -90,6 +90,7 @@ namespace ConsolaUI
         {
             if (int.TryParse(valorIngresado, out opcionSeleccionada))
             {
+                //Tengo en cuenta la opcion extra para volver al menu anterior
                 if (opcionSeleccionada >= 1 && opcionSeleccionada <= Enum.GetNames(typeof(Pokebola)).Length)
                     return true;
             }

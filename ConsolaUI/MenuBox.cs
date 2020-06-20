@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logica;
+using ConsolaUI.Tablas;
+using Entidades.Excepciones;
 
 
 //Falta limpiar la pantalla
@@ -29,10 +31,10 @@ namespace ConsolaUI
                         MenuMostrarPokemon.Iniciar();
                         break;
                     case OpcionesMenuBox.Buscar:
-                        //Buscar el pokemon con el id ingresado por el usuario.
                         BuscarPokemon();
                         break;
                     case OpcionesMenuBox.Guardar:
+                        GuardarPokemon();
                         break;
                     case OpcionesMenuBox.Liberar:
                         break;
@@ -55,27 +57,131 @@ namespace ConsolaUI
 
         }
 
+        /// <summary>
+        /// Busca un pokemon en la box basandose en su Id y muestra el resultado
+        /// </summary>
         static void BuscarPokemon()
         {
-            //El usuario va a ingresar el id
-            //Ese id se va a validar. Tener en cuenta que el usuario va a ingresar valores de 1-20, y las posiciones en el array son de 0-19
-            //Con un id valido, se va a buscar en la posicion y ver si hay cargado un pokemon.
+            Menu.HeaderPrincipal();
+
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
-            
             int pokemonId = Validacion.ValidarId();
 
             try
             {
                 Pokemon pokemonEncontrado = box.ObtenerPokemon(pokemonId);
+                TablaPokemon.GenerarTabla(pokemonEncontrado);
 
             }
             catch (NoExistePokemonException e)
             {
                 Menu.CambiarColor(ConsoleColor.Red);
-                Console.WriteLine(e.InnerException.InnerException.Message);
+                Console.WriteLine(e.Message);
             }
 
+            Menu.EspereUnaTecla();
+        }
+
+        static void GuardarPokemon() 
+        {
+            Menu.HeaderPrincipal();
+            LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
             
+            try
+            {
+                #region Le pregunto al usuario si quiere guardar un huevo o no
+
+                ConsoleKeyInfo teclaPresionada;
+                bool teclaInvalida = false;
+                do
+                {
+                    Console.Write("El pokemon a guardar es un huevo? [S/N]: ");
+                    teclaPresionada = Console.ReadKey();
+
+                    if (teclaPresionada.Key == ConsoleKey.S)
+                    {
+                        //Pokemon huevo
+                        short cantidadPasos = Validacion.ValidarCantPasos();
+                        box.Guardar(new Huevo(cantidadPasos));
+                    }
+                    else if (teclaPresionada.Key == ConsoleKey.N)
+                    {
+                        //Pokemon normal
+                        box.Guardar(PokemonIngresado());
+                    }
+                    else
+                    {
+                        //Ingreso invalido
+                        teclaInvalida = true;
+                        Menu.CambiarColor(ConsoleColor.Red);
+                        Console.WriteLine("La tecla ingresada es inválida, vuelva a intentarlo...");
+                        Menu.ResetearColor();
+                    }
+
+                } while (teclaInvalida);
+                #endregion
+
+            }
+            catch (BoxLlenaException e)
+            {
+                //Cargar en otra box disponible??
+                Menu.CambiarColor(ConsoleColor.Red);
+                Console.WriteLine(e.Message);
+            }
+            catch (MasterBallUnicaException e)
+            {
+                Menu.CambiarColor(ConsoleColor.Red);
+                Console.WriteLine(e.Message);
+            }
+            catch (LegendarioUnicoException e)
+            {
+                Menu.CambiarColor(ConsoleColor.Red);
+                Console.WriteLine(e.Message);
+            }
+            catch (NroDexSuperadoException e) 
+            {
+                Menu.CambiarColor(ConsoleColor.Red);
+                Console.WriteLine(e.Message);
+            }
+
+            Menu.ResetearColor();
+            Menu.EspereUnaTecla();
+        }
+
+        static Pokemon PokemonIngresado()
+        {
+            #region Se deben validar los datos y por ultimo instanciar un nuevo Pokemon con los campos ingresados
+
+            //Cargamos el nroDex
+            short nroDex = Validacion.ValidarNroDex();
+
+            //Cargamos el nombre
+            string nombre = Validacion.ValidarNombre();
+
+            //Cargamos el nivel
+            byte nivel = Validacion.ValidarNivel();
+
+            //Cargamos el tipo
+            Tipo tipo = Validacion.ValidarTipo();
+
+            //Cargamos la pokebola
+            Pokebola pokebola = Validacion.ValidarPokebola();
+
+            //Cargamos el genero
+            Genero genero = Validacion.ValidarGenero();
+
+            //Cargamos los ataques
+            string[] ataques = Validacion.ValidarAtaques();
+
+            //Cargamos el trainer
+            Entrenador entrenador = Validacion.ValidarEntrenador();
+
+            //Cargamos el item
+            bool item = Validacion.ValidarItem();
+
+            #endregion
+
+            return new Pokemon(nroDex, nombre, nivel, tipo, genero, entrenador, pokebola, ataques, item);
         }
 
         static OpcionesMenuBox ValidarIngresoUsuario() 
@@ -94,7 +200,6 @@ namespace ConsolaUI
 
             return opcionSeleccionada;
         }
-
 
         static bool EsOpcionValida(ConsoleKeyInfo teclaIngresada, out OpcionesMenuBox menuSeleccionado)
         {

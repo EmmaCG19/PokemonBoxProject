@@ -119,8 +119,8 @@ namespace ConsolaUI
 
             //CAUTION: El nivel Maximo no puede ser menor que el nivel Minimo
 
-            byte nivelMinimo = Validacion.ValidarNivel($"Ingresa un nivel minimo [1-{Validacion.NivelMaximo}] : ");
-            byte nivelMaximo = Validacion.ValidarNivel($"Ingresa un nivel maximo [1-{Validacion.NivelMaximo}] : ");
+            byte nivelMinimo = Validacion.ValidarNivel($"Ingresa un nivel minimo [1-{PC.NivelMaximo}] : ");
+            byte nivelMaximo = Validacion.ValidarNivel($"Ingresa un nivel maximo [1-{PC.NivelMaximo}] : ");
 
             Pokemon[] pokemonesEnRango = box.ObtenerPorRangoNivel(nivelMinimo, nivelMaximo);
             

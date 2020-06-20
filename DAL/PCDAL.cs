@@ -10,7 +10,6 @@ namespace Datos
 {
     public static class PCDAL
     {
-
         public static void CargarData() 
         {
             PC.Jugador = new Entrenador(10235, "Red");

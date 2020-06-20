@@ -27,12 +27,22 @@ namespace Entidades
             _nivel = nivel;
             _genero = sexo;
 
-            this.Nombre = nombre;
-            this.Ataques = (ataques.Length <= limiteAtaques)? ataques: new string[limiteAtaques];
+            #region Inicializar array de ataques
+            _ataquesVacio = new string[limiteAtaques];
+            
+            for (int i = 0; i < limiteAtaques; i++)
+            {
+                _ataquesVacio[i] = "Espacio disponible";
+            }
+            #endregion
+
+            this.Ataques = (ataques.Length <= limiteAtaques)? ataques: _ataquesVacio; 
             this.TieneItem = tieneItem;
+            this.Nombre = nombre;
         }
 
         protected static readonly byte limiteAtaques;
+        private readonly string [] _ataquesVacio;
         private readonly byte _nivel;
         private readonly Tipo _tipo;
         private readonly Entrenador _entrenador;

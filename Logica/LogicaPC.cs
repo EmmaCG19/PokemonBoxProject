@@ -7,6 +7,7 @@ using System.ComponentModel;
 using Entidades;
 using Entidades.Excepciones;
 using Datos;
+using System.Runtime.CompilerServices;
 
 namespace Logica
 {
@@ -27,16 +28,9 @@ namespace Logica
         {
             PCDAL.CargarData();
 
-            //Cargo valores a algunas cajas [Son 12 cajas]
-            LogicaBox caja1 = new LogicaBox(PC.Boxes[0]);
-            LogicaBox caja3 = new LogicaBox(PC.Boxes[2]);
-            LogicaBox caja5 = new LogicaBox(PC.Boxes[4]);
-            LogicaBox caja10 = new LogicaBox(PC.Boxes[9]);
-
+            LogicaBox caja1 = new LogicaBox(BoxSeleccionada);
             caja1.CargaInicial();
-            caja5.CargaInicial();
-            caja3.CargaInicial();
-            caja10.CargaInicial();
+            
         }
 
         public static Box BoxSeleccionada { get { return _boxSeleccionada; } set { _boxSeleccionada = value; } }
@@ -74,36 +68,48 @@ namespace Logica
             PCDAL.IntercambiarBoxes(box1, box2);
         }
 
-
         //ESTADISTICAS
 
         public static Pokemon[] LegendariosCapturados()
         {
-            int[] nroDexLegendarios = new int[PC.Legendarios.Length];
-            Pokemon[] pokeLegendariosCapturados = new Pokemon[PC.Legendarios.Length];
+            //El array de legendarios capturados no puede ser más de 5 porque hay un ejemplar por legendario
 
+            int[] dexLegendarios = new int[PC.Legendarios.Length];
+            Pokemon[] legendariosCapturados = new Pokemon[PC.Legendarios.Length];
+            
             #region Obtener el nroDex de los pokemons legendarios
-            for (int i = 0; i < nroDexLegendarios.Length; i++)
+            for (int i = 0; i < dexLegendarios.Length; i++)
             {
-                nroDexLegendarios[i] = PC.Legendarios[i].NroDex;
+                dexLegendarios[i] = PC.Legendarios[i].NroDex;
             }
-
             #endregion
+
 
             #region Obtener los pokemones que coincidan con el dex de los legendarios
-            foreach (Box box in PC.Boxes)
+
+            //Matriz
+
+            for (int posPC = 0, contLgnd =0; posPC < PC.Boxes.Length; posPC++)
             {
-                for (int i = 0; i < box.Pokemones.Length; i++)
+                //Quiero obtener todos los pokemon de cada uno de las boxes
+                LogicaBox boxBL = new LogicaBox(PC.Boxes[posPC]);
+                Pokemon[] pokemonesEnBox = boxBL.ObtenerTodosLosCapturados();
+
+                for (int posBOX = 0; posBOX < pokemonesEnBox.Length; posBOX++)
                 {
-                    if (nroDexLegendarios.Contains(box.Pokemones[i].NroDex))
+                    //Voy a recorrer cada una de las boxes y me fijo si el pokemon de esa box
+                    if (dexLegendarios.Contains(pokemonesEnBox[posBOX].NroDex))
                     {
-                        pokeLegendariosCapturados[i] = box.Pokemones[i];
+                        legendariosCapturados[contLgnd++] = pokemonesEnBox[posBOX];
                     }
                 }
+
             }
+
+
             #endregion
 
-            return pokeLegendariosCapturados;
+            return legendariosCapturados;
         }
 
         public static int CantPokemonesPorTipo(Tipo tipo)
@@ -254,17 +260,4 @@ namespace Logica
         }
 
     }
-
-
-    //Helpful code
-
-    //    foreach (Box box in PC.Boxes)
-    //{
-    //    foreach (Pokemon pokemon in box.Pokemones)
-    //    {
-
-    //    }
-
-    //}
-
 }

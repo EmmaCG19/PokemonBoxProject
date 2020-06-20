@@ -5,9 +5,9 @@ namespace Entidades
 {
     public class NoExistePokemonException : Exception
     {
-        private readonly string _mensajeError = "No existe un pokemon con ese Id en la box";
+        static readonly string _error = "No existe un pokemon en esa posicion de la box";
 
-        public NoExistePokemonException():base() 
+        public NoExistePokemonException():base(_error) 
         {
             
         }

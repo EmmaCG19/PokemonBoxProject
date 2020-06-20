@@ -8,5 +8,11 @@ namespace Entidades.Excepciones
 {
     public class LegendarioUnicoException: Exception
     {
+        static readonly string _mensajeError = "El pokemon legendario ya fue capturado";
+
+        public LegendarioUnicoException():base(_mensajeError)
+        {
+
+        }
     }
 }

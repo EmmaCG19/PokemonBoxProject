@@ -8,6 +8,11 @@ namespace Entidades.Excepciones
 {
     public class BoxLlenaException: Exception
     {
-        public BoxLlenaException() { }
+        static readonly string _mensajeError = "La box está llena.";
+
+        public BoxLlenaException():base(_mensajeError) 
+        {
+        
+        }
     }
 }

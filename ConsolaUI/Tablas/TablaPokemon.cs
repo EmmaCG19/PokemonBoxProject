@@ -79,7 +79,6 @@ namespace ConsolaUI.Tablas
         {
             Menu.CambiarColor(ConsoleColor.Yellow);
             Console.WriteLine("\n{0}", GenerarEncabezado());
-            Console.WriteLine(GenerarEncabezado());
             Console.WriteLine(GenerarLineaSeparacion());
             Console.WriteLine(GenerarFila(pokemon));
         }

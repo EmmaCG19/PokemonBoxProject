@@ -40,7 +40,7 @@ namespace Entidades
 
     public enum Genero
     {
-        NoAsignado = 0,
+        NoDefinido = 0,
         Masculino,
         Femenino,
     }

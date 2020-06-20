@@ -14,7 +14,12 @@ namespace Entidades
             Titulo = "Pokemon Storage System v1.0";
             NroBoxes = 12;
             Boxes = new Box[NroBoxes];
+            _pokemonesEnDex = 151;
+            _nivelMaximo = 100;
         }
+
+        static readonly short _pokemonesEnDex;
+        static readonly byte _nivelMaximo;
 
         public static Entrenador Jugador { get; set; }
         public static Region Region { get; set; }
@@ -22,7 +27,9 @@ namespace Entidades
         public static int NroBoxes { get; set; }
         public static string Titulo { get; set; }
         public static List<Entrenador> Contactos { get; set; }
-        public static Pokemon[] Legendarios { get; set; } 
+        public static Pokemon[] Legendarios { get; set; }
+        public static short PokemonesEnDex { get { return _pokemonesEnDex; } }
+        public static byte NivelMaximo { get { return _nivelMaximo; } }
     }
 
 }

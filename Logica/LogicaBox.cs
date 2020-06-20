@@ -47,16 +47,16 @@ namespace Logica
         public void Guardar(Pokemon pokemon)
         {
             //No mas de 3 pokemones con el mismo nroDex en la box
-            //Solamente un pokemon puede estar atrapado con una masterball
-            //Solamente se puede tener UNA copia de los pokemones legendarios
-
-            #region Calculando la cantidad de pokemones con el mismo nroDex
+            #region Calculando la cantidad de pokemones con el mismo nroDex (Exceptuar huevos)
+            Pokemon[] todos = this.ObtenerTodosLosCapturados();
             int cantMismoDex = 0;
-            foreach (Pokemon poke in _dal.Box.Pokemones)
+
+            if (!(pokemon is Huevo))
             {
-                if (poke.NroDex == pokemon.NroDex)
+                foreach (Pokemon poke in todos)
                 {
-                    cantMismoDex++;
+                    if (poke.NroDex == pokemon.NroDex)
+                        cantMismoDex++;
                 }
             }
 
@@ -64,6 +64,7 @@ namespace Logica
                 throw new NroDexSuperadoException();
             #endregion
 
+            //Solamente se puede tener UNA copia de los pokemones legendarios
             #region Verifica que el pokemon, siendo legendario, no exista ya en la PC
             foreach (Pokemon legendario in LogicaPC.LegendariosCapturados())
             {
@@ -72,6 +73,7 @@ namespace Logica
             }
             #endregion
 
+            //Solamente un pokemon puede estar atrapado con una masterball
             #region Verificar que el pokemon atrapado con Masterball, no exista
             if (LogicaPC.YaExistePokemonConMasterBall())
             {
