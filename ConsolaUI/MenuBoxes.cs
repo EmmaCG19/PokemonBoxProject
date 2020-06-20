@@ -94,7 +94,6 @@ namespace ConsolaUI
             sb.AppendLine("3. Intercambiar Boxes");
             sb.AppendLine("4. Agregar más Boxes");
             sb.AppendLine("5. Volver al menú principal");
-            sb.AppendLine();
 
             Console.WriteLine(sb.ToString());
         }

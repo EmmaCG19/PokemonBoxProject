@@ -43,8 +43,6 @@ namespace ConsolaUI
                         break;
                 }
 
-                //Menu.EspereUnaTecla(); -- Incluirlo en todas las acciones que requieran un retorno al menu
-
             } while (seguirEnMenu);
             
         }
@@ -90,8 +88,7 @@ namespace ConsolaUI
             sb.AppendLine("2. Enviar Mail");
             sb.AppendLine("3. Informes");
             sb.AppendLine("4. Salir");
-            sb.AppendLine();
-
+               
             Console.WriteLine(sb.ToString());
         }
 

@@ -82,19 +82,23 @@ namespace ConsolaUI
             Menu.EspereUnaTecla();
         }
 
-        static void GuardarPokemon() 
+        static void GuardarPokemon()
         {
             Menu.HeaderPrincipal();
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
-            
+            string mensajeError = "El pokemon no puede ser guardado porque";
+
             try
             {
-                #region Le pregunto al usuario si quiere guardar un huevo o no
+                #region Le pregunto al usuario si quiere guardar un huevo o un pokemon
 
                 ConsoleKeyInfo teclaPresionada;
-                bool teclaInvalida = false;
+                bool teclaInvalida;
+
                 do
                 {
+                    teclaInvalida = false;
+
                     Console.Write("El pokemon a guardar es un huevo? [S/N]: ");
                     teclaPresionada = Console.ReadKey();
 
@@ -103,18 +107,22 @@ namespace ConsolaUI
                         //Pokemon huevo
                         short cantidadPasos = Validacion.ValidarCantPasos();
                         box.Guardar(new Huevo(cantidadPasos));
+                        Menu.CambiarColor(ConsoleColor.Yellow);
+                        Console.WriteLine("El huevo ha sido cargado");
                     }
                     else if (teclaPresionada.Key == ConsoleKey.N)
                     {
                         //Pokemon normal
-                        box.Guardar(PokemonIngresado());
+                        box.Guardar(CargaDatosPokemon());
+                        Menu.CambiarColor(ConsoleColor.Yellow);
+                        Console.WriteLine("El pokemon ha sido cargado");
                     }
                     else
                     {
                         //Ingreso invalido
                         teclaInvalida = true;
                         Menu.CambiarColor(ConsoleColor.Red);
-                        Console.WriteLine("La tecla ingresada es inválida, vuelva a intentarlo...");
+                        Console.WriteLine("La tecla ingresada es inválida, vuelva a intentarlo...\n");
                         Menu.ResetearColor();
                     }
 
@@ -126,29 +134,29 @@ namespace ConsolaUI
             {
                 //Cargar en otra box disponible??
                 Menu.CambiarColor(ConsoleColor.Red);
-                Console.WriteLine(e.Message);
+                Console.WriteLine("{0} {1}",mensajeError, e.Message.ToLower());
             }
             catch (MasterBallUnicaException e)
             {
                 Menu.CambiarColor(ConsoleColor.Red);
-                Console.WriteLine(e.Message);
+                Console.WriteLine("{0} {1}",mensajeError, e.Message.ToLower());
             }
             catch (LegendarioUnicoException e)
             {
                 Menu.CambiarColor(ConsoleColor.Red);
-                Console.WriteLine(e.Message);
+                Console.WriteLine("{0} {1}",mensajeError, e.Message.ToLower());
             }
-            catch (NroDexSuperadoException e) 
+            catch (NroDexSuperadoException e)
             {
                 Menu.CambiarColor(ConsoleColor.Red);
-                Console.WriteLine(e.Message);
+                Console.WriteLine("{0} {1}",mensajeError, e.Message.ToLower());
             }
 
             Menu.ResetearColor();
             Menu.EspereUnaTecla();
         }
 
-        static Pokemon PokemonIngresado()
+        static Pokemon CargaDatosPokemon()
         {
             #region Se deben validar los datos y por ultimo instanciar un nuevo Pokemon con los campos ingresados
 
@@ -184,7 +192,7 @@ namespace ConsolaUI
             return new Pokemon(nroDex, nombre, nivel, tipo, genero, entrenador, pokebola, ataques, item);
         }
 
-        static OpcionesMenuBox ValidarIngresoUsuario() 
+        static OpcionesMenuBox ValidarIngresoUsuario()
         {
             OpcionesMenuBox opcionSeleccionada;
 
@@ -236,7 +244,6 @@ namespace ConsolaUI
             sb.AppendLine("7. Cambiar Nombre de Box");
             sb.AppendLine("8. Cambiar Fondo de Box");
             sb.AppendLine("9. Volver al menu de Boxes");
-            sb.AppendLine();
 
             Console.WriteLine(sb.ToString());
         }

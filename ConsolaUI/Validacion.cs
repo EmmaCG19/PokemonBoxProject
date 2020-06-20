@@ -20,14 +20,14 @@ namespace ConsolaUI
         {
             short dexValida;
 
-            Console.Write($"Ingrese un nro de dex [1-{PC.PokemonesEnDex}]: ");
+            Console.Write($"\nIngrese un nro de dex [1-{PC.PokemonesEnDex}]: ");
             while (!short.TryParse(Console.ReadLine(), out dexValida) || (dexValida < 1 || dexValida > PC.PokemonesEnDex))
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("El nro de dex es invalido, vuelva a intentarlo...");
                 Menu.ResetearColor();
 
-                Console.Write($"Ingrese un nro de dex [1-{PC.PokemonesEnDex}]: ");
+                Console.Write($"\nIngrese un nro de dex [1-{PC.PokemonesEnDex}]: ");
             }
 
             return dexValida;
@@ -41,14 +41,14 @@ namespace ConsolaUI
         {
             int posValida;
 
-            Console.Write($"Ingrese una posicion de la box [1-{Box.Capacidad}]: ");
+            Console.Write($"\nIngrese una posicion de la box [1-{Box.Capacidad}]: ");
             while (!int.TryParse(Console.ReadLine(), out posValida) || (posValida < 1 || posValida > Box.Capacidad))
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("La posicion ingresada es inválida, vuelva a intentarlo...");
                 Menu.ResetearColor();
 
-                Console.Write($"Ingrese un nro de dex [1-{Box.Capacidad}]: ");
+                Console.Write($"\nIngrese un nro de dex [1-{Box.Capacidad}]: ");
             }
 
             //Debo reducir en uno la posicion para que coincida con el array
@@ -60,7 +60,7 @@ namespace ConsolaUI
         /// </summary>
         /// <param name="mensajeIngreso"></param>
         /// <returns></returns>
-        public static byte ValidarNivel(string mensajeIngreso = "Ingresa un nivel [1-100] : ")
+        public static byte ValidarNivel(string mensajeIngreso = "\nIngresa un nivel [1-100] : ")
         {
             byte nivelValido;
             Console.Write(mensajeIngreso);
@@ -84,7 +84,7 @@ namespace ConsolaUI
         {
             string nombreIngresado;
 
-            Console.Write("Ingrese el nombre: ");
+            Console.Write("\nIngrese el nombre: ");
             nombreIngresado = Console.ReadLine();
 
             while (string.IsNullOrEmpty(nombreIngresado.Trim()))
@@ -92,7 +92,7 @@ namespace ConsolaUI
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("El nombre ingresado es invalido, vuelva a intentarlo...");
                 Menu.ResetearColor();
-                Console.Write("Ingrese el nombre: ");
+                Console.Write("\nIngrese el nombre: ");
                 nombreIngresado = Console.ReadLine();
             }
 
@@ -108,7 +108,7 @@ namespace ConsolaUI
             Console.WriteLine("Tipos de pokemon: ");
             OpcionesTipo();
 
-            Console.Write("Seleccione una opcion: ");
+            Console.Write("\nSeleccione una opcion: ");
 
             Tipo tipoSeleccionado;
 
@@ -118,7 +118,7 @@ namespace ConsolaUI
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("El tipo seleccionado no es valido, vuelva a intentarlo");
                 Menu.ResetearColor();
-                Console.Write("\nSeleccione una opcion: ");
+                Console.Write("Seleccione una opcion: ");
             }
 
             return tipoSeleccionado;
@@ -133,9 +133,9 @@ namespace ConsolaUI
             Console.WriteLine("Tipos de género: ");
             OpcionesGenero();
 
-            Console.Write("Seleccione una opcion: ");
 
             Genero generoSeleccionado;
+            Console.Write("Seleccione una opcion: ");
 
             //Existen pokemones que no tienen Genero. Por ejemplo, Ditto.
             while (!Enum.TryParse<Genero>(Console.ReadLine(), out generoSeleccionado) || !Enum.IsDefined(typeof(Genero), generoSeleccionado))
@@ -156,7 +156,7 @@ namespace ConsolaUI
         public static Pokebola ValidarPokebola()
         {
 
-            Console.WriteLine("Tipos de Pokebola: ");
+            Console.WriteLine("\nTipos de Pokebola: ");
             OpcionesPokebola();
 
             Console.Write("Seleccione una opcion: ");
@@ -180,14 +180,14 @@ namespace ConsolaUI
         /// Valida la existencia de un item en el pokemon
         /// </summary>
         /// <returns></returns>
-        public static bool ValidarItem() 
+        public static bool ValidarItem()
         {
             ConsoleKeyInfo teclaPresionada;
             bool tieneItem = false;
 
             do
             {
-                Console.Write("Tiene un item equipado? S/N: ");
+                Console.Write("\nTiene un item equipado? S/N: ");
                 teclaPresionada = Console.ReadKey();
 
                 if (teclaPresionada.Key == ConsoleKey.S)
@@ -197,7 +197,7 @@ namespace ConsolaUI
                 else
                 {
                     Menu.CambiarColor(ConsoleColor.Red);
-                    Console.WriteLine("\nLa tecla ingresada es inválida, vuelva a intentarlo...");
+                    Console.WriteLine("La tecla ingresada es inválida, vuelva a intentarlo...");
                     Menu.ResetearColor();
                 }
 
@@ -212,91 +212,106 @@ namespace ConsolaUI
         /// Valida los ataques ingresados por el usuario
         /// </summary>
         /// <returns>Un array con los ataques cargados</returns>
-        public static string[] ValidarAtaques() 
+        public static string[] ValidarAtaques()
         {
-            //El usuario va a tener que ingresar hasta 4 ataques
-            //Cada ataque válido se va a ir cargando en una posicion del array
-
             string[] ataquesIngresados = new string[4];
+            Funciones.InicializarArrayString(ataquesIngresados);
 
-            #region Inicializar el array 
-            for (int i = 0; i < ataquesIngresados.Length; i++)
-            {
-                //"Espacio disponible"
-                ataquesIngresados[i] = String.Empty;
-            }
-            #endregion
+            bool finalizarCarga = false;
+            
 
             for (int i = 0; i < ataquesIngresados.Length; i++)
             {
+                #region Ingreso de ataques
                 string ataqueIngresado;
 
-                //Ingreso un ataque
-                Console.Write($"Ingrese el ataque {i+1}/4: ");
+                Console.Write($"Ingrese el ataque {i + 1}/4: ");
                 ataqueIngresado = Console.ReadLine();
 
-                //Validar el ataque 
+                # region Validar nombre ataque
                 while (string.IsNullOrEmpty(ataqueIngresado.Trim()))
                 {
                     Menu.CambiarColor(ConsoleColor.Red);
                     Console.WriteLine("El ataque ingresado no es valido, vuelva a intentarlo...");
                     Menu.ResetearColor();
 
-                    Console.Write($"\nIngrese el ataque {i+1}/4: ");
+                    Console.Write($"Ingrese el ataque {i + 1}/4: ");
                     ataqueIngresado = Console.ReadLine();
                 }
+                #endregion
 
                 ataquesIngresados[i] = ataqueIngresado;
+                #endregion
 
-                //Preguntar si desea seguir agregando ataques
-                Console.Write("Desea seguir agregando ataques? [S/N]: ");
-                string respuesta = Console.ReadLine();
-
-                if (respuesta.ToLower() == "n" || i == ataquesIngresados.Length)
+                #region Se le pregunta al usuario si desea seguir agregando
+                ConsoleKeyInfo respuesta;
+                bool seguirPreguntando;
+                do
                 {
-                    Console.WriteLine("Carga de ataques finalizada");
+                    seguirPreguntando = false;
+                    Console.Write("\nDesea seguir agregando ataques? [S/N]: ");
+                    respuesta = Console.ReadKey();
+
+                    if (respuesta.Key == ConsoleKey.N || i == ataquesIngresados.Length - 1)
+                    {
+                        Menu.CambiarColor(ConsoleColor.Yellow);
+                        Console.WriteLine("\nCarga de ataques finalizada");
+                        finalizarCarga = true;
+                        break;
+                    }
+                    else if (respuesta.Key != ConsoleKey.S)
+                    {
+                        Menu.CambiarColor(ConsoleColor.Red);
+                        Console.WriteLine("\nLa tecla presionada es invalida, vuelva a intentarlo..");
+                        seguirPreguntando = true;
+                    }
+
+                    Menu.ResetearColor();
+
+                } while (seguirPreguntando);
+                #endregion
+
+                Console.WriteLine();
+             
+                //Dejar de cargar ataques
+                if (finalizarCarga)
                     break;
-                }
             }
-        
+
             return ataquesIngresados;
         }
 
         /// <summary>
-        /// Valida el entrenador que capturo el pokemon
+        /// Valida el entrenador que capturo el pokemon. Puede ser el actual u otro que le intercambio el pokemon.
         /// </summary>
         /// <returns></returns>
-        public static Entrenador ValidarEntrenador() 
+        public static Entrenador ValidarEntrenador()
         {
             Entrenador trainer = new Entrenador();
-
-            //Preguntar al usuario si el entrenador del pokemon es el actual o no
-            //Pokemon intercambiados - otro OT
 
             ConsoleKeyInfo teclaPresionada;
             bool teclaInvalida = false;
 
             do
             {
-                Console.Write("El pokemon fue capturado por el entrenador actual? [S/N] : ");
+                Console.Write("\nEl pokemon fue capturado por el entrenador actual? [S/N] : ");
                 teclaPresionada = Console.ReadKey();
 
                 if (teclaPresionada.Key == ConsoleKey.S)
                 {
                     //El entrenador es Red
                     trainer = PC.Jugador;
-                    
+
                 }
                 else if (teclaPresionada.Key == ConsoleKey.N)
                 {
-                    //Genera un id
-                    Random rnd = new Random();
-                    trainer.Id = rnd.Next(15000, 25000);
-
                     //Pedir datos del entrenador que lo capturo
+                    Random rnd = new Random();
+
+                    trainer.Id = rnd.Next(15000, 25000);
                     trainer.NombreOT = ValidarNombre();
                 }
-                else 
+                else
                 {
                     //Ingreso invalido
                     teclaInvalida = true;
@@ -310,17 +325,21 @@ namespace ConsolaUI
             return trainer;
         }
 
+        /// <summary>
+        /// Valida la cantidad de pasos ingresados que requiere un huevo para eclosionar
+        /// </summary>
+        /// <returns></returns>
         public static short ValidarCantPasos()
         {
             short cantPasos;
-            Console.Write("Ingrese la cantidad de pasos: ");
+            Console.Write("\nIngrese la cantidad de pasos: ");
 
-            while (!short.TryParse(Console.ReadLine(), out cantPasos) || cantPasos < 1) 
-            { 
+            while (!short.TryParse(Console.ReadLine(), out cantPasos) || cantPasos < 1)
+            {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("La cantidad de pasos es inválida, vuelva a ingresarla...");
                 Menu.ResetearColor();
-                Console.Write("Ingrese la cantidad de pasos: ");
+                Console.Write("\nIngrese la cantidad de pasos: ");
 
             }
 
@@ -344,7 +363,7 @@ namespace ConsolaUI
         static void OpcionesPokebola()
         {
             StringBuilder sb = new StringBuilder();
-            var pokebolasDisponibles = Enum.GetNames(typeof(Pokebola)); 
+            var pokebolasDisponibles = Enum.GetNames(typeof(Pokebola));
 
             for (int i = 1; i < pokebolasDisponibles.Length; i++)
             {

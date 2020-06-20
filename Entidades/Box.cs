@@ -10,7 +10,7 @@ namespace Entidades
     {
         static Box()
         {
-            _capacidad = 20;
+            _capacidad = 13;
         }
 
         public Box(int id, string nombre = "Box")

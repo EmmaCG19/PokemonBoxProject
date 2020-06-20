@@ -76,7 +76,7 @@ namespace ConsolaUI
             while (!EsOpcionValida(Console.ReadLine(), out opcionSeleccionada))
             {
                 Menu.CambiarColor(ConsoleColor.Red);
-                Console.WriteLine("\nLa opcion ingresada no es válida, vuelva a intentarlo..");
+                Console.WriteLine("La opcion ingresada no es válida, vuelva a intentarlo..\n");
                 Menu.ResetearColor();
                 Console.Write("Ingrese su opcion: ");
             }

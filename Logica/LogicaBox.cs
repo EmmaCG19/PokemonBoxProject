@@ -46,11 +46,11 @@ namespace Logica
 
         public void Guardar(Pokemon pokemon)
         {
-            //No mas de 3 pokemones con el mismo nroDex en la box
-            #region Calculando la cantidad de pokemones con el mismo nroDex (Exceptuar huevos)
             Pokemon[] todos = this.ObtenerTodosLosCapturados();
             int cantMismoDex = 0;
 
+            #region Calculando la cantidad de pokemones con el mismo nroDex (Exceptuar huevos)
+            //No mas de 3 pokemones con el mismo nroDex en la box
             if (!(pokemon is Huevo))
             {
                 foreach (Pokemon poke in todos)
@@ -75,7 +75,7 @@ namespace Logica
 
             //Solamente un pokemon puede estar atrapado con una masterball
             #region Verificar que el pokemon atrapado con Masterball, no exista
-            if (LogicaPC.YaExistePokemonConMasterBall())
+            if (LogicaPC.YaExistePokemonConMasterBall() && pokemon.AtrapadoCon == Pokebola.Masterball)
             {
                 throw new MasterBallUnicaException();
             }

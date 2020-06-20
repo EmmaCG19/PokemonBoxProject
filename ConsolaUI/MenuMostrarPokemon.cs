@@ -161,7 +161,6 @@ namespace ConsolaUI
             sb.AppendLine("5. Mostrar por pokebola");
             sb.AppendLine("6. Mostrar huevos");
             sb.AppendLine($"7. Volver al menu de {LogicaPC.BoxSeleccionada.Nombre.ToLower()}");
-            sb.AppendLine();
 
             Console.WriteLine(sb);
         }
@@ -174,7 +173,7 @@ namespace ConsolaUI
             while (!EsOpcionValida(Console.ReadKey(), out opcionSeleccionada))
             {
                 Menu.CambiarColor(ConsoleColor.Red);
-                Console.WriteLine("\nLa opcion ingresada no es válida, vuelva a intentarlo..");
+                Console.WriteLine("La opcion ingresada no es válida, vuelva a intentarlo..\n");
                 Menu.ResetearColor();
                 Console.Write("Ingrese su opcion: ");
             }

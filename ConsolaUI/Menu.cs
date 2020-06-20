@@ -7,12 +7,12 @@ using Entidades;
 
 namespace ConsolaUI
 {
-    public abstract class Menu
+    public static class Menu
     {
         static Menu()
         {
             Console.Title = PC.Titulo.ToUpper();
-            _colorMenu = ConsoleColor.DarkGreen;
+            _colorMenu = ConsoleColor.Magenta;
             largoFila = 65;
         }
 

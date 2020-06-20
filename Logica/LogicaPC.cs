@@ -8,6 +8,7 @@ using Entidades;
 using Entidades.Excepciones;
 using Datos;
 using System.Runtime.CompilerServices;
+using System.Net;
 
 namespace Logica
 {
@@ -15,22 +16,18 @@ namespace Logica
     {
         static LogicaPC()
         {
-            limiteDexNacional = 151;
+            PCDAL.CargarData();
             _boxSeleccionada = PC.Boxes[0];
         }
 
-        public static readonly byte limiteDexNacional;
         private static Box _boxSeleccionada;
 
         //ACCIONES EN PC
 
         public static void IniciarPC()
         {
-            PCDAL.CargarData();
-
             LogicaBox caja1 = new LogicaBox(BoxSeleccionada);
             caja1.CargaInicial();
-            
         }
 
         public static Box BoxSeleccionada { get { return _boxSeleccionada; } set { _boxSeleccionada = value; } }
@@ -70,12 +67,12 @@ namespace Logica
 
         //ESTADISTICAS
 
-        public static Pokemon[] LegendariosCapturados()
+        public static List<Pokemon> LegendariosCapturados()
         {
             //El array de legendarios capturados no puede ser más de 5 porque hay un ejemplar por legendario
 
+            List<Pokemon> legendariosCapturados = new List<Pokemon>();
             int[] dexLegendarios = new int[PC.Legendarios.Length];
-            Pokemon[] legendariosCapturados = new Pokemon[PC.Legendarios.Length];
             
             #region Obtener el nroDex de los pokemons legendarios
             for (int i = 0; i < dexLegendarios.Length; i++)
@@ -87,9 +84,7 @@ namespace Logica
 
             #region Obtener los pokemones que coincidan con el dex de los legendarios
 
-            //Matriz
-
-            for (int posPC = 0, contLgnd =0; posPC < PC.Boxes.Length; posPC++)
+            for (int posPC = 0; posPC < PC.Boxes.Length; posPC++)
             {
                 //Quiero obtener todos los pokemon de cada uno de las boxes
                 LogicaBox boxBL = new LogicaBox(PC.Boxes[posPC]);
@@ -100,7 +95,7 @@ namespace Logica
                     //Voy a recorrer cada una de las boxes y me fijo si el pokemon de esa box
                     if (dexLegendarios.Contains(pokemonesEnBox[posBOX].NroDex))
                     {
-                        legendariosCapturados[contLgnd++] = pokemonesEnBox[posBOX];
+                        legendariosCapturados.Add(pokemonesEnBox[posBOX]);
                     }
                 }
 
@@ -186,19 +181,19 @@ namespace Logica
 
         public static string PokemonMasCapturado()
         {
-            int[] capturasPorDex = new int[limiteDexNacional];
+            int[] capturasPorDex = new int[PC.PokemonesEnDex];
             int capturasMax = int.MinValue;
             int nroDexMax = 1;
 
             #region Calcular la cantidad de capturas por cada nroDex
-            for (int nroDex = 1; nroDex <= limiteDexNacional; nroDex++)
+            for (int nroDex = 1; nroDex <= PC.PokemonesEnDex; nroDex++)
             {
                 capturasPorDex[nroDex - 1] = NroCapturasPorDex((byte)nroDex);
             }
             #endregion
 
             #region Obtener el nro de dex con mayor nro de capturas
-            for (int i = 0; i < limiteDexNacional; i++)
+            for (int i = 0; i < PC.PokemonesEnDex; i++)
             {
                 if (capturasPorDex[i] > capturasMax)
                 {
@@ -249,7 +244,9 @@ namespace Logica
             //Buscar si hay algun pokemon entre todos los capturados con masterball
             foreach (Box box in PC.Boxes)
             {
-                foreach (Pokemon pokemon in box.Pokemones)
+                LogicaBox boxBL = new LogicaBox(box);
+
+                foreach (Pokemon pokemon in boxBL.ObtenerTodosLosCapturados())
                 {
                     if (pokemon.AtrapadoCon == Pokebola.Masterball)
                         return true;
