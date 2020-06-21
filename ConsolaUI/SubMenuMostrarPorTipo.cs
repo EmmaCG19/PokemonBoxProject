@@ -19,6 +19,7 @@ namespace ConsolaUI
             {
                 Menu.HeaderPrincipal();
                 Menu.BannerMenu("Tipo de Pokemon");
+                MenuBox.ResetearFondo();
                 OpcionesMenu();
 
                 int opcionSeleccionada = ValidarIngresoUsuario();
@@ -55,9 +56,8 @@ namespace ConsolaUI
         static void OpcionesMenu()
         {
             int cont = 0;
-            StringBuilder sb = new StringBuilder();
 
-            Console.WriteLine("Seleccione un tipo de pokemon: ");
+            Console.WriteLine("A) Seleccione un tipo de pokemon: ");
             Menu.CambiarColor(ConsoleColor.Green);
             foreach (string tipoPokemon in Enum.GetNames(typeof(Tipo)))
             {
@@ -67,7 +67,7 @@ namespace ConsolaUI
                 cont++;
             }
             
-            Menu.ResetearColor();
+            MenuBox.ResetearFondo();
             Console.WriteLine("{0}. Volver al menú mostrar", cont);
         }
 
@@ -80,7 +80,7 @@ namespace ConsolaUI
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("La opcion ingresada no es válida, vuelva a intentarlo..\n");
-                Menu.ResetearColor();
+                MenuBox.ResetearFondo();
                 Console.Write("Ingrese su opcion: ");
             }
             Console.WriteLine();

@@ -214,45 +214,48 @@ namespace ConsolaUI
         /// <returns>Un array con los ataques cargados</returns>
         public static string[] ValidarAtaques()
         {
-            string[] ataquesIngresados = new string[4];
+            string[] ataquesIngresados = new string[Pokemon.LimiteAtaques];
             bool finalizarCarga = false;
+            ConsoleKeyInfo respuesta;
+            bool seguirPreguntando;
 
-            for (int i = 0; i < ataquesIngresados.Length; i++)
+            for (int pos = 0; pos < ataquesIngresados.Length; pos++)
             {
                 #region Ingreso de ataques
                 string ataqueIngresado;
 
-                Console.Write($"Ingrese el ataque {i + 1}/4: ");
+                Console.Write($"Ingrese el ataque {pos + 1}/4: ");
                 ataqueIngresado = Console.ReadLine();
 
-                # region Validar nombre ataque
+                //Validar nombre ataque
                 while (string.IsNullOrEmpty(ataqueIngresado.Trim()))
                 {
                     Menu.CambiarColor(ConsoleColor.Red);
                     Console.WriteLine("El ataque ingresado no es valido, vuelva a intentarlo...");
                     Menu.ResetearColor();
 
-                    Console.Write($"Ingrese el ataque {i + 1}/4: ");
+                    Console.Write($"Ingrese el ataque {pos + 1}/4: ");
                     ataqueIngresado = Console.ReadLine();
                 }
-                #endregion
 
-                ataquesIngresados[i] = ataqueIngresado;
+                ataquesIngresados[pos] = ataqueIngresado;
                 #endregion
 
                 #region Se le pregunta al usuario si desea seguir agregando
-                ConsoleKeyInfo respuesta;
-                bool seguirPreguntando;
+
+                //Ultima posicion no pregunta
+                if (pos == ataquesIngresados.Length - 1)
+                    break;
+
                 do
                 {
                     seguirPreguntando = false;
+
                     Console.Write("\nDesea seguir agregando ataques? [S/N]: ");
                     respuesta = Console.ReadKey();
 
-                    if (respuesta.Key == ConsoleKey.N || i == ataquesIngresados.Length - 1)
+                    if (respuesta.Key == ConsoleKey.N)
                     {
-                        //Menu.CambiarColor(ConsoleColor.Yellow);
-                        //Console.WriteLine("\nCarga de ataques finalizada");
                         finalizarCarga = true;
                         break;
                     }
@@ -266,13 +269,13 @@ namespace ConsolaUI
                     Menu.ResetearColor();
 
                 } while (seguirPreguntando);
-                #endregion
 
                 Console.WriteLine();
-             
+
                 //Dejar de cargar ataques
                 if (finalizarCarga)
                     break;
+                #endregion
             }
 
             return ataquesIngresados;

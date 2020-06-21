@@ -20,7 +20,7 @@ namespace ConsolaUI
             {
                 Menu.HeaderPrincipal();
                 Menu.BannerMenu("Mostrar Pokemones");
-                Menu.CambiarColor(LogicaPC.BoxSeleccionada.Fondo);
+                MenuBox.ResetearFondo();
 
                 OpcionesMenu();
                 
@@ -61,6 +61,7 @@ namespace ConsolaUI
         static void MostrarTodos()
         {
             Menu.HeaderPrincipal();
+            MenuBox.ResetearFondo();
 
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
             Pokemon[] pokemonesCapturados = box.ObtenerTodosLosCapturados();
@@ -77,6 +78,7 @@ namespace ConsolaUI
         static void MostrarHuevos() 
         {
             Menu.HeaderPrincipal();
+            MenuBox.ResetearFondo();
 
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
             Pokemon[] huevosPokemon = box.ObtenerHuevos();
@@ -97,7 +99,8 @@ namespace ConsolaUI
         static void MostrarPorNroDex()
         {
             Menu.HeaderPrincipal();
-            
+            MenuBox.ResetearFondo();
+
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
             Pokemon[] pokemonConMismaDex = box.ObtenerPorNroPokedex(Validacion.ValidarNroDex());
 
@@ -114,6 +117,7 @@ namespace ConsolaUI
         static void MostrarPorRangoNivel()
         {
             Menu.HeaderPrincipal();
+            MenuBox.ResetearFondo();
 
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
 
@@ -141,6 +145,8 @@ namespace ConsolaUI
         public static bool Mostrar(Pokemon[] pokemonesAMostrar)
         {
             Menu.HeaderPrincipal();
+            MenuBox.ResetearFondo();
+
             if (pokemonesAMostrar.Length != 0)
             {
                 TablaPokemon.GenerarTabla(pokemonesAMostrar);
@@ -174,7 +180,7 @@ namespace ConsolaUI
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("La opcion ingresada no es válida, vuelva a intentarlo..\n");
-                Menu.ResetearColor();
+                MenuBox.ResetearFondo();
                 Console.Write("Ingrese su opcion: ");
             }
             Console.Clear();

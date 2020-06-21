@@ -19,6 +19,7 @@ namespace ConsolaUI
             {
                 Menu.HeaderPrincipal();
                 Menu.BannerMenu("Tipo de Pokebola");
+                MenuBox.ResetearFondo();
                 OpcionesMenu();
 
                 int opcionSeleccionada = ValidarIngresoUsuario();
@@ -64,7 +65,7 @@ namespace ConsolaUI
                 cont++;
             }
 
-            Menu.ResetearColor();
+            MenuBox.ResetearFondo();
             Console.WriteLine("{0}. Volver al menú mostrar", cont);
         }
 
@@ -77,7 +78,7 @@ namespace ConsolaUI
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("La opcion ingresada no es válida, vuelva a intentarlo..\n");
-                Menu.ResetearColor();
+                MenuBox.ResetearFondo();
                 Console.Write("Ingrese su opcion: ");
             }
             Console.WriteLine();

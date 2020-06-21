@@ -19,6 +19,8 @@ namespace ConsolaUI
             {
                 Menu.HeaderPrincipal();
                 Menu.BannerMenu("Menu Modificar Pokemon");
+                MenuBox.ResetearFondo();
+
                 OpcionesMenu();
 
                 switch (ValidarIngresoUsuario())
@@ -42,7 +44,6 @@ namespace ConsolaUI
             } while (seguirEnMenu);
 
         }
-
 
         static void CambiarNombrePokemon()
         {
@@ -75,7 +76,6 @@ namespace ConsolaUI
                 Console.WriteLine(e.Message);
             }
 
-            Menu.ResetearColor();
             Menu.EspereUnaTecla();
 
         }
@@ -110,7 +110,6 @@ namespace ConsolaUI
                 Console.WriteLine(e.Message);
             }
 
-            Menu.ResetearColor();
             Menu.EspereUnaTecla();
 
         }
@@ -143,7 +142,6 @@ namespace ConsolaUI
                 Console.WriteLine(e.Message);
             }
 
-            Menu.ResetearColor();
             Menu.EspereUnaTecla();
 
         }
@@ -168,7 +166,6 @@ namespace ConsolaUI
 
             return opcionSeleccionada;
         }
-
 
         static bool EsOpcionValida(ConsoleKeyInfo teclaIngresada, out OpcionesMenuModificar menuSeleccionado)
         {
@@ -206,7 +203,6 @@ namespace ConsolaUI
             Item = ConsoleKey.NumPad3,
             Volver = ConsoleKey.NumPad4,
         }
-
 
     }
 }

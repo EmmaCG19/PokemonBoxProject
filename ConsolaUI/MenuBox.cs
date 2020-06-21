@@ -8,8 +8,6 @@ using Logica;
 using ConsolaUI.Tablas;
 using Entidades.Excepciones;
 
-
-//Falta limpiar la pantalla
 namespace ConsolaUI
 {
     public static class MenuBox
@@ -22,9 +20,9 @@ namespace ConsolaUI
             {
                 Menu.HeaderPrincipal();
                 Menu.BannerMenu(LogicaPC.BoxSeleccionada.Nombre);
+                ResetearFondo();
                 OpcionesMenu();
 
-                Menu.CambiarColor(ConsoleColor.Green);
                 switch (ValidarIngresoUsuario())
                 {
                     case OpcionesMenuBox.Mostrar:
@@ -43,10 +41,13 @@ namespace ConsolaUI
                         SubMenuModificar.Iniciar();
                         break;
                     case OpcionesMenuBox.Mover:
+                        MoverPokemon();
                         break;
                     case OpcionesMenuBox.CambiarNombreBox:
+                        CambiarNombreBox();
                         break;
                     case OpcionesMenuBox.CambiarFondoBox:
+                        CambiarFondoBox();
                         break;
                     case OpcionesMenuBox.VolverMenuBoxes:
                         seguirEnMenu = false;
@@ -62,9 +63,10 @@ namespace ConsolaUI
         /// <summary>
         /// Busca un pokemon en la box basandose en su Id y muestra el resultado
         /// </summary>
-        public static void BuscarPokemon()
+        static void BuscarPokemon()
         {
             Menu.HeaderPrincipal();
+            ResetearFondo();
 
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
             int pokemonId = Validacion.ValidarId();
@@ -90,6 +92,8 @@ namespace ConsolaUI
         static void GuardarPokemon()
         {
             Menu.HeaderPrincipal();
+            ResetearFondo();
+
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
             string mensajeError = "El pokemon no puede ser guardado porque";
 
@@ -161,9 +165,13 @@ namespace ConsolaUI
             Menu.EspereUnaTecla();
         }
 
+        /// <summary>
+        /// Libera al pokemon, es decir, lo elimina de los pokemones listados en la box.
+        /// </summary>
         static void LiberarPokemon()
         {
             Menu.HeaderPrincipal();
+            ResetearFondo();
 
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
             int idPokemon = Validacion.ValidarId();
@@ -189,6 +197,10 @@ namespace ConsolaUI
 
         }
 
+        /// <summary>
+        /// Le pide al usuario que ingrese los datos del pokemon a cargar y valida la informacion
+        /// </summary>
+        /// <returns>El pokemon cargado</returns>
         static Pokemon CargaDatosPokemon()
         {
             #region Se deben validar los datos y por ultimo instanciar un nuevo Pokemon con los campos ingresados
@@ -225,6 +237,85 @@ namespace ConsolaUI
             return new Pokemon(nroDex, nombre, nivel, tipo, genero, entrenador, pokebola, ataques, item);
         }
 
+        /// <summary>
+        /// Permite reubicar al pokemon en otra posicion de la BOX. Si no está ocupada la posicion, lo almacena ahi. En caso contrario, intercambia posiciones.
+        /// </summary>
+        static void MoverPokemon()
+        {
+            LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
+
+            Menu.HeaderPrincipal();
+            ResetearFondo();
+
+            try
+            {
+                Console.Write("Pokemon a mover: ");
+                Pokemon pokemonAMover = box.ObtenerPokemon(Validacion.ValidarId());
+
+                Console.Write("Posicion a donde desea moverlo: ");
+                int posicionSeleccionada = Validacion.ValidarId();
+
+                box.Mover(pokemonAMover, posicionSeleccionada);
+                Menu.CambiarColor(ConsoleColor.Yellow);
+                Console.WriteLine("El pokemon ha sido movido a la posicion seleccionada");
+
+            }
+            catch (NoExistePokemonException e)
+            {
+                Menu.CambiarColor(ConsoleColor.Red);
+                Console.WriteLine("No se puede mover el pokemon porque {0}", e.Message);
+            }
+
+            Menu.EspereUnaTecla();
+        }
+
+        static void CambiarNombreBox()
+        {
+            Menu.HeaderPrincipal();
+            ResetearFondo();
+
+            string nombreViejo = LogicaPC.BoxSeleccionada.Nombre;
+            string nombreNuevo = Validacion.ValidarNombre();
+
+            LogicaPC.BoxSeleccionada.Nombre = nombreNuevo; 
+            Console.WriteLine("La box '{0}' pasó a llamarse '{1}'", nombreViejo, nombreNuevo);
+
+            Menu.EspereUnaTecla();
+        }
+
+        public static void CambiarFondoBox()
+        {
+            Menu.HeaderPrincipal();
+            ResetearFondo();
+            OpcionesMenuColor();
+
+            LogicaPC.BoxSeleccionada.Fondo = ValidarColorBox();
+            Menu.CambiarColor(LogicaPC.BoxSeleccionada.Fondo);
+
+            Menu.EspereUnaTecla();
+        }
+
+        public static void ResetearFondo()
+        {
+            Menu.CambiarColor(LogicaPC.BoxSeleccionada.Fondo);
+        }
+
+        static ConsoleColor ValidarColorBox()
+        {
+            ConsoleColor colorSeleccionado;
+            Console.Write("Ingrese una opcion: ");
+
+            while (!Enum.TryParse<ConsoleColor>(Console.ReadLine(), out colorSeleccionado) || !Enum.IsDefined(typeof(ConsoleColor), colorSeleccionado))
+            {
+                Menu.CambiarColor(ConsoleColor.Red);
+                Console.WriteLine("El color seleccionado no es valido, vuelva a intentarlo...");
+                MenuBox.ResetearFondo();
+                Console.Write("Seleccione un color: ");
+            }
+
+            return colorSeleccionado;
+        }
+
         static OpcionesMenuBox ValidarIngresoUsuario()
         {
             OpcionesMenuBox opcionSeleccionada;
@@ -234,7 +325,7 @@ namespace ConsolaUI
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("\nLa opcion ingresada no es válida, vuelva a intentarlo..");
-                Menu.ResetearColor();
+                ResetearFondo();
                 Console.Write("Ingrese su opcion: ");
             }
             Console.WriteLine();
@@ -263,6 +354,21 @@ namespace ConsolaUI
                     return false;
             }
 
+        }
+        
+        static void OpcionesMenuColor()
+        {
+            StringBuilder sb = new StringBuilder();
+            int contColor = 0;
+
+            sb.AppendLine("Seleccione un color: ");
+            foreach (string color in Enum.GetNames(typeof(ConsoleColor)))
+            {
+                sb.AppendLine(string.Format("{0}{1}. {2}", Menu.Identar(3), contColor++, color));
+
+            }
+
+            Console.WriteLine(sb.ToString());
         }
 
         static void OpcionesMenu()
@@ -294,5 +400,7 @@ namespace ConsolaUI
             VolverMenuBoxes = ConsoleKey.NumPad9,
 
         }
+
+
     }
 }
