@@ -44,6 +44,7 @@ namespace ConsolaUI
             Console.WriteLine("Player: {0,-29}Time: {1}", PC.Jugador.NombreOT, DateTime.Now.ToLocalTime());
             LineaDeSeparacion(Menu.largoFila, '-');
             ResetearColor();
+            Console.WriteLine(); //Agregado un salto más a las 8.16AM del 21/6
         }
 
         public static void BannerMenu(string nombreDelMenu)

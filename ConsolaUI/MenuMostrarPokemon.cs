@@ -183,7 +183,6 @@ namespace ConsolaUI
                 MenuBox.ResetearFondo();
                 Console.Write("Ingrese su opcion: ");
             }
-            Console.Clear();
             
             return opcionSeleccionada;
         }

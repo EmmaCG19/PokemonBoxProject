@@ -65,6 +65,11 @@ namespace Logica
             PCDAL.IntercambiarBoxes(box1, box2);
         }
 
+        public static Box ObtenerBox(int posBox) 
+        {
+            return PCDAL.ObtenerBox(posBox);
+        }
+
         //ESTADISTICAS
 
         public static List<Pokemon> LegendariosCapturados()

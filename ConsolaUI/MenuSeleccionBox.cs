@@ -23,7 +23,7 @@ namespace ConsolaUI
 
                 int opcionSeleccionada = ValidarIngresoUsuario();
 
-                if (opcionSeleccionada >= 1 && opcionSeleccionada < PC.Boxes.Length)
+                if (opcionSeleccionada >= 1 && opcionSeleccionada <= PC.Boxes.Length)
                 {
                     LogicaPC.BoxSeleccionada = PC.Boxes[opcionSeleccionada - 1];
                     Menu.CambiarColor(ConsoleColor.Green);
@@ -40,7 +40,7 @@ namespace ConsolaUI
 
         }
 
-        static int ValidarIngresoUsuario()
+        public static int ValidarIngresoUsuario()
         {
             int opcionSeleccionada;
             Console.Write("Ingrese el nro de box: ");
@@ -60,7 +60,7 @@ namespace ConsolaUI
         {
             if (int.TryParse(valorIngresado, out opcionSeleccionada))
             {
-                if (opcionSeleccionada >= 0 && opcionSeleccionada < PC.Boxes.Length)
+                if (opcionSeleccionada >= 0 && opcionSeleccionada <= PC.Boxes.Length)
                     return true;
             }
 
@@ -98,16 +98,16 @@ namespace ConsolaUI
         static void PantallaCargaABox()
         {
             Console.Clear();
-            Console.WriteLine($"Ingresando al menu de la box '{LogicaPC.BoxSeleccionada.Nombre}'...");
-            Thread.Sleep(1000);
+            Console.WriteLine($"Ingresando al menu de la box '{LogicaPC.BoxSeleccionada.Nombre}'.");
+            Thread.Sleep(500);
 
             Console.Clear();
             Console.WriteLine($"Ingresando al menu de la box '{LogicaPC.BoxSeleccionada.Nombre}'..");
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
 
             Console.Clear();
             Console.WriteLine($"Ingresando al menu de la box '{LogicaPC.BoxSeleccionada.Nombre}'...");
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
 
             MenuBox.Iniciar();
         }

@@ -1,16 +1,17 @@
-﻿using Entidades;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entidades;
+using Entidades.Excepciones;
 
 namespace Datos
 {
     public static class PCDAL
     {
-        public static void CargarData() 
+        public static void CargarData()
         {
             PC.Jugador = new Entrenador(10235, "Red");
 
@@ -72,9 +73,9 @@ namespace Datos
             Box[] boxesACopiar = PC.Boxes;
 
             //Redefinir la cantidad de cajas de la PC
-            PC.NroBoxes = cantidad;
-            PC.Boxes = new Box[PC.NroBoxes];
+            PC.Boxes = new Box[PC.NroBoxes + cantidad];
 
+            //Inicializo las boxes
             InicializarBoxes();
 
             //Copiar las boxes al nuevo array
@@ -82,6 +83,14 @@ namespace Datos
             {
                 PC.Boxes[pos] = boxesACopiar[pos];
             }
+        }
+
+        public static Box ObtenerBox(int posBox)
+        {
+            if (posBox >= 0 && posBox < PC.Boxes.Length)
+                return PC.Boxes[posBox];
+            else
+                throw new NoExisteBoxException();
         }
 
     }
