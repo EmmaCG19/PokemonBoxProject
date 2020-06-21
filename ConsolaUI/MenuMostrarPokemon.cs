@@ -160,7 +160,7 @@ namespace ConsolaUI
             sb.AppendLine("4. Mostrar por rango de nivel");
             sb.AppendLine("5. Mostrar por pokebola");
             sb.AppendLine("6. Mostrar huevos");
-            sb.AppendLine($"7. Volver al menu de {LogicaPC.BoxSeleccionada.Nombre.ToLower()}");
+            sb.AppendLine($"7. Volver al menu de '{LogicaPC.BoxSeleccionada.Nombre.ToLower()}'");
 
             Console.WriteLine(sb);
         }

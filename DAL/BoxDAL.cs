@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +29,7 @@ namespace Datos
             #region Lista de pokemones
             Pokemon[] pokemonesHardcodeados = new Pokemon[]
             {
-                new Pokemon(120, "Staryu", 25, Tipo.Agua, Genero.Femenino, PC.Jugador, Pokebola.Greatball, new string[] { "burbuja", "gruñido", "placaje" }, true),
+                new Pokemon(120, "Staryu", 25, Tipo.Agua, Genero.Femenino, PC.Jugador, Pokebola.Greatball, new string[] { "rapidez", "burbuja", "gruñido", "placaje" }, true),
                 new Pokemon(1, "Bulbasaur", 5, Tipo.Planta, Genero.Masculino, PC.Jugador, Pokebola.Pokeball, new string[] { "placaje", "gruñido" }, false),
                 new Huevo(300),
                 new Pokemon(41, "Zubat", 17, Tipo.Veneno, Genero.Femenino, PC.Jugador, Pokebola.Pokeball, new string[] { "absorber", "rayo confusion"}, true),
@@ -140,25 +142,106 @@ namespace Datos
             pokemon.TieneItem = !pokemon.TieneItem;
         }
 
-        public void CambiarAtaques(Pokemon pokemon, string[] ataques)
-        {
-            #region Modifica el ataque del pokemon solamente si hay otro cargado en la misma posicion
-            for (int pos = 0; pos < pokemon.Ataques.Length; pos++)
-            {
-                if (ataques[pos] != String.Empty)
-                {
-                    pokemon.Ataques[pos] = ataques[pos];
-                }
-            }
-            #endregion
-        }
-
         public void CambiarNombre(Pokemon pokemon, string nombre)
         {
             if (!nombre.Trim().Equals(String.Empty))
             {
                 pokemon.Nombre = nombre;
             }
+        }
+
+        public void CambiarAtaques(Pokemon pokemon, string[] nuevosAtaques)
+        {
+
+            for (int posNuevo = 0, posActual = 0; posNuevo < Pokemon.LimiteAtaques; posNuevo++)
+            {
+                if (nuevosAtaques[posNuevo] != null)
+                {
+                    if (!AtaqueExistente(pokemon, nuevosAtaques[posNuevo]))
+                    {
+                        if (PosicionSinAtaque(pokemon.Ataques) != -1)
+                        {
+                            #region Moveset del pokemon no está completo. El ataque nuevo se agrega en la primera posicion libre.
+                            int posLibre = PosicionSinAtaque(pokemon.Ataques);
+                            pokemon.Ataques[posLibre] = nuevosAtaques[posNuevo];
+                            #endregion
+                        }
+                        else
+                        {
+                            #region Moveset del pokemon está completo. El ataque nuevo reemplaza al viejo de esa posicion.
+                            pokemon.Ataques[posActual++] = nuevosAtaques[posNuevo];
+                            #endregion
+                        }
+
+                    }
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// Se obtienen los ataques cargados del pokemon.
+        /// </summary>
+        /// <param name="pokemon"></param>
+        /// <returns></returns>
+        public string[] ObtenerAtaques(Pokemon pokemon)
+        {
+            #region Obtengo la cantidad de ataques que fueron cargados, es decir, que no sean nulos.
+            int cantAtaques = 0;
+
+            //Pokemon llega con un array de 3 ataques. 
+            //Necesito completar el espacio faltante con null.
+
+            foreach (string ataque in pokemon.Ataques)
+            {
+                if (ataque != null)
+                    cantAtaques++;
+            }
+            #endregion
+
+            #region Agrego los ataques cargados a un nuevo array con la cantidad obtenida anteriormente
+            string[] ataquesCargados = new string[cantAtaques];
+            for (int i = 0, j = 0; i < Pokemon.LimiteAtaques; i++)
+            {
+                if (pokemon.Ataques[i] != null)
+                    ataquesCargados[j++] = pokemon.Ataques[i];
+            }
+            #endregion
+
+            return ataquesCargados;
+        }
+
+        private bool AtaqueExistente(Pokemon pokemon, string nombreAtaque)
+        {
+            string[] ataques = this.ObtenerAtaques(pokemon);
+
+            //Obtener los nombres de los ataques que estan cargados en el array
+            for (int i = 0; i < ataques.Length; i++)
+            {
+                if (ataques[i].ToLower().Trim() == nombreAtaque.ToLower().Trim())
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private int PosicionSinAtaque(string[] listaAtaques)
+        {
+            //retorna -1 si no hay posiciones vacias
+            int posSinAtaque = -1;
+
+            for (int pos = 0; pos < listaAtaques.Length; pos++)
+            {
+                if (listaAtaques[pos] is null)
+                {
+                    posSinAtaque = pos;
+                    break;
+                }
+            }
+
+            return posSinAtaque;
         }
 
         /// <summary>

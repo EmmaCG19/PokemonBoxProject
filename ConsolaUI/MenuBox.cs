@@ -40,6 +40,7 @@ namespace ConsolaUI
                         LiberarPokemon();
                         break;
                     case OpcionesMenuBox.Modificar:
+                        SubMenuModificar.Iniciar();
                         break;
                     case OpcionesMenuBox.Mover:
                         break;
@@ -61,7 +62,7 @@ namespace ConsolaUI
         /// <summary>
         /// Busca un pokemon en la box basandose en su Id y muestra el resultado
         /// </summary>
-        static void BuscarPokemon()
+        public static void BuscarPokemon()
         {
             Menu.HeaderPrincipal();
 

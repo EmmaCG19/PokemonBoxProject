@@ -109,6 +109,16 @@ namespace Logica
             return _dal.ObtenerTodosLosCapturados();
         }
 
+        /// <summary>
+        /// Obtengo los ataques cargados del pokemon
+        /// </summary>
+        /// <param name="pokemon"></param>
+        /// <returns></returns>
+        public string[] ObtenerAtaques(Pokemon pokemon)
+        {
+            return _dal.ObtenerAtaques(pokemon);
+        }
+
         public Pokemon[] ObtenerPorNroPokedex(int nroPokedex)
         {
             Pokemon[] todos = this.ObtenerTodosLosCapturados();
@@ -245,33 +255,31 @@ namespace Logica
             switch (orden) 
             {
                 case ModoOrdenamiento.ASC:
-                    //Metodo Burbuja or Sort method
-                    _dal.Box.Pokemones.OrderBy(p => p.Nivel);
-                    break;
+                    throw new NotImplementedException();
                 case ModoOrdenamiento.DESC:
-                    _dal.Box.Pokemones.OrderByDescending(p => p.Nivel);
-                    break;
+                    throw new NotImplementedException();
                 default:
                     break;
             }
         }
 
-        
-
-
         //FUNCIONALIDADES DE LA BOX
-        public void CambiarFondo(ConsoleColor color)
+        public void CambiarFondoBox(ConsoleColor color)
         {
             _dal.Box.Fondo = color;
         }
 
-        public void CambiarNombre(string nombre)
+        public void CambiarNombreBox(string nombre)
         {
             _dal.Box.Nombre = nombre;
         }
 
     }
 
-    
+    public enum ModoOrdenamiento
+    {
+        ASC = 1,
+        DESC
+    }
 
 }

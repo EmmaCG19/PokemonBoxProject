@@ -215,10 +215,7 @@ namespace ConsolaUI
         public static string[] ValidarAtaques()
         {
             string[] ataquesIngresados = new string[4];
-            Funciones.InicializarArrayString(ataquesIngresados);
-
             bool finalizarCarga = false;
-            
 
             for (int i = 0; i < ataquesIngresados.Length; i++)
             {
@@ -254,8 +251,8 @@ namespace ConsolaUI
 
                     if (respuesta.Key == ConsoleKey.N || i == ataquesIngresados.Length - 1)
                     {
-                        Menu.CambiarColor(ConsoleColor.Yellow);
-                        Console.WriteLine("\nCarga de ataques finalizada");
+                        //Menu.CambiarColor(ConsoleColor.Yellow);
+                        //Console.WriteLine("\nCarga de ataques finalizada");
                         finalizarCarga = true;
                         break;
                     }

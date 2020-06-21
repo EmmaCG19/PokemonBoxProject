@@ -40,7 +40,7 @@ namespace Entidades
 
     public enum Genero
     {
-        NoDefinido = 0,
+        Indefinido = 0,
         Masculino,
         Femenino,
     }
@@ -56,10 +56,5 @@ namespace Entidades
         Kalos
     }
 
-    public enum ModoOrdenamiento
-    {
-        ASC = 1,
-        DESC
-    }
-
+    
 }

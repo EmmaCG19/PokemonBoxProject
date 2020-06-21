@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entidades;
+using Logica;
 
 namespace ConsolaUI.Tablas
 {
@@ -12,7 +13,6 @@ namespace ConsolaUI.Tablas
         static TablaPokemon()
         {
             //ancho de columnas
-
         }
 
         public static string GenerarEncabezado()
@@ -20,31 +20,49 @@ namespace ConsolaUI.Tablas
             StringBuilder sb = new StringBuilder();
             sb.Append(string.Format(" {0,-4}|", "Id"));
             sb.Append(string.Format(" {0,-6}|", "NroDex"));
-            sb.Append(string.Format(" {0,-15}|", "Nombre"));
+            sb.Append(string.Format(" {0,-10}|", "Nombre"));
             sb.Append(string.Format(" {0,-6}|", "Nivel"));
-            sb.Append(string.Format(" {0,-15}|", "Genero"));
-            sb.Append(string.Format(" {0,-15}|", "Tipo"));
-            sb.Append(string.Format(" {0,-15}|", "Atrapado Con"));
-            sb.Append(string.Format(" {0,-15}|", "Entrenador"));
+            sb.Append(string.Format(" {0,-12}|", "Genero"));
+            sb.Append(string.Format(" {0,-12}|", "Tipo"));
+            sb.Append(string.Format(" {0,-12}|", "Atrapado Con"));
+            sb.Append(string.Format(" {0,-12}|", "Entrenador"));
+            sb.Append(string.Format(" {0,-40}", "Ataques"));
+
+            //No fue agregado porque supera el ancho de la consola
             //sb.Append(string.Format(" {0,-10}|", "Tiene Item"));
-            //sb.Append(string.Format(" {0,-50}", "Ataques"));
 
             return sb.ToString();
         }
 
         public static string GenerarFila(Pokemon pokemon)
         {
+            LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
+            string[] ataques = box.ObtenerAtaques(pokemon);
+
             StringBuilder sb = new StringBuilder();
             sb.Append(string.Format(" {0,-4}|", pokemon.Id + 1));
             sb.Append(string.Format(" {0,-6}|", pokemon.NroDex));
-            sb.Append(string.Format(" {0,-15}|", pokemon.Nombre));
+            sb.Append(string.Format(" {0,-10}|", pokemon.Nombre));
             sb.Append(string.Format(" {0,-6}|", pokemon.Nivel));
-            sb.Append(string.Format(" {0,-15}|", pokemon.Genero));
-            sb.Append(string.Format(" {0,-15}|", pokemon.Tipo));
-            sb.Append(string.Format(" {0,-15}|", pokemon.AtrapadoCon));
-            sb.Append(string.Format(" {0,-15}|", pokemon.Entrenador.NombreOT));
-            //sb.Append(string.Format("{0,-4}|", pokemon.TieneItem ? "Si" : "No"));
-            //sb.Append(string.Format("{0,-20}", pokemon.Ataques[0]));
+            sb.Append(string.Format(" {0,-12}|", pokemon.Genero));
+            sb.Append(string.Format(" {0,-12}|", pokemon.Tipo));
+            sb.Append(string.Format(" {0,-12}|", pokemon.AtrapadoCon));
+            sb.Append(string.Format(" {0,-12}|", pokemon.Entrenador.NombreOT));
+
+            #region Generando un campo para los ataques
+            if (ataques.Length != 0)
+            {
+                foreach (string ataque in ataques)
+                {
+                    sb.Append(string.Format(" {0,-10}-", ataque));
+                }
+            }
+            else
+                sb.Append(string.Format(" {0,-40}", "SIN ATAQUES"));
+            #endregion
+
+            //No fue agregado porque supera el ancho de la consola
+            //sb.Append(string.Format("{0,-10}|", pokemon.TieneItem ? "Si" : "No"));
 
             return sb.ToString();
         }

@@ -69,7 +69,7 @@ namespace ConsolaUI
 
         static void OpcionesMenu()
         {
-            Console.WriteLine("{0}Selecciona la box a la que desea ingresar: ", Menu.Identar(3));
+            Console.WriteLine("A) Selecciona la box a la que desea ingresar: ");
             #region Generando un submenu dinamico con la lista de cajas y su disponibilidad
             int indice = 0;
             foreach (Box box in PC.Boxes)

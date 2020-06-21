@@ -13,12 +13,12 @@ namespace Entidades
     {
         static Pokemon()
         {
-            limiteAtaques = 4;
+            _limiteAtaques = 4;
         }
 
         public Pokemon(short nroDex, string nombre) { _nroDex = nroDex; this.Nombre = nombre; }
 
-        public Pokemon(short nroDex, string nombre, byte nivel, Tipo tipo, Genero sexo, Entrenador entrenador, Pokebola pokebola, string[] ataques, bool tieneItem)
+        public Pokemon(short nroDex, string nombre, byte nivel, Tipo tipo, Genero sexo, Entrenador entrenador, Pokebola pokebola, string[] ataquesParametro, bool tieneItem)
         {
             _nroDex = nroDex;
             _tipo = tipo;
@@ -27,22 +27,25 @@ namespace Entidades
             _nivel = nivel;
             _genero = sexo;
 
-            #region Inicializar array de ataques
-            _ataquesVacio = new string[limiteAtaques];
-            
-            for (int i = 0; i < limiteAtaques; i++)
+            this.Ataques = new string[Pokemon.LimiteAtaques];
+
+            #region Adaptando el array que llega como parametro
+            if (ataquesParametro.Length <= Pokemon.LimiteAtaques) 
             {
-                _ataquesVacio[i] = "Espacio disponible";
+                for (int i = 0, j = 0; i < ataquesParametro.Length; i++)
+                {
+                    if (ataquesParametro[i] != null)
+                        //Lo guarda en la primera posicion de mi array de ataques
+                        this.Ataques[j++] = ataquesParametro[i];
+                }
             }
             #endregion
 
-            this.Ataques = (ataques.Length <= limiteAtaques)? ataques: _ataquesVacio; 
             this.TieneItem = tieneItem;
             this.Nombre = nombre;
         }
 
-        protected static readonly byte limiteAtaques;
-        private readonly string [] _ataquesVacio;
+        protected static readonly byte _limiteAtaques;
         private readonly byte _nivel;
         private readonly Tipo _tipo;
         private readonly Entrenador _entrenador;
@@ -60,6 +63,8 @@ namespace Entidades
         public Genero Genero { get{ return _genero; } }
         public bool TieneItem { get; set; }
         public string[] Ataques { get; set; }
+        public static byte LimiteAtaques { get { return _limiteAtaques; } }
+
     }
 
     
