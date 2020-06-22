@@ -295,6 +295,8 @@ namespace ConsolaUI.Utilidades
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("La cantidad de pasos es inválida, vuelva a ingresarla...");
+                
+                
                 MenuBox.ResetearFondo();
                 Console.Write("\nIngrese la cantidad de pasos: ");
 
