@@ -121,10 +121,8 @@ namespace ConsolaUI
 
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
 
-            //CAUTION: El nivel Maximo no puede ser menor que el nivel Minimo
-
-            byte nivelMinimo = Validacion.ValidarNivel($"Ingresa un nivel minimo [1-{PC.NivelMaximo}] : ");
-            byte nivelMaximo = Validacion.ValidarNivel($"Ingresa un nivel maximo [1-{PC.NivelMaximo}] : ");
+            byte nivelMinimo = Validacion.ValidarNivel($"Ingresa un nivel minimo [1-{PC.NivelMaximo}]");
+            byte nivelMaximo = Validacion.ValidarNivel($"Ingresa un nivel maximo [1-{PC.NivelMaximo}]");
 
             Pokemon[] pokemonesEnRango = box.ObtenerPorRangoNivel(nivelMinimo, nivelMaximo);
             

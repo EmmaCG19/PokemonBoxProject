@@ -14,7 +14,7 @@ namespace ConsolaUI
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("{0}-{1}-{2}", DateTime.Now.Day, DateTime.Now.Month, DateTime.Now.Year);
             sb.AppendFormat("__");
-            sb.AppendFormat("{0}-{1}-{2}", (DateTime.Now.Hour < 12)? DateTime.Now.Hour + 12: DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+            sb.AppendFormat("{0}-{1}-{2}", (DateTime.Now.Hour < 10)? string.Concat("0",DateTime.Now.Hour.ToString()) : DateTime.Now.Hour.ToString(), DateTime.Now.Minute, DateTime.Now.Second);
 
             return sb.ToString();
         }

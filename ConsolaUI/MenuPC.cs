@@ -47,9 +47,14 @@ namespace ConsolaUI
                         MenuInforme.Iniciar();
                         break;
                     case OpcionesMenuPC.Salir:
-                        seguirEnMenu = false;
-                        Thread.Sleep(3000);
-                        Environment.Exit(0);
+                        #region Salir del programa
+                        if (Validacion.ValidarSoN("Desea salir del programa?"))
+                        {
+                            seguirEnMenu = false;
+                            Thread.Sleep(1500);
+                            Environment.Exit(0);
+                        }
+                        #endregion
                         break;
                     default:
                         break;
@@ -74,6 +79,7 @@ namespace ConsolaUI
             Menu.CambiarColor(ConsoleColor.Yellow);
             Console.WriteLine("Para:{0}", destinatario.NombreOT);
             Console.WriteLine("{0}{1}\n", Menu.Identar(12), mensaje);
+            Menu.ResetearColor();
 
             if (Validacion.ValidarSoN("Desea enviar el mail?"))
             {
@@ -120,7 +126,6 @@ namespace ConsolaUI
 
             Console.WriteLine(sb.ToString());
         }
-
 
         static OpcionesMenuPC ValidarIngresoUsuario()
         {

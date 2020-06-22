@@ -44,17 +44,18 @@ namespace ConsolaUI
 
         public static void MostrarTodo()
         {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(ReporteEntrenador());
+            sb.AppendLine(ReportePokedex());
+            
             Menu.HeaderPrincipal();
-
-            StringBuilder reporte = new StringBuilder();
-            reporte.AppendLine(ReporteEntrenador());
-            reporte.AppendLine();
-            reporte.AppendLine(ReportePokedex());
-            Console.Write(reporte.ToString());
+            Menu.CambiarColor(ConsoleColor.Green);
+            Console.Write(sb.ToString());
+            Menu.ResetearColor();
 
             if (Validacion.ValidarSoN("Desea guardar esta informacion?"))
             {
-                GeneradorTXT.GenerarArchivo("InformePC", reporte.ToString());
+                GeneradorTXT.GenerarArchivo("InformePC", sb.ToString());
                 Menu.CambiarColor(ConsoleColor.Yellow);
                 Console.WriteLine("\n{0}", @"El archivo ha sido generado en 'ProyectoPokemonBox\ConsolaUI\bin\Debug'");
             }
@@ -67,6 +68,7 @@ namespace ConsolaUI
             Menu.HeaderPrincipal();
             Menu.CambiarColor(ConsoleColor.Green);
             Console.Write(ReporteEntrenador());
+            Menu.ResetearColor();
 
             //Preguntar si desea exportar los datos            
             if (Validacion.ValidarSoN("Desea guardar esta informacion?"))
@@ -84,6 +86,7 @@ namespace ConsolaUI
             Menu.HeaderPrincipal();
             Menu.CambiarColor(ConsoleColor.Green);
             Console.Write(ReportePokedex());
+            Menu.ResetearColor();
 
             //Preguntar si desea exportar los datos            
             if (Validacion.ValidarSoN("Desea guardar esta informacion?"))
@@ -142,10 +145,6 @@ namespace ConsolaUI
             sb.AppendLine(LineaSeparacion());
             sb.AppendLine(InformeMasterBall());
 
-            //Linea de separacion entre items
-            //sb.AppendFormat("{0}{1}\n", Menu.Identar(3), Menu.LineaFormateada(50, '-'));
-            //sb.AppendFormat("{0}{1}\n");
-
             return sb.ToString();
         }
 
@@ -158,10 +157,10 @@ namespace ConsolaUI
             if (LogicaPC.YaExistePokemonConMasterBall())
             {
                 Pokemon pokemon = LogicaPC.PokemonAtrapadoConMasterball();
-                sb.AppendFormat("{0}[NroDex: #{1}, Nombre: {2}, Nivel: {3}]\n", Menu.Identar(5), pokemon.NroDex, pokemon.Nombre, pokemon.Nivel);
+                sb.AppendFormat("{0}[NroDex: #{1}, Nombre: {2}, Nivel: {3}]", Menu.Identar(5), pokemon.NroDex, pokemon.Nombre, pokemon.Nivel);
             }
             else
-                sb.AppendFormat("{0}No se ha capturado pokemon con la masterball\n", Menu.Identar(5));
+                sb.AppendFormat("{0}No se ha capturado pokemon con la masterball", Menu.Identar(5));
 
 
             return sb.ToString();
@@ -280,8 +279,8 @@ namespace ConsolaUI
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("1. Estadisticas sobre la pokedex");
-            sb.AppendLine("2. Estadisticas sobre el entrenador");
-            sb.AppendLine("3. Exportar todos los datos");
+            sb.AppendLine("2. Datos sobre el entrenador");
+            sb.AppendLine("3. Mostrar todo lo anterior");
             sb.AppendLine("4. Volver al Menu PC");
 
             Console.WriteLine(sb.ToString());

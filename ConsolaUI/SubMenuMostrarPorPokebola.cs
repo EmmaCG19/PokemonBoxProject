@@ -56,7 +56,7 @@ namespace ConsolaUI
         {
             int cont = 0;
 
-            Console.WriteLine("Seleccione un tipo de pokebola: ");
+            Console.WriteLine("A) Seleccione un tipo de pokebola: ");
             Menu.CambiarColor(ConsoleColor.Green);
             foreach (string tipoPokebola in Enum.GetNames(typeof(Pokebola)))
             {

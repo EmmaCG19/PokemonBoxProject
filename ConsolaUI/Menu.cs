@@ -12,12 +12,11 @@ namespace ConsolaUI
         static Menu()
         {
             Console.Title = PC.Titulo.ToUpper();
-            _colorMenu = ConsoleColor.Magenta;
+            _colorMenu = ConsoleColor.DarkGreen;
             largoFila = 65;
         }
 
-        //Propiedad largo de fila
-        public static readonly int largoFila;
+        static readonly int largoFila;
         static readonly ConsoleColor _colorMenu;
 
         /// <summary>
@@ -82,7 +81,6 @@ namespace ConsolaUI
             Console.WriteLine();
             Menu.ResetearColor();
         }
-
 
         public static string LineaFormateada(int longitud, char simbolo)
         {

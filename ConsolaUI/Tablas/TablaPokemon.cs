@@ -20,7 +20,7 @@ namespace ConsolaUI.Tablas
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat(" {0,-4}|", "Id");
             sb.AppendFormat(" {0,-6}|", "NroDex");
-            sb.AppendFormat(" {0,-10}|", "Nombre");
+            sb.AppendFormat(" {0,-15}|", "Nombre");
             sb.AppendFormat(" {0,-6}|", "Nivel");
             sb.AppendFormat(" {0,-12}|", "Genero");
             sb.AppendFormat(" {0,-12}|", "Tipo");
@@ -42,7 +42,7 @@ namespace ConsolaUI.Tablas
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat(" {0,-4}|", pokemon.Id + 1);
             sb.AppendFormat(" {0,-6}|", pokemon.NroDex);
-            sb.AppendFormat(" {0,-10}|", pokemon.Nombre);
+            sb.AppendFormat(" {0,-15}|", pokemon.Nombre);
             sb.AppendFormat(" {0,-6}|", pokemon.Nivel);
             sb.AppendFormat(" {0,-12}|", pokemon.Genero);
             sb.AppendFormat(" {0,-12}|", pokemon.Tipo);
@@ -89,7 +89,6 @@ namespace ConsolaUI.Tablas
             {
                 Console.WriteLine(GenerarFila(pokemon));
                 Console.WriteLine(GenerarLineaSeparacion());
-
             }
         }
 

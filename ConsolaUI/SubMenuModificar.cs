@@ -48,9 +48,11 @@ namespace ConsolaUI
         static void CambiarNombrePokemon()
         {
 
-            Menu.HeaderPrincipal();
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
             string nuevoNombre;
+            
+            Menu.HeaderPrincipal();
+            MenuBox.ResetearFondo();
 
             try
             {
@@ -86,7 +88,8 @@ namespace ConsolaUI
             string[] nuevosAtaques;
 
             Menu.HeaderPrincipal();
-            
+            MenuBox.ResetearFondo();
+
             try
             {
                 nuevosAtaques = new string[Pokemon.LimiteAtaques];
@@ -118,8 +121,10 @@ namespace ConsolaUI
 
         static void CambiarItemPokemon()
         {
-            Menu.HeaderPrincipal();
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
+            
+            Menu.HeaderPrincipal();
+            MenuBox.ResetearFondo();
 
             try
             {

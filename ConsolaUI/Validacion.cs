@@ -26,7 +26,7 @@ namespace ConsolaUI
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("El nro de dex es invalido, vuelva a intentarlo...");
-                Menu.ResetearColor();
+                MenuBox.ResetearFondo();
 
                 Console.Write($"\nIngrese un nro de dex [1-{PC.PokemonesEnDex}]: ");
             }
@@ -47,9 +47,9 @@ namespace ConsolaUI
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("La posicion ingresada es inválida, vuelva a intentarlo...");
-                Menu.ResetearColor();
+                MenuBox.ResetearFondo();
 
-                Console.Write($"\nIngrese un nro de dex [1-{Box.Capacidad}]: ");
+                Console.Write($"\nIngrese una posicion de la box [1-{Box.Capacidad}]: ");
             }
 
             //Debo reducir en uno la posicion para que coincida con el array
@@ -70,7 +70,7 @@ namespace ConsolaUI
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("El nivel ingresado es invalido, vuelva a intentarlo...");
-                Menu.ResetearColor();
+                MenuBox.ResetearFondo();
                 Console.Write("\n{0}: ", mensajeIngreso);
             }
 
@@ -93,7 +93,7 @@ namespace ConsolaUI
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("El nombre ingresado es invalido, vuelva a intentarlo...");
-                MenuBox.ResetearFondo(); //Cambiar al color de la BOX
+                MenuBox.ResetearFondo();
                 Console.Write("\n{0}: ", mensajeIngreso);
                 cadenaIngresada = Console.ReadLine();
             }
@@ -107,11 +107,10 @@ namespace ConsolaUI
         /// <returns></returns>
         public static Tipo ValidarTipo()
         {
-            Console.WriteLine("Tipos de pokemon: ");
+            Console.WriteLine("\nTipos de pokemon: ");
             OpcionesTipo();
 
-            Console.Write("\nSeleccione una opcion: ");
-
+            Console.Write("Seleccione una opcion: ");
             Tipo tipoSeleccionado;
 
             //No vamos a tener en cuenta el tipo 'No asignado'. Es unicamente para los huevos.
@@ -119,7 +118,7 @@ namespace ConsolaUI
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("El tipo seleccionado no es valido, vuelva a intentarlo");
-                Menu.ResetearColor();
+                MenuBox.ResetearFondo();
                 Console.Write("Seleccione una opcion: ");
             }
 
@@ -132,7 +131,7 @@ namespace ConsolaUI
         /// <returns></returns>
         public static Genero ValidarGenero()
         {
-            Console.WriteLine("Tipos de género: ");
+            Console.WriteLine("\nTipos de género: ");
             OpcionesGenero();
 
 
@@ -144,7 +143,7 @@ namespace ConsolaUI
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("El tipo seleccionado no es valido, vuelva a intentarlo");
-                Menu.ResetearColor();
+                MenuBox.ResetearFondo();
                 Console.Write("\nSeleccione una opcion: ");
             }
 
@@ -157,7 +156,6 @@ namespace ConsolaUI
         /// <returns></returns>
         public static Pokebola ValidarPokebola()
         {
-
             Console.WriteLine("\nTipos de Pokebola: ");
             OpcionesPokebola();
 
@@ -171,7 +169,7 @@ namespace ConsolaUI
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("El tipo seleccionado no es valido, vuelva a intentarlo");
-                Menu.ResetearColor();
+                MenuBox.ResetearFondo();
                 Console.Write("\nSeleccione una opcion: ");
             }
 
@@ -199,8 +197,8 @@ namespace ConsolaUI
                 else
                 {
                     Menu.CambiarColor(ConsoleColor.Red);
-                    Console.WriteLine("La tecla ingresada es inválida, vuelva a intentarlo...");
-                    Menu.ResetearColor();
+                    Console.WriteLine("\nLa tecla ingresada es inválida, vuelva a intentarlo...");
+                    MenuBox.ResetearFondo();
                 }
 
                 Console.WriteLine();
@@ -218,15 +216,15 @@ namespace ConsolaUI
         {
             string[] ataquesIngresados = new string[Pokemon.LimiteAtaques];
             bool finalizarCarga = false;
-            ConsoleKeyInfo respuesta;
             bool seguirPreguntando;
+            ConsoleKeyInfo respuesta;
 
             for (int pos = 0; pos < ataquesIngresados.Length; pos++)
             {
                 #region Ingreso de ataques
                 string ataqueIngresado;
 
-                Console.Write($"Ingrese el ataque {pos + 1}/4: ");
+                Console.Write($"\nIngrese el ataque {pos + 1}/4: ");
                 ataqueIngresado = Console.ReadLine();
 
                 //Validar nombre ataque
@@ -234,9 +232,9 @@ namespace ConsolaUI
                 {
                     Menu.CambiarColor(ConsoleColor.Red);
                     Console.WriteLine("El ataque ingresado no es valido, vuelva a intentarlo...");
-                    Menu.ResetearColor();
+                    MenuBox.ResetearFondo();
 
-                    Console.Write($"Ingrese el ataque {pos + 1}/4: ");
+                    Console.Write($"\nIngrese el ataque {pos + 1}/4: ");
                     ataqueIngresado = Console.ReadLine();
                 }
 
@@ -268,7 +266,7 @@ namespace ConsolaUI
                         seguirPreguntando = true;
                     }
 
-                    Menu.ResetearColor();
+                    MenuBox.ResetearFondo();
 
                 } while (seguirPreguntando);
 
@@ -301,7 +299,7 @@ namespace ConsolaUI
 
                 if (teclaPresionada.Key == ConsoleKey.S)
                 {
-                    //El entrenador es Red
+                    //El entrenador es el player
                     trainer = PC.Jugador;
 
                 }
@@ -318,8 +316,8 @@ namespace ConsolaUI
                     //Ingreso invalido
                     teclaInvalida = true;
                     Menu.CambiarColor(ConsoleColor.Red);
-                    Console.WriteLine("La tecla ingresada es inválida, vuelva a intentarlo...");
-                    Menu.ResetearColor();
+                    Console.WriteLine("\nLa tecla ingresada es inválida, vuelva a intentarlo...");
+                    MenuBox.ResetearFondo();
                 }
 
             } while (teclaInvalida);
@@ -340,7 +338,7 @@ namespace ConsolaUI
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("La cantidad de pasos es inválida, vuelva a ingresarla...");
-                Menu.ResetearColor();
+                MenuBox.ResetearFondo();
                 Console.Write("\nIngrese la cantidad de pasos: ");
 
             }
@@ -356,10 +354,10 @@ namespace ConsolaUI
             Console.Write("\n{0} [S/N]: ", mensajeIngreso);
             teclaPresionada = Console.ReadKey();
 
-            while (teclaPresionada.Key == ConsoleKey.S && teclaPresionada.Key == ConsoleKey.N)
+            while (!(teclaPresionada.Key == ConsoleKey.S || teclaPresionada.Key == ConsoleKey.N))
             {
                 Menu.CambiarColor(ConsoleColor.Red);
-                Console.WriteLine("La tecla presionada es inválida, vuelva a intentarlo...");
+                Console.WriteLine("\nLa tecla presionada es inválida, vuelva a intentarlo...");
                 Menu.ResetearColor();
                 Console.Write("\n{0} [S/N]: ", mensajeIngreso);
                 teclaPresionada = Console.ReadKey();
@@ -380,7 +378,7 @@ namespace ConsolaUI
 
             for (int i = 1; i < tiposDisponibles.Length; i++)
             {
-                sb.AppendFormat("{2}{0}.{1}\n", i, tiposDisponibles[i], Menu.Identar(3));
+                sb.AppendFormat("{2}{0}. {1}\n", i, tiposDisponibles[i], Menu.Identar(3));
             }
 
             Console.WriteLine(sb);
@@ -393,7 +391,7 @@ namespace ConsolaUI
 
             for (int i = 1; i < pokebolasDisponibles.Length; i++)
             {
-                sb.AppendFormat("{2}{0}.{1}\n", i, pokebolasDisponibles[i], Menu.Identar(3));
+                sb.AppendFormat("{2}{0}. {1}\n", i, pokebolasDisponibles[i], Menu.Identar(3));
             }
 
             Console.WriteLine(sb);
@@ -406,7 +404,7 @@ namespace ConsolaUI
 
             for (int i = 0; i < generos.Length; i++)
             {
-                sb.AppendFormat("{2}{0}.{1}\n", i, generos[i], Menu.Identar(3));
+                sb.AppendFormat("{2}{0}. {1}\n", i, generos[i], Menu.Identar(3));
             }
 
             Console.WriteLine(sb);

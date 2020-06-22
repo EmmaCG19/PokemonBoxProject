@@ -1,11 +1,11 @@
-﻿using Entidades;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logica;
 using ConsolaUI.Tablas;
+using Entidades;
 using Entidades.Excepciones;
 
 namespace ConsolaUI
@@ -99,44 +99,41 @@ namespace ConsolaUI
 
             try
             {
-                #region Le pregunto al usuario si quiere guardar un huevo o un pokemon
-
-                ConsoleKeyInfo teclaPresionada;
-                bool teclaInvalida;
-
-                do
+                if (Validacion.ValidarSoN("El pokemon a guardar es un huevo?"))
                 {
-                    teclaInvalida = false;
+                    #region Cargar un huevo
+                    ResetearFondo();
+                    short cantidadPasos = Validacion.ValidarCantPasos();
+                    box.Guardar(new Huevo(cantidadPasos));
+                    Menu.CambiarColor(ConsoleColor.Yellow);
+                    Console.WriteLine("El huevo ha sido cargado");
+                    #endregion
 
-                    Console.Write("El pokemon a guardar es un huevo? [S/N]: ");
-                    teclaPresionada = Console.ReadKey();
+                }
+                else
+                {
+                    #region Cargar un pokemon 
+                    ResetearFondo();
+                    Pokemon pokemonNuevo = CargaDatosPokemon();
+                    Menu.HeaderPrincipal();
+                    TablaPokemon.GenerarTabla(pokemonNuevo);
+                    ResetearFondo();
 
-                    if (teclaPresionada.Key == ConsoleKey.S)
+                    if (Validacion.ValidarSoN("Desea guardar este pokemon?"))
                     {
-                        //Pokemon huevo
-                        short cantidadPasos = Validacion.ValidarCantPasos();
-                        box.Guardar(new Huevo(cantidadPasos));
-                        Menu.CambiarColor(ConsoleColor.Yellow);
-                        Console.WriteLine("El huevo ha sido cargado");
-                    }
-                    else if (teclaPresionada.Key == ConsoleKey.N)
-                    {
-                        //Pokemon normal
-                        box.Guardar(CargaDatosPokemon());
+                        ResetearFondo();
+                        box.Guardar(pokemonNuevo);
                         Menu.CambiarColor(ConsoleColor.Yellow);
                         Console.WriteLine("El pokemon ha sido cargado");
                     }
                     else
                     {
-                        //Ingreso invalido
-                        teclaInvalida = true;
                         Menu.CambiarColor(ConsoleColor.Red);
-                        Console.WriteLine("La tecla ingresada es inválida, vuelva a intentarlo...\n");
-                        Menu.ResetearColor();
+                        Console.WriteLine("Se ha cancelado la carga del pokemon");
                     }
+                    #endregion
 
-                } while (teclaInvalida);
-                #endregion
+                }
 
             }
             catch (BoxLlenaException e)
@@ -161,7 +158,6 @@ namespace ConsolaUI
                 Console.WriteLine("{0} {1}", mensajeError, e.Message.ToLower());
             }
 
-            Menu.ResetearColor();
             Menu.EspereUnaTecla();
         }
 
@@ -179,12 +175,21 @@ namespace ConsolaUI
             try
             {
                 TablaPokemon.GenerarTabla(box.ObtenerPokemon(idPokemon));
+                ResetearFondo();
 
-                //Bonus: Agregar Confirmacion
-                box.Liberar(idPokemon);
-                Menu.CambiarColor(ConsoleColor.Yellow);
-                Console.WriteLine("\nEl pokemon ha sido liberado");
-
+                #region Confirmando la eliminacion
+                if (Validacion.ValidarSoN("Desea eliminar el pokemon?"))
+                {
+                    box.Liberar(idPokemon);
+                    Menu.CambiarColor(ConsoleColor.Yellow);
+                    Console.WriteLine("\nEl pokemon ha sido liberado");
+                }
+                else
+                {
+                    Menu.CambiarColor(ConsoleColor.Red);
+                    Console.WriteLine("\nLa liberacion se ha cancelado");
+                }
+                #endregion
             }
             catch (NoExistePokemonException e)
             {
@@ -192,9 +197,7 @@ namespace ConsolaUI
                 Console.WriteLine(e.Message);
             }
 
-            Menu.ResetearColor();
             Menu.EspereUnaTecla();
-
         }
 
         /// <summary>
@@ -204,7 +207,6 @@ namespace ConsolaUI
         static Pokemon CargaDatosPokemon()
         {
             #region Se deben validar los datos y por ultimo instanciar un nuevo Pokemon con los campos ingresados
-
             //Cargamos el nroDex
             short nroDex = Validacion.ValidarNroDex();
 
@@ -231,7 +233,6 @@ namespace ConsolaUI
 
             //Cargamos el item
             bool item = Validacion.ValidarItem();
-
             #endregion
 
             return new Pokemon(nroDex, nombre, nivel, tipo, genero, entrenador, pokebola, ataques, item);
@@ -277,7 +278,7 @@ namespace ConsolaUI
             string nombreViejo = LogicaPC.BoxSeleccionada.Nombre;
             string nombreNuevo = Validacion.ValidarCadena("Ingrese el nuevo nombre de la box");
 
-            LogicaPC.BoxSeleccionada.Nombre = nombreNuevo; 
+            LogicaPC.BoxSeleccionada.Nombre = nombreNuevo;
             Console.WriteLine("La box '{0}' pasó a llamarse '{1}'", nombreViejo, nombreNuevo);
 
             Menu.EspereUnaTecla();
@@ -291,10 +292,14 @@ namespace ConsolaUI
 
             LogicaPC.BoxSeleccionada.Fondo = ValidarColorBox();
             Menu.CambiarColor(LogicaPC.BoxSeleccionada.Fondo);
+            Console.WriteLine("El color de la fox ha sido cambiado");
 
             Menu.EspereUnaTecla();
         }
 
+        /// <summary>
+        /// Vuelve a settear el color de fondo que tiene asignado la box
+        /// </summary>
         public static void ResetearFondo()
         {
             Menu.CambiarColor(LogicaPC.BoxSeleccionada.Fondo);
@@ -355,7 +360,7 @@ namespace ConsolaUI
             }
 
         }
-        
+
         static void OpcionesMenuColor()
         {
             StringBuilder sb = new StringBuilder();

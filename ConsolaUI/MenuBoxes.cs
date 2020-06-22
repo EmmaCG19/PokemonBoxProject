@@ -49,7 +49,7 @@ namespace ConsolaUI
         static void ResetearBox()
         {
             Menu.HeaderPrincipal();
-            int nroBox = ValidarBox();
+            int nroBox = ValidarBox("Ingrese un nro de box");
 
             try
             {
@@ -73,11 +73,8 @@ namespace ConsolaUI
 
             try
             {
-                Console.WriteLine("Ingrese la primera box: ");
-                Box box1 = LogicaPC.ObtenerBox(ValidarBox());
-
-                Console.WriteLine("Ingrese la segunda box: ");
-                Box box2 = LogicaPC.ObtenerBox(ValidarBox());
+                Box box1 = LogicaPC.ObtenerBox(ValidarBox("Ingrese la primera box"));
+                Box box2 = LogicaPC.ObtenerBox(ValidarBox("Ingrese la segunda box"));
 
                 LogicaPC.IntercambiarBoxes(box1, box2);
                 Menu.CambiarColor(ConsoleColor.Yellow);
@@ -104,12 +101,15 @@ namespace ConsolaUI
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("La cantidad ingresada es inválida, vuelva a intentarlo...\n");
-                Console.Write("Ingrese cuantas boxes desea agregar: ");
+                Menu.ResetearColor();
+                Console.Write("\nIngrese cuantas boxes desea agregar: ");
             }
 
             try
             {
                 LogicaPC.AgregarBoxes(cantBoxes);
+                Menu.CambiarColor(ConsoleColor.Yellow);
+                Console.WriteLine("Las boxes fueron agregadas");
             }
             catch (NoExisteBoxException e)
             {
@@ -122,16 +122,16 @@ namespace ConsolaUI
         }
 
 
-        static int ValidarBox()
+        static int ValidarBox(string mensajeIngreso)
         {
             int opcionSeleccionada;
-            Console.Write("Ingrese el nro de box: ");
+            Console.Write("{0} [1-{1}]: ", mensajeIngreso, PC.Boxes.Length);
             while (!EsBoxValida(Console.ReadLine(), out opcionSeleccionada))
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("La opcion ingresada es inválida, vuelva a intentarlo...");
                 Menu.ResetearColor();
-                Console.Write("\nIngrese el nro de box: ");
+                Console.Write("\n{0} [1-{1}]: ", mensajeIngreso, PC.Boxes.Length);
             }
 
             Console.WriteLine();
