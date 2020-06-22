@@ -6,12 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Logica;
 using Entidades;
+using ConsolaUI.Menues;
 
-namespace ConsolaUI
+namespace ConsolaUI.Utilidades
 {
     //Modificar los validadores y hacerlos mas genericos
 
-    public static class Validacion
+    public static class Validaciones
     {
         /// <summary>
         /// Valida que el ingreso sea un numero de pokedex válido

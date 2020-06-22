@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Entidades;
 using Logica;
+using ConsolaUI.Utilidades;
 
-namespace ConsolaUI
+namespace ConsolaUI.Menues
 {
     public static class MenuInforme
     {
@@ -53,7 +54,7 @@ namespace ConsolaUI
             Console.Write(sb.ToString());
             Menu.ResetearColor();
 
-            if (Validacion.ValidarSoN("Desea guardar esta informacion?"))
+            if (Validaciones.ValidarSoN("Desea guardar esta informacion?"))
             {
                 GeneradorTXT.GenerarArchivo("InformePC", sb.ToString());
                 Menu.CambiarColor(ConsoleColor.Yellow);
@@ -71,7 +72,7 @@ namespace ConsolaUI
             Menu.ResetearColor();
 
             //Preguntar si desea exportar los datos            
-            if (Validacion.ValidarSoN("Desea guardar esta informacion?"))
+            if (Validaciones.ValidarSoN("Desea guardar esta informacion?"))
             {
                 GeneradorTXT.GenerarArchivo("InformeEntrenador", ReporteEntrenador());
                 Menu.CambiarColor(ConsoleColor.Yellow);
@@ -89,7 +90,7 @@ namespace ConsolaUI
             Menu.ResetearColor();
 
             //Preguntar si desea exportar los datos            
-            if (Validacion.ValidarSoN("Desea guardar esta informacion?"))
+            if (Validaciones.ValidarSoN("Desea guardar esta informacion?"))
             {
                 GeneradorTXT.GenerarArchivo("InformePokedex", ReportePokedex());
                 Menu.CambiarColor(ConsoleColor.Yellow);

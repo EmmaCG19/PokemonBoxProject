@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Entidades;
 
-namespace ConsolaUI
+namespace ConsolaUI.Menues
 {
     public static class Menu
     {

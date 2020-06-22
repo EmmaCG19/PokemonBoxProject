@@ -6,8 +6,9 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
+using ConsolaUI.Utilidades;
 
-namespace ConsolaUI
+namespace ConsolaUI.Menues
 {
     public static class SubMenuModificar
     {
@@ -56,7 +57,7 @@ namespace ConsolaUI
 
             try
             {
-                Pokemon pokemon = box.ObtenerPokemon(Validacion.ValidarId());
+                Pokemon pokemon = box.ObtenerPokemon(Validaciones.ValidarId());
 
                 if (pokemon is Huevo)
                 {
@@ -65,7 +66,7 @@ namespace ConsolaUI
                 }
                 else
                 {
-                    nuevoNombre = Validacion.ValidarCadena("Ingrese el nuevo nombre del pokemon");
+                    nuevoNombre = Validaciones.ValidarCadena("Ingrese el nuevo nombre del pokemon");
                     box.CambiarNombre(pokemon, nuevoNombre);
                     Menu.CambiarColor(ConsoleColor.Yellow);
                     Console.WriteLine("El nombre ha sido modificado");
@@ -93,7 +94,7 @@ namespace ConsolaUI
             try
             {
                 nuevosAtaques = new string[Pokemon.LimiteAtaques];
-                Pokemon pokemon = box.ObtenerPokemon(Validacion.ValidarId());
+                Pokemon pokemon = box.ObtenerPokemon(Validaciones.ValidarId());
 
                 if (pokemon is Huevo)
                 {
@@ -102,7 +103,7 @@ namespace ConsolaUI
                 }
                 else
                 {
-                    nuevosAtaques = Validacion.ValidarAtaques();
+                    nuevosAtaques = Validaciones.ValidarAtaques();
                     box.CambiarAtaques(pokemon, nuevosAtaques);
                     Menu.CambiarColor(ConsoleColor.Yellow);
                     Console.WriteLine("El moveset del pokemon ha sido modificado");
@@ -128,7 +129,7 @@ namespace ConsolaUI
 
             try
             {
-                Pokemon pokemon = box.ObtenerPokemon(Validacion.ValidarId());
+                Pokemon pokemon = box.ObtenerPokemon(Validaciones.ValidarId());
 
                 if (pokemon is Huevo)
                 {

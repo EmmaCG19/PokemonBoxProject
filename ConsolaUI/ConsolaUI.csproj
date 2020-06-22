@@ -43,22 +43,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GeneradorTXT.cs" />
-    <Compile Include="MenuInforme.cs" />
-    <Compile Include="SubMenuModificar.cs" />
-    <Compile Include="SubMenuMostrarPorPokebola.cs" />
-    <Compile Include="SubMenuMostrarPorTipo.cs" />
+    <Compile Include="Utilidades\GeneradorTXT.cs" />
+    <Compile Include="Menues\MenuInforme.cs" />
+    <Compile Include="Menues\SubMenuModificar.cs" />
+    <Compile Include="Menues\SubMenuMostrarPorPokebola.cs" />
+    <Compile Include="Menues\SubMenuMostrarPorTipo.cs" />
     <Compile Include="Tablas\ITabla.cs" />
-    <Compile Include="Menu.cs" />
-    <Compile Include="MenuBox.cs" />
-    <Compile Include="MenuBoxes.cs" />
-    <Compile Include="MenuMostrarPokemon.cs" />
-    <Compile Include="MenuPC.cs" />
-    <Compile Include="MenuSeleccionBox.cs" />
+    <Compile Include="Menues\Menu.cs" />
+    <Compile Include="Menues\MenuBox.cs" />
+    <Compile Include="Menues\MenuBoxes.cs" />
+    <Compile Include="Menues\MenuMostrarPokemon.cs" />
+    <Compile Include="Menues\MenuPC.cs" />
+    <Compile Include="Menues\MenuSeleccionBox.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tablas\TablaPokemon.cs" />
-    <Compile Include="Validacion.cs" />
+    <Compile Include="Utilidades\Validaciones.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -73,8 +73,6 @@
       <Name>Logica</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Menues\MenuMostrar\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using Entidades;
 using Logica;
 using ConsolaUI.Tablas;
+using ConsolaUI.Utilidades;
 
-namespace ConsolaUI
+namespace ConsolaUI.Menues
 {
     class SubMenuMostrarPorPokebola
     {

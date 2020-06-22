@@ -9,9 +9,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Entidades;
 using Logica;
-using Microsoft.Win32;
+using ConsolaUI.Utilidades;
 
-namespace ConsolaUI
+namespace ConsolaUI.Menues
 {
     public static class MenuPC
     {
@@ -48,7 +48,7 @@ namespace ConsolaUI
                         break;
                     case OpcionesMenuPC.Salir:
                         #region Salir del programa
-                        if (Validacion.ValidarSoN("Desea salir del programa?"))
+                        if (Validaciones.ValidarSoN("Desea salir del programa?"))
                         {
                             seguirEnMenu = false;
                             Thread.Sleep(1500);
@@ -73,17 +73,17 @@ namespace ConsolaUI
             ListaContactos();
 
             Entrenador destinatario = ValidarContacto();
-            string mensaje = Validacion.ValidarCadena("Escriba su mensaje");
+            string mensaje = Validaciones.ValidarCadena("Escriba su mensaje");
 
             Menu.HeaderPrincipal();
             Menu.CambiarColor(ConsoleColor.Yellow);
-            Console.WriteLine("Para:{0}", destinatario.NombreOT);
+            Console.WriteLine("Para: {0}", destinatario.NombreOT);
             Console.WriteLine("{0}{1}\n", Menu.Identar(12), mensaje);
             Menu.ResetearColor();
 
-            if (Validacion.ValidarSoN("Desea enviar el mail?"))
+            if (Validaciones.ValidarSoN("Desea enviar el mail?"))
             {
-                Console.WriteLine("\nEl mail ha sido envidado exitosamente.");
+                Console.WriteLine("\nEl mail ha sido enviado exitosamente.");
                 _cantMailsEnviados++;
             }
             else

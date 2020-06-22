@@ -7,8 +7,9 @@ using Logica;
 using ConsolaUI.Tablas;
 using Entidades;
 using Entidades.Excepciones;
+using ConsolaUI.Utilidades;
 
-namespace ConsolaUI
+namespace ConsolaUI.Menues
 {
     public static class MenuBox
     {
@@ -69,7 +70,7 @@ namespace ConsolaUI
             ResetearFondo();
 
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
-            int pokemonId = Validacion.ValidarId();
+            int pokemonId = Validaciones.ValidarId();
 
             try
             {
@@ -99,11 +100,11 @@ namespace ConsolaUI
 
             try
             {
-                if (Validacion.ValidarSoN("El pokemon a guardar es un huevo?"))
+                if (Validaciones.ValidarSoN("El pokemon a guardar es un huevo?"))
                 {
                     #region Cargar un huevo
                     ResetearFondo();
-                    short cantidadPasos = Validacion.ValidarCantPasos();
+                    short cantidadPasos = Validaciones.ValidarCantPasos();
                     box.Guardar(new Huevo(cantidadPasos));
                     Menu.CambiarColor(ConsoleColor.Yellow);
                     Console.WriteLine("El huevo ha sido cargado");
@@ -119,7 +120,7 @@ namespace ConsolaUI
                     TablaPokemon.GenerarTabla(pokemonNuevo);
                     ResetearFondo();
 
-                    if (Validacion.ValidarSoN("Desea guardar este pokemon?"))
+                    if (Validaciones.ValidarSoN("Desea guardar este pokemon?"))
                     {
                         ResetearFondo();
                         box.Guardar(pokemonNuevo);
@@ -170,7 +171,7 @@ namespace ConsolaUI
             ResetearFondo();
 
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
-            int idPokemon = Validacion.ValidarId();
+            int idPokemon = Validaciones.ValidarId();
 
             try
             {
@@ -178,7 +179,7 @@ namespace ConsolaUI
                 ResetearFondo();
 
                 #region Confirmando la eliminacion
-                if (Validacion.ValidarSoN("Desea eliminar el pokemon?"))
+                if (Validaciones.ValidarSoN("Desea eliminar el pokemon?"))
                 {
                     box.Liberar(idPokemon);
                     Menu.CambiarColor(ConsoleColor.Yellow);
@@ -208,31 +209,31 @@ namespace ConsolaUI
         {
             #region Se deben validar los datos y por ultimo instanciar un nuevo Pokemon con los campos ingresados
             //Cargamos el nroDex
-            short nroDex = Validacion.ValidarNroDex();
+            short nroDex = Validaciones.ValidarNroDex();
 
             //Cargamos el nombre
-            string nombre = Validacion.ValidarCadena("Ingrese el nombre del pokemon");
+            string nombre = Validaciones.ValidarCadena("Ingrese el nombre del pokemon");
 
             //Cargamos el nivel
-            byte nivel = Validacion.ValidarNivel();
+            byte nivel = Validaciones.ValidarNivel();
 
             //Cargamos el tipo
-            Tipo tipo = Validacion.ValidarTipo();
+            Tipo tipo = Validaciones.ValidarTipo();
 
             //Cargamos la pokebola
-            Pokebola pokebola = Validacion.ValidarPokebola();
+            Pokebola pokebola = Validaciones.ValidarPokebola();
 
             //Cargamos el genero
-            Genero genero = Validacion.ValidarGenero();
+            Genero genero = Validaciones.ValidarGenero();
 
             //Cargamos los ataques
-            string[] ataques = Validacion.ValidarAtaques();
+            string[] ataques = Validaciones.ValidarAtaques();
 
             //Cargamos el trainer
-            Entrenador entrenador = Validacion.ValidarEntrenador();
+            Entrenador entrenador = Validaciones.ValidarEntrenador();
 
             //Cargamos el item
-            bool item = Validacion.ValidarItem();
+            bool item = Validaciones.ValidarItem();
             #endregion
 
             return new Pokemon(nroDex, nombre, nivel, tipo, genero, entrenador, pokebola, ataques, item);
@@ -251,10 +252,10 @@ namespace ConsolaUI
             try
             {
                 Console.Write("Pokemon a mover: ");
-                Pokemon pokemonAMover = box.ObtenerPokemon(Validacion.ValidarId());
+                Pokemon pokemonAMover = box.ObtenerPokemon(Validaciones.ValidarId());
 
                 Console.Write("Posicion a donde desea moverlo: ");
-                int posicionSeleccionada = Validacion.ValidarId();
+                int posicionSeleccionada = Validaciones.ValidarId();
 
                 box.Mover(pokemonAMover, posicionSeleccionada);
                 Menu.CambiarColor(ConsoleColor.Yellow);
@@ -276,7 +277,7 @@ namespace ConsolaUI
             ResetearFondo();
 
             string nombreViejo = LogicaPC.BoxSeleccionada.Nombre;
-            string nombreNuevo = Validacion.ValidarCadena("Ingrese el nuevo nombre de la box");
+            string nombreNuevo = Validaciones.ValidarCadena("Ingrese el nuevo nombre de la box");
 
             LogicaPC.BoxSeleccionada.Nombre = nombreNuevo;
             Console.WriteLine("La box '{0}' pasó a llamarse '{1}'", nombreViejo, nombreNuevo);

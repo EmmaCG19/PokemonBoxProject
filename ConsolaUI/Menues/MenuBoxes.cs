@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using Logica;
 using Entidades;
 using Entidades.Excepciones;
+using ConsolaUI.Utilidades;
 
-namespace ConsolaUI
+namespace ConsolaUI.Menues
 {
     class MenuBoxes
     {

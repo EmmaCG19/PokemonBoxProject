@@ -7,8 +7,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using ConsolaUI.Utilidades;
 
-namespace ConsolaUI
+namespace ConsolaUI.Menues
 {
     public static class MenuMostrarPokemon
     {
@@ -102,7 +103,7 @@ namespace ConsolaUI
             MenuBox.ResetearFondo();
 
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
-            Pokemon[] pokemonConMismaDex = box.ObtenerPorNroPokedex(Validacion.ValidarNroDex());
+            Pokemon[] pokemonConMismaDex = box.ObtenerPorNroPokedex(Validaciones.ValidarNroDex());
 
             if (!Mostrar(pokemonConMismaDex))
             {
@@ -121,8 +122,8 @@ namespace ConsolaUI
 
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
 
-            byte nivelMinimo = Validacion.ValidarNivel($"Ingresa un nivel minimo [1-{PC.NivelMaximo}]");
-            byte nivelMaximo = Validacion.ValidarNivel($"Ingresa un nivel maximo [1-{PC.NivelMaximo}]");
+            byte nivelMinimo = Validaciones.ValidarNivel($"Ingresa un nivel minimo [1-{PC.NivelMaximo}]");
+            byte nivelMaximo = Validaciones.ValidarNivel($"Ingresa un nivel maximo [1-{PC.NivelMaximo}]");
 
             Pokemon[] pokemonesEnRango = box.ObtenerPorRangoNivel(nivelMinimo, nivelMaximo);
             

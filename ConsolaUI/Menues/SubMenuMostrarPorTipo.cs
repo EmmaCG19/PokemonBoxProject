@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using Entidades;
 using Logica;
 using ConsolaUI.Tablas;
+using ConsolaUI.Utilidades;
 
-namespace ConsolaUI
+namespace ConsolaUI.Menues
 {
     public static class SubMenuMostrarPorTipo
     {
@@ -36,7 +37,6 @@ namespace ConsolaUI
             } while (seguirEnMenu);
 
         }
-
 
         static void MostrarPorTipo(Tipo tipo)
         {

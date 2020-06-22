@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace ConsolaUI
+namespace ConsolaUI.Utilidades
 {
     public static class GeneradorTXT
     {
