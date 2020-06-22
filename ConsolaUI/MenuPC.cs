@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography;
 using System.Text;
@@ -8,11 +9,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using Entidades;
 using Logica;
+using Microsoft.Win32;
 
 namespace ConsolaUI
 {
-    public class MenuPC
+    public static class MenuPC
     {
+        static MenuPC()
+        {
+            _cantMailsEnviados = 0;
+        }
+
+        static int _cantMailsEnviados;
+        public static int MailsEnviados { get { return _cantMailsEnviados; } }
+
         public static void Iniciar()
         {
             LogicaPC.IniciarPC();
@@ -31,8 +41,10 @@ namespace ConsolaUI
                         MenuBoxes.Iniciar();
                         break;
                     case OpcionesMenuPC.Mail:
+                        EnviarMail();
                         break;
                     case OpcionesMenuPC.Informe:
+                        MenuInforme.Iniciar();
                         break;
                     case OpcionesMenuPC.Salir:
                         seguirEnMenu = false;
@@ -44,8 +56,71 @@ namespace ConsolaUI
                 }
 
             } while (seguirEnMenu);
-            
+
         }
+
+        /// <summary>
+        /// Envia un mail a uno de los NPC agendados como contacto
+        /// </summary>
+        static void EnviarMail()
+        {
+            Menu.HeaderPrincipal();
+            ListaContactos();
+
+            Entrenador destinatario = ValidarContacto();
+            string mensaje = Validacion.ValidarCadena("Escriba su mensaje");
+
+            Menu.HeaderPrincipal();
+            Menu.CambiarColor(ConsoleColor.Yellow);
+            Console.WriteLine("Para:{0}", destinatario.NombreOT);
+            Console.WriteLine("{0}{1}\n", Menu.Identar(12), mensaje);
+
+            if (Validacion.ValidarSoN("Desea enviar el mail?"))
+            {
+                Console.WriteLine("\nEl mail ha sido envidado exitosamente.");
+                _cantMailsEnviados++;
+            }
+            else
+            {
+                Menu.CambiarColor(ConsoleColor.Red);
+                Console.WriteLine("\nEl mail ha sido cancelado.");
+            }
+
+            Menu.EspereUnaTecla();
+        }
+
+        static Entrenador ValidarContacto()
+        {
+            int contacto;
+
+            Console.Write("Seleccione el destinario: ");
+
+            while (!int.TryParse(Console.ReadLine(), out contacto) || contacto < 1 || contacto > PC.Contactos.Count)
+            {
+                Menu.CambiarColor(ConsoleColor.Red);
+                Console.WriteLine("La opcion seleccionado es inválida, vuelva a intentarlo...\n");
+                Menu.ResetearColor();
+                Console.Write("Seleccione el destinario: ");
+            }
+
+            return PC.Contactos[contacto - 1];
+        }
+
+        static void ListaContactos()
+        {
+            StringBuilder sb = new StringBuilder();
+            int cont = 0;
+
+            sb.AppendLine("Lista de contactos: ");
+            foreach (Entrenador entrenador in PC.Contactos)
+            {
+                sb.AppendFormat("{0}{1}. {2}\n", Menu.Identar(3), ++cont, entrenador.NombreOT);
+
+            }
+
+            Console.WriteLine(sb.ToString());
+        }
+
 
         static OpcionesMenuPC ValidarIngresoUsuario()
         {
@@ -88,7 +163,7 @@ namespace ConsolaUI
             sb.AppendLine("2. Enviar Mail");
             sb.AppendLine("3. Informes");
             sb.AppendLine("4. Salir");
-               
+
             Console.WriteLine(sb.ToString());
         }
 

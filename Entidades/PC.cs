@@ -14,6 +14,7 @@ namespace Entidades
             Titulo = "Pokemon Storage System v1.0";
             NroBoxes = 12;
             Boxes = new Box[NroBoxes];
+            Region = Region.Kanto;
             _pokemonesEnDex = 151;
             _nivelMaximo = 100;
         }

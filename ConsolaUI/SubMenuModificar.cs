@@ -55,7 +55,7 @@ namespace ConsolaUI
             try
             {
                 Pokemon pokemon = box.ObtenerPokemon(Validacion.ValidarId());
-                
+
                 if (pokemon is Huevo)
                 {
                     Menu.CambiarColor(ConsoleColor.Red);
@@ -63,7 +63,7 @@ namespace ConsolaUI
                 }
                 else
                 {
-                    nuevoNombre = Validacion.ValidarNombre();
+                    nuevoNombre = Validacion.ValidarCadena("Ingrese el nuevo nombre del pokemon");
                     box.CambiarNombre(pokemon, nuevoNombre);
                     Menu.CambiarColor(ConsoleColor.Yellow);
                     Console.WriteLine("El nombre ha sido modificado");
@@ -82,14 +82,16 @@ namespace ConsolaUI
 
         static void CambiarAtaquesPokemon()
         {
-            Menu.HeaderPrincipal();
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
-            string[] nuevosAtaques = new string[Pokemon.LimiteAtaques];
+            string[] nuevosAtaques;
 
+            Menu.HeaderPrincipal();
+            
             try
             {
+                nuevosAtaques = new string[Pokemon.LimiteAtaques];
                 Pokemon pokemon = box.ObtenerPokemon(Validacion.ValidarId());
-                
+
                 if (pokemon is Huevo)
                 {
                     Menu.CambiarColor(ConsoleColor.Red);

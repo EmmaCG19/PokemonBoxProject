@@ -109,7 +109,7 @@ namespace ConsolaUI
 
             try
             {
-                LogicaPC.ModificarCantBoxes(cantBoxes);
+                LogicaPC.AgregarBoxes(cantBoxes);
             }
             catch (NoExisteBoxException e)
             {

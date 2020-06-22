@@ -9,7 +9,7 @@ namespace Entidades
     public class Huevo : Pokemon
     {
         public Huevo(short pasosEclosion) :
-        base(0, "Huevo", 1, Tipo.NoAsignado, Genero.Indefinido, new Entrenador(-1,"No asignado"), Pokebola.NoAsignado, new string[Pokemon.LimiteAtaques], false)
+        base(0, "Huevo", 1, Tipo.NoAsignado, Genero.Indefinido, PC.Jugador, Pokebola.NoAsignado, new string[Pokemon.LimiteAtaques], false)
         {
             this.PasosEclosion = pasosEclosion;
         }

@@ -9,9 +9,10 @@ using Entidades;
 
 namespace ConsolaUI
 {
+    //Modificar los validadores y hacerlos mas genericos
+
     public static class Validacion
     {
-
         /// <summary>
         /// Valida que el ingreso sea un numero de pokedex válido
         /// </summary>
@@ -60,43 +61,44 @@ namespace ConsolaUI
         /// </summary>
         /// <param name="mensajeIngreso"></param>
         /// <returns></returns>
-        public static byte ValidarNivel(string mensajeIngreso = "\nIngresa un nivel [1-100] : ")
+        public static byte ValidarNivel(string mensajeIngreso = "Ingresa un nivel [1-100]")
         {
             byte nivelValido;
-            Console.Write(mensajeIngreso);
+            Console.Write("\n{0}: ", mensajeIngreso);
 
             while (!byte.TryParse(Console.ReadLine(), out nivelValido) || (nivelValido < 1 || nivelValido > PC.NivelMaximo))
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("El nivel ingresado es invalido, vuelva a intentarlo...");
                 Menu.ResetearColor();
-                Console.Write(mensajeIngreso);
+                Console.Write("\n{0}: ", mensajeIngreso);
             }
 
             return nivelValido;
         }
 
         /// <summary>
-        /// Valida que el ingreso sea un nombre válido
+        /// Valida que el ingreso sea una cadena que no sea nula ni vacia. 
         /// </summary>
-        /// <returns>Nombre válido</returns>
-        public static string ValidarNombre()
+        /// <params> El mensaje de ingreso </params>
+        /// <returns>Cadena válida</returns>
+        public static string ValidarCadena(string mensajeIngreso)
         {
-            string nombreIngresado;
+            string cadenaIngresada;
 
-            Console.Write("\nIngrese el nombre: ");
-            nombreIngresado = Console.ReadLine();
+            Console.Write("\n{0}: ", mensajeIngreso);
+            cadenaIngresada = Console.ReadLine();
 
-            while (string.IsNullOrEmpty(nombreIngresado.Trim()))
+            while (string.IsNullOrEmpty(cadenaIngresada.Trim()))
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("El nombre ingresado es invalido, vuelva a intentarlo...");
-                Menu.ResetearColor();
-                Console.Write("\nIngrese el nombre: ");
-                nombreIngresado = Console.ReadLine();
+                MenuBox.ResetearFondo(); //Cambiar al color de la BOX
+                Console.Write("\n{0}: ", mensajeIngreso);
+                cadenaIngresada = Console.ReadLine();
             }
 
-            return nombreIngresado;
+            return cadenaIngresada;
         }
 
         /// <summary>
@@ -309,7 +311,7 @@ namespace ConsolaUI
                     Random rnd = new Random();
 
                     trainer.Id = rnd.Next(15000, 25000);
-                    trainer.NombreOT = ValidarNombre();
+                    trainer.NombreOT = ValidarCadena("Ingrese un entrenador");
                 }
                 else
                 {
@@ -347,6 +349,28 @@ namespace ConsolaUI
 
         }
 
+        public static bool ValidarSoN(string mensajeIngreso)
+        {
+            ConsoleKeyInfo teclaPresionada;
+
+            Console.Write("\n{0} [S/N]: ", mensajeIngreso);
+            teclaPresionada = Console.ReadKey();
+
+            while (teclaPresionada.Key == ConsoleKey.S && teclaPresionada.Key == ConsoleKey.N)
+            {
+                Menu.CambiarColor(ConsoleColor.Red);
+                Console.WriteLine("La tecla presionada es inválida, vuelva a intentarlo...");
+                Menu.ResetearColor();
+                Console.Write("\n{0} [S/N]: ", mensajeIngreso);
+                teclaPresionada = Console.ReadKey();
+            }
+
+            if (teclaPresionada.Key == ConsoleKey.S)
+                return true;
+            else
+                return false;
+        }
+
         static void OpcionesTipo()
         {
             StringBuilder sb = new StringBuilder();
@@ -354,7 +378,7 @@ namespace ConsolaUI
 
             for (int i = 1; i < tiposDisponibles.Length; i++)
             {
-                sb.AppendLine(string.Format("{2}{0}.{1}", i, tiposDisponibles[i], Menu.Identar(3)));
+                sb.AppendFormat("{2}{0}.{1}\n", i, tiposDisponibles[i], Menu.Identar(3));
             }
 
             Console.WriteLine(sb);
@@ -367,7 +391,7 @@ namespace ConsolaUI
 
             for (int i = 1; i < pokebolasDisponibles.Length; i++)
             {
-                sb.AppendLine(string.Format("{2}{0}.{1}", i, pokebolasDisponibles[i], Menu.Identar(3)));
+                sb.AppendFormat("{2}{0}.{1}\n", i, pokebolasDisponibles[i], Menu.Identar(3));
             }
 
             Console.WriteLine(sb);
@@ -380,7 +404,7 @@ namespace ConsolaUI
 
             for (int i = 0; i < generos.Length; i++)
             {
-                sb.AppendLine(string.Format("{2}{0}.{1}", i, generos[i], Menu.Identar(3)));
+                sb.AppendFormat("{2}{0}.{1}\n", i, generos[i], Menu.Identar(3));
             }
 
             Console.WriteLine(sb);

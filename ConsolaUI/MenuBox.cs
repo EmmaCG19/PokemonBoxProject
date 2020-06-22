@@ -209,7 +209,7 @@ namespace ConsolaUI
             short nroDex = Validacion.ValidarNroDex();
 
             //Cargamos el nombre
-            string nombre = Validacion.ValidarNombre();
+            string nombre = Validacion.ValidarCadena("Ingrese el nombre del pokemon");
 
             //Cargamos el nivel
             byte nivel = Validacion.ValidarNivel();
@@ -275,7 +275,7 @@ namespace ConsolaUI
             ResetearFondo();
 
             string nombreViejo = LogicaPC.BoxSeleccionada.Nombre;
-            string nombreNuevo = Validacion.ValidarNombre();
+            string nombreNuevo = Validacion.ValidarCadena("Ingrese el nuevo nombre de la box");
 
             LogicaPC.BoxSeleccionada.Nombre = nombreNuevo; 
             Console.WriteLine("La box '{0}' pasó a llamarse '{1}'", nombreViejo, nombreNuevo);
@@ -364,7 +364,7 @@ namespace ConsolaUI
             sb.AppendLine("Seleccione un color: ");
             foreach (string color in Enum.GetNames(typeof(ConsoleColor)))
             {
-                sb.AppendLine(string.Format("{0}{1}. {2}", Menu.Identar(3), contColor++, color));
+                sb.AppendFormat("{0}{1}. {2}\n", Menu.Identar(3), contColor++, color);
 
             }
 

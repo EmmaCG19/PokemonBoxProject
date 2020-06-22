@@ -17,10 +17,11 @@ namespace Entidades
         {
             this.Id = id;
             this.NombreOT = nombre;
+            this.Region = Region.Kanto;
         }
 
         public int Id { get; set; }
         public string NombreOT { get; set; }
-
+        public Region Region { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace Logica
 
         private readonly BoxDAL _dal;
 
-        //FUNCIONALIDADES DE LOS POKEMONES DE LA BOX
+        //Funcionalidades del pokemon:
 
         public void CargaInicial()
         {
@@ -47,10 +47,9 @@ namespace Logica
         public void Guardar(Pokemon pokemon)
         {
             Pokemon[] todos = this.ObtenerTodosLosCapturados();
-            int cantMismoDex = 0;
 
-            #region Calculando la cantidad de pokemones con el mismo nroDex (Exceptuar huevos)
-            //No mas de 3 pokemones con el mismo nroDex en la box
+            #region Calculando la cantidad de pokemones con el mismo nroDex. No puede haber más de 3 por dex (Exceptuar huevos)
+            int cantMismoDex = 0;
             if (!(pokemon is Huevo))
             {
                 foreach (Pokemon poke in todos)
@@ -64,8 +63,7 @@ namespace Logica
                 throw new NroDexSuperadoException();
             #endregion
 
-            //Solamente se puede tener UNA copia de los pokemones legendarios
-            #region Verifica que el pokemon, siendo legendario, no exista ya en la PC
+            #region Verifica que el pokemon, siendo legendario, no exista ya en la PC. Un ejemplar por legendario.
             foreach (Pokemon legendario in LogicaPC.LegendariosCapturados())
             {
                 if (pokemon.NroDex == legendario.NroDex)
@@ -73,8 +71,7 @@ namespace Logica
             }
             #endregion
 
-            //Solamente un pokemon puede estar atrapado con una masterball
-            #region Verificar que el pokemon atrapado con Masterball, no exista
+            #region Verificar que el pokemon atrapado con Masterball, no exista. Solamente existe un pokemon atrapado con Masterball.
             if (LogicaPC.YaExistePokemonConMasterBall() && pokemon.AtrapadoCon == Pokebola.Masterball)
             {
                 throw new MasterBallUnicaException();
@@ -119,7 +116,7 @@ namespace Logica
             return _dal.ObtenerAtaques(pokemon);
         }
 
-        public Pokemon[] ObtenerPorNroPokedex(int nroPokedex)
+        public Pokemon[] ObtenerPorNroPokedex(short nroPokedex)
         {
             Pokemon[] todos = this.ObtenerTodosLosCapturados();
 
@@ -197,7 +194,33 @@ namespace Logica
             return pokemonesPorPokebola;
         }
 
-        public Pokemon[] ObtenerPorRangoNivel(int nivelMin= 1, int nivelMax= 100)
+        public Pokemon[] ObtenerPorGenero(Genero genero)
+        {
+            Pokemon[] todos = this.ObtenerTodosLosCapturados();
+
+            #region Obtengo la cantidad de pokemones que son de un determinado género
+            int cantPokemon = 0;
+            foreach (Pokemon pokemon in todos)
+            {
+                if (pokemon.Genero == genero && !(pokemon is Huevo))
+                    cantPokemon++;
+            }
+            #endregion
+
+            #region Guardo los pokemones con este genero en el nuevo array
+            Pokemon[] pokemonesPorGenero = new Pokemon[cantPokemon];
+            for (int i = 0, j = 0; i < todos.Length; i++)
+            {
+                if (todos[i].Genero == genero && !(todos[i] is Huevo))
+                    pokemonesPorGenero[j++] = todos[i];
+            }
+            #endregion
+
+            return pokemonesPorGenero;
+
+        }
+
+        public Pokemon[] ObtenerPorRangoNivel(int nivelMin = 1, int nivelMax = 100)
         {
             Pokemon[] todos = this.ObtenerTodosLosCapturados();
 
@@ -223,7 +246,7 @@ namespace Logica
             return pokemonPorRangoNivel;
 
         }
-         
+
         public Pokemon[] ObtenerHuevos()
         {
             Pokemon[] todos = this.ObtenerTodosLosCapturados();
@@ -250,9 +273,9 @@ namespace Logica
             return huevos;
         }
 
-        public void OrdenarPorNivel(ModoOrdenamiento orden) 
+        public void OrdenarPorNivel(ModoOrdenamiento orden)
         {
-            switch (orden) 
+            switch (orden)
             {
                 case ModoOrdenamiento.ASC:
                     throw new NotImplementedException();
@@ -263,7 +286,9 @@ namespace Logica
             }
         }
 
-        //FUNCIONALIDADES DE LA BOX
+
+        //Funcionalidades de la box:
+
         public void CambiarFondoBox(ConsoleColor color)
         {
             _dal.Box.Fondo = color;

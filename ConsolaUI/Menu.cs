@@ -41,10 +41,17 @@ namespace ConsolaUI
         {
             Console.Clear();
             Menu.CambiarColor(ConsoleColor.Yellow);
-            Console.WriteLine("Player: {0,-29}Time: {1}", PC.Jugador.NombreOT, DateTime.Now.ToLocalTime());
-            LineaDeSeparacion(Menu.largoFila, '-');
+            Console.WriteLine(InfoJugador());
+            Console.WriteLine(LineaFormateada(Menu.largoFila, '-'));
             ResetearColor();
-            Console.WriteLine(); //Agregado un salto más a las 8.16AM del 21/6
+            Console.WriteLine(); 
+        }
+
+        public static string InfoJugador() 
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("Player: {0,-29}Time: {1}", PC.Jugador.NombreOT, DateTime.Now.ToLocalTime());
+            return sb.ToString();
         }
 
         public static void BannerMenu(string nombreDelMenu)
@@ -67,19 +74,15 @@ namespace ConsolaUI
                 lineaLadoDer = LineaFormateada((largoFilaPalabra / 2 - 1), '*');
             }
 
-            LineaDeSeparacion(largoFila, '*');
-            LineaDeSeparacion(largoFila, '*');
+            Console.WriteLine(LineaFormateada(largoFila, '*'));
+            Console.WriteLine(LineaFormateada(largoFila, '*'));
             Console.WriteLine("{0} {1} {2}", lineaLadoIzq, nombreDelMenu.ToUpper(), lineaLadoDer);
-            LineaDeSeparacion(largoFila, '*');
-            LineaDeSeparacion(largoFila, '*');
+            Console.WriteLine(LineaFormateada(largoFila, '*'));
+            Console.WriteLine(LineaFormateada(largoFila, '*'));
             Console.WriteLine();
             Menu.ResetearColor();
         }
 
-        public static void LineaDeSeparacion(int longitud, char simbolo)
-        {
-            Console.WriteLine(LineaFormateada(longitud, simbolo));
-        }
 
         public static string LineaFormateada(int longitud, char simbolo)
         {
