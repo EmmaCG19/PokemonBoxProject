@@ -46,12 +46,15 @@ namespace ConsolaUI.Menues
 
         }
 
+        /// <summary>
+        /// Cambia el nombre del pokemon. Si se ingresa un huevo, muestra el mensaje de error.
+        /// </summary>
         static void CambiarNombrePokemon()
         {
 
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
             string nuevoNombre;
-            
+
             Menu.HeaderPrincipal();
             MenuBox.ResetearFondo();
 
@@ -62,14 +65,14 @@ namespace ConsolaUI.Menues
                 if (pokemon is Huevo)
                 {
                     Menu.CambiarColor(ConsoleColor.Red);
-                    Console.WriteLine("No se pueden modificar el nombre de un huevo");
+                    Console.WriteLine("\nNo se pueden modificar el nombre de un huevo");
                 }
                 else
                 {
                     nuevoNombre = Validaciones.ValidarCadena("Ingrese el nuevo nombre del pokemon");
                     box.CambiarNombre(pokemon, nuevoNombre);
                     Menu.CambiarColor(ConsoleColor.Yellow);
-                    Console.WriteLine("El nombre ha sido modificado");
+                    Console.WriteLine("\nEl nombre ha sido modificado");
                 }
 
             }
@@ -83,6 +86,9 @@ namespace ConsolaUI.Menues
 
         }
 
+        /// <summary>
+        /// Permite modificar el moveset del pokemon
+        /// </summary>
         static void CambiarAtaquesPokemon()
         {
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
@@ -120,10 +126,13 @@ namespace ConsolaUI.Menues
 
         }
 
+        /// <summary>
+        /// Equipa o quita el item del pokemon
+        /// </summary>
         static void CambiarItemPokemon()
         {
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
-            
+
             Menu.HeaderPrincipal();
             MenuBox.ResetearFondo();
 
@@ -140,7 +149,12 @@ namespace ConsolaUI.Menues
                 {
                     box.CambiarStatusItem(pokemon);
                     Menu.CambiarColor(ConsoleColor.Yellow);
-                    Console.WriteLine("\nEl item del pokemon se modifico");
+
+                    if (pokemon.TieneItem)
+                        Console.WriteLine("\nEl item fue desequipado");
+                    else
+                        Console.WriteLine("\nEl item fue equipado");
+
                 }
 
             }
@@ -179,7 +193,6 @@ namespace ConsolaUI.Menues
         {
             menuSeleccionado = (OpcionesMenuModificar)teclaIngresada.Key;
 
-            //El usuario presiona una tecla y esta tiene que coincidir con las disponibles
             switch (menuSeleccionado)
             {
                 case OpcionesMenuModificar.Nombre:

@@ -96,6 +96,9 @@ namespace ConsolaUI.Menues
             Menu.ResetearColor();
         }
 
+        /// <summary>
+        /// Simula una loading screen antes de pasar a la box seleccionada
+        /// </summary>
         static void PantallaCargaABox()
         {
             Console.Clear();

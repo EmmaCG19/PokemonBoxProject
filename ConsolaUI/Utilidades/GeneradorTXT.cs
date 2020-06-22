@@ -9,6 +9,10 @@ namespace ConsolaUI.Utilidades
 {
     public static class GeneradorTXT
     {
+        /// <summary>
+        /// Genera una timestamp con la fecha y hora actual
+        /// </summary>
+        /// <returns></returns>
         static string GenerarTimeStamp() 
         {
             StringBuilder sb = new StringBuilder();

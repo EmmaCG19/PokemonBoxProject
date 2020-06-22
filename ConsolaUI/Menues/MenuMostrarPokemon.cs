@@ -76,6 +76,9 @@ namespace ConsolaUI.Menues
             Menu.EspereUnaTecla();
         }
 
+        /// <summary>
+        /// Muestra los huevos que estan alojados en la box
+        /// </summary>
         static void MostrarHuevos() 
         {
             Menu.HeaderPrincipal();
@@ -92,7 +95,6 @@ namespace ConsolaUI.Menues
 
             Menu.EspereUnaTecla();
         }
-
 
         /// <summary>
         /// Muestra todos los pokemones que tengan ese mismo nro de dex. Se informa si no hay capturados.
@@ -114,7 +116,9 @@ namespace ConsolaUI.Menues
             Menu.EspereUnaTecla();
         }
 
-
+        /// <summary>
+        /// Muestra pokemon por rango de nivel
+        /// </summary>
         static void MostrarPorRangoNivel()
         {
             Menu.HeaderPrincipal();

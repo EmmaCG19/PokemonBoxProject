@@ -47,6 +47,9 @@ namespace ConsolaUI.Menues
 
         }
 
+        /// <summary>
+        /// Resetea y elimina toda la informacion cargada en la box
+        /// </summary>
         static void ResetearBox()
         {
             Menu.HeaderPrincipal();
@@ -77,6 +80,9 @@ namespace ConsolaUI.Menues
             Menu.EspereUnaTecla();
         }
 
+        /// <summary>
+        /// Intercambia la posicion de dos boxes
+        /// </summary>
         static void IntercambiarBoxes()
         {
             Menu.HeaderPrincipal();
@@ -100,6 +106,9 @@ namespace ConsolaUI.Menues
 
         }
 
+        /// <summary>
+        /// Suma una cantidad de boxes a la PC
+        /// </summary>
         static void AgregarBoxes()
         {
             Menu.HeaderPrincipal();
@@ -131,7 +140,6 @@ namespace ConsolaUI.Menues
 
         }
 
-
         static int ValidarBox(string mensajeIngreso)
         {
             int opcionSeleccionada;
@@ -148,6 +156,12 @@ namespace ConsolaUI.Menues
             return opcionSeleccionada - 1;
         }
 
+        /// <summary>
+        /// Valida si la box existe dentro de la PC
+        /// </summary>
+        /// <param name="valorIngresado"></param>
+        /// <param name="opcionSeleccionada"></param>
+        /// <returns></returns>
         static bool EsBoxValida(string valorIngresado, out int opcionSeleccionada)
         {
             if (int.TryParse(valorIngresado, out opcionSeleccionada))
@@ -179,7 +193,6 @@ namespace ConsolaUI.Menues
 
             return opcionSeleccionada;
         }
-
 
         static bool EsOpcionValida(ConsoleKeyInfo teclaIngresada, out OpcionesMenuBoxes menuSeleccionado)
         {

@@ -107,7 +107,7 @@ namespace Logica
                 }
             }
 
-            //Por si no hay pokemones capturados
+            //Evitar que arroje excepcion por dividir por 0, si no se capturaron pokemones
             if (totalNivel != 0)
                 promedioNivel = (int)Math.Floor((decimal)totalNivel / (TotalPokemonCapturados() - CantHuevosEncontrados()));
 
@@ -128,6 +128,10 @@ namespace Logica
             return cantHuevos;
         }
 
+        /// <summary>
+        /// Devuelve una lista de los legendarios atrapados
+        /// </summary>
+        /// <returns></returns>
         public static List<Pokemon> LegendariosCapturados()
         {
             //El array de legendarios capturados no puede ser más de 5 porque hay un ejemplar por legendario
@@ -251,6 +255,10 @@ namespace Logica
             return pokemonesDeLvl;
         }
 
+        /// <summary>
+        /// Devuelve el nro de dex del pokemon que mas se atrapo
+        /// </summary>
+        /// <returns></returns>
         public static short PokemonMasCapturado()
         {
             int[] capturasPorDex = new int[PC.PokemonesEnDex];

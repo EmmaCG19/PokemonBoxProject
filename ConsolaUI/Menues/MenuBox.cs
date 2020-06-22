@@ -107,7 +107,7 @@ namespace ConsolaUI.Menues
                     short cantidadPasos = Validaciones.ValidarCantPasos();
                     box.Guardar(new Huevo(cantidadPasos));
                     Menu.CambiarColor(ConsoleColor.Yellow);
-                    Console.WriteLine("El huevo ha sido cargado");
+                    Console.WriteLine("\nEl huevo ha sido cargado");
                     #endregion
 
                 }
@@ -125,12 +125,12 @@ namespace ConsolaUI.Menues
                         ResetearFondo();
                         box.Guardar(pokemonNuevo);
                         Menu.CambiarColor(ConsoleColor.Yellow);
-                        Console.WriteLine("El pokemon ha sido cargado");
+                        Console.WriteLine("\nEl pokemon ha sido cargado");
                     }
                     else
                     {
                         Menu.CambiarColor(ConsoleColor.Red);
-                        Console.WriteLine("Se ha cancelado la carga del pokemon");
+                        Console.WriteLine("\nSe ha cancelado la carga del pokemon");
                     }
                     #endregion
 
@@ -323,6 +323,21 @@ namespace ConsolaUI.Menues
             return colorSeleccionado;
         }
 
+        static void OpcionesMenuColor()
+        {
+            StringBuilder sb = new StringBuilder();
+            int contColor = 0;
+
+            sb.AppendLine("Seleccione un color: ");
+            foreach (string color in Enum.GetNames(typeof(ConsoleColor)))
+            {
+                sb.AppendFormat("{0}{1}. {2}\n", Menu.Identar(3), contColor++, color);
+
+            }
+
+            Console.WriteLine(sb.ToString());
+        }
+
         static OpcionesMenuBox ValidarIngresoUsuario()
         {
             OpcionesMenuBox opcionSeleccionada;
@@ -361,21 +376,6 @@ namespace ConsolaUI.Menues
                     return false;
             }
 
-        }
-
-        static void OpcionesMenuColor()
-        {
-            StringBuilder sb = new StringBuilder();
-            int contColor = 0;
-
-            sb.AppendLine("Seleccione un color: ");
-            foreach (string color in Enum.GetNames(typeof(ConsoleColor)))
-            {
-                sb.AppendFormat("{0}{1}. {2}\n", Menu.Identar(3), contColor++, color);
-
-            }
-
-            Console.WriteLine(sb.ToString());
         }
 
         static void OpcionesMenu()

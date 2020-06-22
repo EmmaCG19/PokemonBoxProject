@@ -299,12 +299,12 @@ namespace Logica
             _dal.Box.Nombre = nombre;
         }
 
-    }
-
-    public enum ModoOrdenamiento
+        public enum ModoOrdenamiento
     {
         ASC = 1,
         DESC
     }
+    }
+
 
 }

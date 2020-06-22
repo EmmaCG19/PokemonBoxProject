@@ -64,6 +64,9 @@ namespace ConsolaUI.Menues
             Menu.EspereUnaTecla();
         }
 
+        /// <summary>
+        /// Muestra la informacion del jugador
+        /// </summary>
         public static void MostrarInformeTrainer()
         {
             Menu.HeaderPrincipal();
@@ -82,6 +85,9 @@ namespace ConsolaUI.Menues
             Menu.EspereUnaTecla();
         }
 
+        /// <summary>
+        /// Muestra las estadisticas de la pokedex
+        /// </summary>
         public static void MostrarInformePokedex()
         {
             Menu.HeaderPrincipal();
@@ -100,7 +106,7 @@ namespace ConsolaUI.Menues
             Menu.EspereUnaTecla();
         }
 
-        public static string ReporteEntrenador()
+        static string ReporteEntrenador()
         {
             StringBuilder sb = new StringBuilder();
 
@@ -116,7 +122,7 @@ namespace ConsolaUI.Menues
             return sb.ToString(); ;
         }
 
-        public static string ReportePokedex()
+        static string ReportePokedex()
         {
             StringBuilder sb = new StringBuilder();
 

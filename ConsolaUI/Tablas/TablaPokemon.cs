@@ -11,10 +11,7 @@ namespace ConsolaUI.Tablas
 {
     public static class TablaPokemon
     {
-        static TablaPokemon()
-        {
-            //ancho de columnas
-        }
+        static TablaPokemon(){}
 
         public static string GenerarEncabezado()
         {
