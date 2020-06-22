@@ -28,7 +28,8 @@ namespace ConsolaUI
                     case OpcionesMenuInforme.Entrenador:
                         MostrarInformeTrainer();
                         break;
-                    case OpcionesMenuInforme.ExportarTodo:
+                    case OpcionesMenuInforme.Todo:
+                        MostrarTodo();
                         break;
                     case OpcionesMenuInforme.VolverAMenu:
                         seguirEnMenu = false;
@@ -41,6 +42,26 @@ namespace ConsolaUI
         }
 
 
+        public static void MostrarTodo()
+        {
+            Menu.HeaderPrincipal();
+
+            StringBuilder reporte = new StringBuilder();
+            reporte.AppendLine(ReporteEntrenador());
+            reporte.AppendLine();
+            reporte.AppendLine(ReportePokedex());
+            Console.Write(reporte.ToString());
+
+            if (Validacion.ValidarSoN("Desea guardar esta informacion?"))
+            {
+                GeneradorTXT.GenerarArchivo("InformePC", reporte.ToString());
+                Menu.CambiarColor(ConsoleColor.Yellow);
+                Console.WriteLine("\n{0}", @"El archivo ha sido generado en 'ProyectoPokemonBox\ConsolaUI\bin\Debug'");
+            }
+
+            Menu.EspereUnaTecla();
+        }
+
         public static void MostrarInformeTrainer()
         {
             Menu.HeaderPrincipal();
@@ -49,9 +70,10 @@ namespace ConsolaUI
 
             //Preguntar si desea exportar los datos            
             if (Validacion.ValidarSoN("Desea guardar esta informacion?"))
-            { 
-            
-
+            {
+                GeneradorTXT.GenerarArchivo("InformeEntrenador", ReporteEntrenador());
+                Menu.CambiarColor(ConsoleColor.Yellow);
+                Console.WriteLine("\n{0}", @"El archivo ha sido generado en 'ProyectoPokemonBox\ConsolaUI\bin\Debug'");
             }
 
             Menu.EspereUnaTecla();
@@ -66,8 +88,9 @@ namespace ConsolaUI
             //Preguntar si desea exportar los datos            
             if (Validacion.ValidarSoN("Desea guardar esta informacion?"))
             {
-
-
+                GeneradorTXT.GenerarArchivo("InformePokedex", ReportePokedex());
+                Menu.CambiarColor(ConsoleColor.Yellow);
+                Console.WriteLine("\n{0}", @"El archivo ha sido generado en 'ProyectoPokemonBox\ConsolaUI\bin\Debug'");
             }
 
             Menu.EspereUnaTecla();
@@ -126,9 +149,9 @@ namespace ConsolaUI
             return sb.ToString();
         }
 
-        static string InformeMasterBall() 
+        static string InformeMasterBall()
         {
-            StringBuilder sb = new StringBuilder()
+            StringBuilder sb = new StringBuilder();
             sb.AppendFormat("{0}MASTERBALL: \n", Menu.Identar(3));
             sb.AppendFormat("{0}{1}\n", Menu.Identar(3), Menu.LineaFormateada(12, '-'));
 
@@ -244,7 +267,7 @@ namespace ConsolaUI
             {
                 case OpcionesMenuInforme.Pokedex:
                 case OpcionesMenuInforme.Entrenador:
-                case OpcionesMenuInforme.ExportarTodo:
+                case OpcionesMenuInforme.Todo:
                 case OpcionesMenuInforme.VolverAMenu:
                     return true;
                 default:
@@ -268,7 +291,7 @@ namespace ConsolaUI
         {
             Pokedex = ConsoleKey.NumPad1,
             Entrenador = ConsoleKey.NumPad2,
-            ExportarTodo = ConsoleKey.NumPad3,
+            Todo = ConsoleKey.NumPad3,
             VolverAMenu = ConsoleKey.NumPad4
         }
 

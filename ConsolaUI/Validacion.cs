@@ -365,6 +365,8 @@ namespace ConsolaUI
                 teclaPresionada = Console.ReadKey();
             }
 
+            Console.WriteLine();
+
             if (teclaPresionada.Key == ConsoleKey.S)
                 return true;
             else

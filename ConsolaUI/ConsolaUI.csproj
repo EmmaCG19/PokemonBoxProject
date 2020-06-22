@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Funciones.cs" />
+    <Compile Include="GeneradorTXT.cs" />
     <Compile Include="MenuInforme.cs" />
     <Compile Include="SubMenuModificar.cs" />
     <Compile Include="SubMenuMostrarPorPokebola.cs" />
