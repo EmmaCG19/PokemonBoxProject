@@ -10,7 +10,6 @@ using ConsolaUI.Menues;
 
 namespace ConsolaUI.Utilidades
 {
-    //Modificar los validadores y hacerlos mas genericos
 
     public static class Validaciones
     {
@@ -182,30 +181,7 @@ namespace ConsolaUI.Utilidades
         /// <returns></returns>
         public static bool ValidarItem()
         {
-            ConsoleKeyInfo teclaPresionada;
-            bool tieneItem = false;
-
-            do
-            {
-                Console.Write("\nTiene un item equipado? S/N: ");
-                teclaPresionada = Console.ReadKey();
-
-                if (teclaPresionada.Key == ConsoleKey.S)
-                    tieneItem = true;
-                else if (teclaPresionada.Key == ConsoleKey.N)
-                    tieneItem = false;
-                else
-                {
-                    Menu.CambiarColor(ConsoleColor.Red);
-                    Console.WriteLine("\nLa tecla ingresada es inválida, vuelva a intentarlo...");
-                    MenuBox.ResetearFondo();
-                }
-
-                Console.WriteLine();
-
-            } while (teclaPresionada.Key != ConsoleKey.S && teclaPresionada.Key != ConsoleKey.N);
-
-            return tieneItem;
+            return ValidarSoN("Tiene un item equipado?");
         }
 
         /// <summary>
@@ -289,38 +265,19 @@ namespace ConsolaUI.Utilidades
         {
             Entrenador trainer = new Entrenador();
 
-            ConsoleKeyInfo teclaPresionada;
-            bool teclaInvalida = false;
-
-            do
+            if (ValidarSoN("El pokemon fue capturado por el entrenador actual ?"))
             {
-                Console.Write("\nEl pokemon fue capturado por el entrenador actual? [S/N] : ");
-                teclaPresionada = Console.ReadKey();
+                //El entrenador es el player
+                trainer = PC.Jugador;
+            }
+            else 
+            {
+                //Pedir datos del entrenador que lo capturo
+                Random rnd = new Random();
 
-                if (teclaPresionada.Key == ConsoleKey.S)
-                {
-                    //El entrenador es el player
-                    trainer = PC.Jugador;
-
-                }
-                else if (teclaPresionada.Key == ConsoleKey.N)
-                {
-                    //Pedir datos del entrenador que lo capturo
-                    Random rnd = new Random();
-
-                    trainer.Id = rnd.Next(15000, 25000);
-                    trainer.NombreOT = ValidarCadena("Ingrese un entrenador");
-                }
-                else
-                {
-                    //Ingreso invalido
-                    teclaInvalida = true;
-                    Menu.CambiarColor(ConsoleColor.Red);
-                    Console.WriteLine("\nLa tecla ingresada es inválida, vuelva a intentarlo...");
-                    MenuBox.ResetearFondo();
-                }
-
-            } while (teclaInvalida);
+                trainer.Id = rnd.Next(15000, 25000);
+                trainer.NombreOT = ValidarCadena("Ingrese un entrenador");
+            }
 
             return trainer;
         }
@@ -347,6 +304,11 @@ namespace ConsolaUI.Utilidades
 
         }
 
+        /// <summary>
+        /// Permite validar preguntas del tipo Si/No.
+        /// </summary>
+        /// <param name="mensajeIngreso"></param>
+        /// <returns></returns>
         public static bool ValidarSoN(string mensajeIngreso)
         {
             ConsoleKeyInfo teclaPresionada;

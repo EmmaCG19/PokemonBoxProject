@@ -54,7 +54,7 @@ namespace ConsolaUI.Menues
             Console.Write(sb.ToString());
             Menu.ResetearColor();
 
-            if (Validaciones.ValidarSoN("Desea guardar esta informacion?"))
+            if (Validaciones.ValidarSoN("Desea guardar esta informacion en un archivo .txt?"))
             {
                 GeneradorTXT.GenerarArchivo("InformePC", sb.ToString());
                 Menu.CambiarColor(ConsoleColor.Yellow);
@@ -72,7 +72,7 @@ namespace ConsolaUI.Menues
             Menu.ResetearColor();
 
             //Preguntar si desea exportar los datos            
-            if (Validaciones.ValidarSoN("Desea guardar esta informacion?"))
+            if (Validaciones.ValidarSoN("Desea guardar esta informacion en un archivo .txt?"))
             {
                 GeneradorTXT.GenerarArchivo("InformeEntrenador", ReporteEntrenador());
                 Menu.CambiarColor(ConsoleColor.Yellow);
@@ -90,7 +90,7 @@ namespace ConsolaUI.Menues
             Menu.ResetearColor();
 
             //Preguntar si desea exportar los datos            
-            if (Validaciones.ValidarSoN("Desea guardar esta informacion?"))
+            if (Validaciones.ValidarSoN("Desea guardar esta informacion en un archivo .txt?"))
             {
                 GeneradorTXT.GenerarArchivo("InformePokedex", ReportePokedex());
                 Menu.CambiarColor(ConsoleColor.Yellow);
@@ -246,13 +246,13 @@ namespace ConsolaUI.Menues
         {
             OpcionesMenuInforme opcionSeleccionada;
 
-            Console.Write("Ingrese su opcion: ");
+            Console.Write("Seleccione una opcion: ");
             while (!EsOpcionValida(Console.ReadKey(), out opcionSeleccionada))
             {
                 Menu.CambiarColor(ConsoleColor.Red);
-                Console.WriteLine("\nLa opcion ingresada no es válida, vuelva a intentarlo..");
+                Console.WriteLine("\nLa opcion seleccionada no es válida, vuelva a intentarlo..");
                 Menu.ResetearColor();
-                Console.Write("\nIngrese su opcion: ");
+                Console.Write("\nSeleccione una opcion: ");
             }
             Console.WriteLine();
 

@@ -36,6 +36,9 @@ namespace ConsolaUI.Menues
             Console.ForegroundColor = color;
         }
 
+        /// <summary>
+        /// Genera un header con la información del jugador y la hora local
+        /// </summary>
         public static void HeaderPrincipal()
         {
             Console.Clear();
@@ -53,6 +56,10 @@ namespace ConsolaUI.Menues
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Genera un banner personalizado que contiene el tituto del menú
+        /// </summary>
+        /// <param name="nombreDelMenu"></param>
         public static void BannerMenu(string nombreDelMenu)
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -61,7 +68,6 @@ namespace ConsolaUI.Menues
             string lineaLadoDer;
             string lineaLadoIzq;
 
-            //Corregir cantidas de dots de cada lado 
             if (largoFilaPalabra % 2 == 0)
             {
                 lineaLadoIzq = LineaFormateada(largoFilaPalabra / 2, '*');
@@ -86,7 +92,6 @@ namespace ConsolaUI.Menues
         {
             StringBuilder sb = new StringBuilder();
 
-            //Tener en cuenta los espacios
             for (int i = 0; i < longitud - 2; i++)
             {
                 sb.Append(simbolo);
@@ -95,6 +100,11 @@ namespace ConsolaUI.Menues
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Genera una sangría de una determinada longitud
+        /// </summary>
+        /// <param name="espacios"></param>
+        /// <returns></returns>
         public static string Identar(int espacios)
         {
             return "".PadLeft(espacios);

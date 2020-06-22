@@ -38,6 +38,7 @@ namespace ConsolaUI.Menues
 
         }
 
+
         static void MostrarPorTipo(Tipo tipo)
         {
             LogicaBox box = new LogicaBox(LogicaPC.BoxSeleccionada);
@@ -57,7 +58,7 @@ namespace ConsolaUI.Menues
         {
             int cont = 0;
 
-            Console.WriteLine("A) Seleccione un tipo de pokemon: ");
+            Console.WriteLine("Tipo de pokemon: ");
             Menu.CambiarColor(ConsoleColor.Green);
             foreach (string tipoPokemon in Enum.GetNames(typeof(Tipo)))
             {
@@ -68,7 +69,7 @@ namespace ConsolaUI.Menues
             }
             
             MenuBox.ResetearFondo();
-            Console.WriteLine("{0}. Volver al menú mostrar", cont);
+            Console.WriteLine("{0}. Volver al menú mostrar\n", cont);
         }
 
         static int ValidarIngresoUsuario()

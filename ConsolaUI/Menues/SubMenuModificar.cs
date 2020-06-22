@@ -99,14 +99,14 @@ namespace ConsolaUI.Menues
                 if (pokemon is Huevo)
                 {
                     Menu.CambiarColor(ConsoleColor.Red);
-                    Console.WriteLine("No se pueden modificar los ataques de un huevo");
+                    Console.WriteLine("\nNo se pueden modificar los ataques de un huevo");
                 }
                 else
                 {
                     nuevosAtaques = Validaciones.ValidarAtaques();
                     box.CambiarAtaques(pokemon, nuevosAtaques);
                     Menu.CambiarColor(ConsoleColor.Yellow);
-                    Console.WriteLine("El moveset del pokemon ha sido modificado");
+                    Console.WriteLine("\nEl moveset del pokemon ha sido modificado");
                 }
 
             }
@@ -134,13 +134,13 @@ namespace ConsolaUI.Menues
                 if (pokemon is Huevo)
                 {
                     Menu.CambiarColor(ConsoleColor.Red);
-                    Console.WriteLine("No se pueden cambiar el item de un huevo");
+                    Console.WriteLine("\nNo se pueden cambiar el item de un huevo");
                 }
                 else
                 {
                     box.CambiarStatusItem(pokemon);
                     Menu.CambiarColor(ConsoleColor.Yellow);
-                    Console.WriteLine("El item del pokemon se modifico");
+                    Console.WriteLine("\nEl item del pokemon se modifico");
                 }
 
             }

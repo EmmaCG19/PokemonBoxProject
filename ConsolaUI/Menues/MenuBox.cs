@@ -259,13 +259,13 @@ namespace ConsolaUI.Menues
 
                 box.Mover(pokemonAMover, posicionSeleccionada);
                 Menu.CambiarColor(ConsoleColor.Yellow);
-                Console.WriteLine("El pokemon ha sido movido a la posicion seleccionada");
+                Console.WriteLine("\nEl pokemon ha sido movido a la posicion seleccionada");
 
             }
             catch (NoExistePokemonException e)
             {
                 Menu.CambiarColor(ConsoleColor.Red);
-                Console.WriteLine("No se puede mover el pokemon porque {0}", e.Message);
+                Console.WriteLine("\nError al mover porque {0}", e.Message.ToLower());
             }
 
             Menu.EspereUnaTecla();
@@ -280,7 +280,8 @@ namespace ConsolaUI.Menues
             string nombreNuevo = Validaciones.ValidarCadena("Ingrese el nuevo nombre de la box");
 
             LogicaPC.BoxSeleccionada.Nombre = nombreNuevo;
-            Console.WriteLine("La box '{0}' pasó a llamarse '{1}'", nombreViejo, nombreNuevo);
+            ResetearFondo();
+            Console.WriteLine("\nLa box '{0}' pasó a llamarse '{1}'", nombreViejo, nombreNuevo);
 
             Menu.EspereUnaTecla();
         }
@@ -293,7 +294,7 @@ namespace ConsolaUI.Menues
 
             LogicaPC.BoxSeleccionada.Fondo = ValidarColorBox();
             Menu.CambiarColor(LogicaPC.BoxSeleccionada.Fondo);
-            Console.WriteLine("El color de la fox ha sido cambiado");
+            Console.WriteLine("\nEl color de la box ha sido cambiado");
 
             Menu.EspereUnaTecla();
         }
@@ -326,13 +327,13 @@ namespace ConsolaUI.Menues
         {
             OpcionesMenuBox opcionSeleccionada;
 
-            Console.Write("Ingrese su opcion: ");
+            Console.Write("Seleccione una opcion: ");
             while (!EsOpcionValida(Console.ReadKey(), out opcionSeleccionada))
             {
                 Menu.CambiarColor(ConsoleColor.Red);
-                Console.WriteLine("\nLa opcion ingresada no es válida, vuelva a intentarlo..");
+                Console.WriteLine("\nLa opcion seleccionada no es válida, vuelva a intentarlo..");
                 ResetearFondo();
-                Console.Write("Ingrese su opcion: ");
+                Console.Write("\nSeleccione una opcion: ");
             }
             Console.WriteLine();
 

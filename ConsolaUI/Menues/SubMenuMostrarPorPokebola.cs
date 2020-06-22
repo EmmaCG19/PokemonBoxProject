@@ -57,7 +57,7 @@ namespace ConsolaUI.Menues
         {
             int cont = 0;
 
-            Console.WriteLine("A) Seleccione un tipo de pokebola: ");
+            Console.WriteLine("Seleccione un tipo de pokebola: ");
             Menu.CambiarColor(ConsoleColor.Green);
             foreach (string tipoPokebola in Enum.GetNames(typeof(Pokebola)))
             {
@@ -67,7 +67,7 @@ namespace ConsolaUI.Menues
             }
 
             MenuBox.ResetearFondo();
-            Console.WriteLine("{0}. Volver al menú mostrar", cont);
+            Console.WriteLine("{0}. Volver al menú mostrar\n", cont);
         }
 
         static int ValidarIngresoUsuario()

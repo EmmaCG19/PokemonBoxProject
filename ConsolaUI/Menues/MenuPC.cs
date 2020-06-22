@@ -131,13 +131,13 @@ namespace ConsolaUI.Menues
         {
             OpcionesMenuPC opcionSeleccionada;
 
-            Console.Write("Ingrese su opcion: ");
+            Console.Write("Seleccione una opcion: ");
             while (!EsOpcionValida(Console.ReadKey(), out opcionSeleccionada))
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("\nLa opcion ingresada no es válida, vuelva a intentarlo..");
                 Menu.ResetearColor();
-                Console.Write("Ingrese su opcion: ");
+                Console.Write("\nSeleccione una opcion: ");
             }
             Console.WriteLine();
 

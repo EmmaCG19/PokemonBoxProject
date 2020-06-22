@@ -174,13 +174,13 @@ namespace ConsolaUI.Menues
         {
             OpcionesMenuMostrar opcionSeleccionada;
 
-            Console.Write("Ingrese su opcion: ");
+            Console.Write("Seleccione una opcion: ");
             while (!EsOpcionValida(Console.ReadKey(), out opcionSeleccionada))
             {
                 Menu.CambiarColor(ConsoleColor.Red);
-                Console.WriteLine("La opcion ingresada no es válida, vuelva a intentarlo..\n");
+                Console.WriteLine("\nLa opcion seleccionada no es válida, vuelva a intentarlo..");
                 MenuBox.ResetearFondo();
-                Console.Write("Ingrese su opcion: ");
+                Console.Write("\nSeleccione una  opcion: ");
             }
             
             return opcionSeleccionada;

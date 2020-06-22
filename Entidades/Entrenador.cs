@@ -10,7 +10,7 @@ namespace Entidades
     {
         public Entrenador()
         {
-
+            this.Region = Region.Kanto;
         }
 
         public Entrenador(int id, string nombre)

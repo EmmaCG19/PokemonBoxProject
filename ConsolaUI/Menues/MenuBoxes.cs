@@ -55,9 +55,18 @@ namespace ConsolaUI.Menues
             try
             {
                 Box box = LogicaPC.ObtenerBox(nroBox);
-                LogicaPC.ResetearBox(box);
-                Menu.CambiarColor(ConsoleColor.Yellow);
-                Console.WriteLine("La box ha sido reseteada");
+
+                if (Validaciones.ValidarSoN("Desea resetear la box"))
+                {
+                    LogicaPC.ResetearBox(box);
+                    Menu.CambiarColor(ConsoleColor.Yellow);
+                    Console.WriteLine("La box ha sido reseteada");
+                }
+                else
+                {
+                    Menu.CambiarColor(ConsoleColor.Red);
+                    Console.WriteLine("No se ha reseteado la box");
+                }
             }
             catch (NoExisteBoxException e)
             {
@@ -98,7 +107,7 @@ namespace ConsolaUI.Menues
             int cantBoxes;
             Console.Write("Ingrese cuantas boxes desea agregar: ");
 
-            while (!int.TryParse(Console.ReadLine(), out cantBoxes))
+            while (!int.TryParse(Console.ReadLine(), out cantBoxes) || cantBoxes < 1)
             {
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("La cantidad ingresada es inválida, vuelva a intentarlo...\n");
@@ -162,7 +171,7 @@ namespace ConsolaUI.Menues
             while (!EsOpcionValida(Console.ReadKey(true), out opcionSeleccionada))
             {
                 Menu.CambiarColor(ConsoleColor.Red);
-                Console.WriteLine("La opcion ingresada no es válida, vuelva a intentarlo..\n");
+                Console.WriteLine("\nLa opcion ingresada no es válida, vuelva a intentarlo..\n");
                 Menu.ResetearColor();
                 Console.Write("Ingrese su opcion: ");
             }
