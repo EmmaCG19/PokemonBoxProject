@@ -12,7 +12,7 @@ namespace ConsolaUI.Menues
         static Menu()
         {
             Console.Title = PC.Titulo.ToUpper();
-            _colorMenu = ConsoleColor.DarkGreen;
+            _colorMenu = ConsoleColor.Blue;
             largoFila = 65;
         }
 

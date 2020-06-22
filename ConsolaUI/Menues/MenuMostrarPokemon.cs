@@ -55,7 +55,6 @@ namespace ConsolaUI.Menues
 
         }
 
-
         /// <summary>
         /// Muestra todos los pokemones capturados. Se informa si no hay capturados.
         /// </summary>
@@ -158,7 +157,6 @@ namespace ConsolaUI.Menues
 
             return false;
         }
-
 
         static void OpcionesMenu()
         {

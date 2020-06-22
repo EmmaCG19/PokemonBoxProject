@@ -42,7 +42,9 @@ namespace ConsolaUI.Menues
             } while (seguirEnMenu);
         }
 
-
+        /// <summary>
+        /// Muestra todos los informes
+        /// </summary>
         public static void MostrarTodo()
         {
             StringBuilder sb = new StringBuilder();
