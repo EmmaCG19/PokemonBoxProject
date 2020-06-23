@@ -313,9 +313,6 @@ namespace ConsolaUI.Utilidades
         /// <returns></returns>
         public static bool ValidarSoN(string mensajeIngreso)
         {
-            //Fix temporal al bug del color con este validador
-            ConsoleColor colorActual = Console.ForegroundColor;
-
             ConsoleKeyInfo teclaPresionada;
 
             Console.Write("\n{0} [S/N]: ", mensajeIngreso);
@@ -323,6 +320,9 @@ namespace ConsolaUI.Utilidades
 
             while (!(teclaPresionada.Key == ConsoleKey.S || teclaPresionada.Key == ConsoleKey.N))
             {
+                //Fix temporal al bug del color con este validador
+                ConsoleColor colorActual = Console.ForegroundColor;
+
                 Menu.CambiarColor(ConsoleColor.Red);
                 Console.WriteLine("\nLa tecla presionada es inválida, vuelva a intentarlo...");
                 Menu.CambiarColor(colorActual);
